@@ -1,0 +1,38 @@
+agbXlib.h
+Guía de instrucciones para su uso
+
+-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o
+
+FUNCIÓN
+	void MuestraIMG(u8 *img, u16 *pal)
+
+Esta función dibuja una imagen .RAW directamente sobre la pantalla LCD, punto por punto, aunque no sirve de bg ó sprite es util para inicios, titulos, etc. Se usa de la siguiente manera: Primero en un archivo DATA se tienen que declarar los nombres de los archivos correspondientes con un nombre de variable, luego ponerlos en el código de fuente como "extern" (asi como en el ejemplo). Después se tienen que crear una variable apuntador u8 temporal para la imagen y otra variable apuntador u16 temporal para la paleta. Después se asocian estas variables temporales con los extern de la siguiente manera:
+
+	extern u8 extern_imagen;
+	extern u16 extern_paleta;
+
+	u8 *tmp_img;
+	u16 *tmp_pal;
+
+  	tmp_img = (u8*)(&extern_imagen);
+	tmp_pal = (u16*)(&extern_paleta);
+
+Luego se llama a la funcion y se ponen las variables temporales como argumentos asi:
+
+	MuestraIMG(tmp_img, tmp_pal);
+
+FUNCIÓN
+	void EsperaBoton(nom);
+
+Esta funcion espera a que se presione un determinado botón para seguir, la lista es:
+
+	a
+	b
+	select
+	start
+	derecha
+	izquierda
+	arriba
+	abajo
+	r
+	l
