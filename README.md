@@ -20,10 +20,12 @@ Latest release: [mystic_q.gba](https://github.com/benoror/gbadev/blob/master/ROM
 
 \*Fun note: Was planning to make a library for developing RPGs on the GBA: [grpglib.txt](https://github.com/benoror/gbadev/blob/master/dreamsoft.es.fm/grpglib.txt)
 
-![]()
+![](/public/dexgex.gif)
 
 ## Cebelix
 
 A yet-to-be platformer mainly to test high-res(\*) images inspired by pseudo-3d from Donkey Kong series.
 
 Latest release: [cebelix.gba](https://github.com/benoror/gbadev/blob/master/ROMS/cebelix.gba?raw=true)
+
+![](/public/cebelix.gif)
