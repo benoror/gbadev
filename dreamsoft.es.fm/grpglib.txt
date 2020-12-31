@@ -1,0 +1,69 @@
+
+	GNU/RPG Library README (v0.1)
+	Autor: DuCKeR@linuxmail.org
+	*Nota: Este documento puede ser Copiado, Modificado y Distribuido libremente.
+
+1. ¿Qué es GRPGlib?
+
+        GRPGlib (GNU/RPG Library) es un conjunto de librerias GPL (libres) cuyo principal objetivo es facilitar la creación 
+de juegos de rol (RPG) para plataformas GNU (UNIX, Linux, FreeBSD, etc.). Aunque esta pensado para trabajar con Linux.
+
+2. ¿Porque crear GRPGlib?
+
+        El campo del entretenimiento en la comunidad de Software Libre en general esta muy "olvidado". Creemos que los juegos 
+es algo importante en un sistema operativo, y no debe ser la excepción en Linux. Si, sí, si hay muchos juegos para Linux, 
+pero son simples juegos de mesa o juegos sencillos. En verdad son pocos los juegos que cuentan con aspectos como: historia, 
+variedad de personajes y mucha durabilidad (a esto ultimo me refiero al tiempo promedio que se necesita para terminar el 
+juego).
+
+3. Características de GRPGlib
+
+   3.1. Mapa del Proyecto
+
+		 /		 /
+		|		| bgs.h
+		|   Town Mode	| character.h
+		|  (ó dungeon) <  extrach.h
+		|		| objets.h
+		|		| battery.h
+		|		| textboxes.h
+		|		| status.h
+		|		 \
+		|
+		|		 /
+		|		| bgs.h
+Modos de juego <    World Map	| character.h
+		|     Mode     <  objets.h
+		|		| battery.h
+		|		| textboxes.h
+		|		| status.h
+		|		 \
+		|		
+		|		 /
+		|		| bgs.h
+		|		| vs.h
+		|  Battle Mode <  battery.h
+		|		| textboxes.h
+		 \		 \
+
+	bgs.h : Mustra la imagen de fondo, controla el scroll (H y V) y asigna el timpo de terreno en un array. ETC...
+
+  character.h : Controla el movimiento del lider de la PARTY. Lee continuamente en busca de posibles colisiones, 
+	        apoyandose en el array de bgs.h . ETC...
+
+    extrach.h : Genera movimientos aleatorios ó preeprogramados ó simple mente muestra estaticamente a personajes extras
+		(habitantes de una ciudad p.ej.), con opcion para asignarle un texto u otra accion como consecuencia de otra. 
+		Lee posibles colisiones apoyandose en bgs.h . ETC...
+
+     objets.h : Ubica un objetico con movimiento o estático, le asigna una accion como consecuencia de otra. ETC...
+
+		EJEMPLO: Un COFRE, se podria crear una funcion que, apoyandose en objets.h, lo abrira cuando el personaje 
+		lo demande, ademas de que le sume determinada cantidad de oro.
+
+	*Nota* : Esta PENIENTE en decidir si extrach.h y objets.h seran dos librerias separadas, o unirlas en una sola.
+
+         vs.h : Muestra imagenes mas detalladas, genera animaciones de ataques, golpes, movimientos. ETC...
+
+  textboxes.h :	Controla los cuedros de texto, donde los personajes diran sus diálogos, ETC...
+
+    battery.h : Librería para SALVAR los avances. ETC...

@@ -1,0 +1,240 @@
+The Ultimate Game Boy Advance Programming Newbie Guide
+======================================================
+by Tim (aka NiGHTS_01 - nights_01@yahoo.com)
+Version 1.0
+Last updated 4-3-01
+
+
+This Document
+-------------
+In the course of learning a new development "scene," beginners
+are often forced to wade through countless web sites and documents
+that might as well be written in ancient Sanskrit for all they care.
+Often, even then lowest level of the "Newbie Guides" take too many
+things for granted, and make far too many assumptions about the
+ability level and knowledge of their readers.
+Usually, if a beginner is reading such a document, they will simply
+be left with more questions than they initially had, or they will
+just be so befuddled that they don't bother going on with their
+desire to program.
+
+This document is designed to be the complete antitheis of those texts.
+This one is written in plain english and will not make assumptions about
+how much you know.  Additionally, it will not treat you like a complete
+idiot. Hopefully, this will be a useful guide for both completely green
+newbies and the savvy programmer that may just need a little push in the
+right direction.
+
+There is a lot of talent in the world... Why brush somebody off simply
+because they don't know where to start?  Who knows... If you lend out
+a helping hand, you may be getting the next SHIGERU MIYAMOTO on his way.
+
+
+So, You want to be a Game Boy Advance programmer, huh?
+------------------------------------------------------
+Good!  More power to you!  If there's anything the video game industry
+needs, it's more programmers, since more programmers means more games!
+Whether the GBA will be the first console system you've developed for,
+or the tenth, you could not have made a better choice.
+The GBA is especially easy to get into because you can program for it
+in the languages that we all know and love: C and C++. There's no
+Assembly required (Bah! Pun not intended, I swear!) like there is with
+the original Game Boy, or the convoluted hardware of the PlayStation 2.
+Additionaly, it's cheap!  Heck, you don't even need Game Boy Advance
+hardware to program for it.  Now, since you've made the decision to code
+for the GBA, here's what you're going to need to get started:
+
+
+So, What do I need to get started?
+----------------------------------
+(Experienced programmers can skip to the fourth item.)
+
+* Knowledge!
+------------
+First and foremost, you're going to need to need some knowledge in the
+C and/or C++ programming languages.  If don't know C++ already, go read
+some tutorials, take a class, buy a book, whatever.
+Once you learn the language, it will be your most valuable tool for
+programming on virtually any platform.
+
+* Your favorite Operating System
+--------------------------------
+Chances are, the computer you're on right now will be all you need.
+Hardcore Linux users will tell you that Linux is the only way to go
+if you want to program console games, but truth be told, Windows will
+do quite well.  In this day and age when the gap between the *nix users
+and Windows users is increasing, the gap between the OSes themselves is
+greatly decreasing.  Utilities like WINE let you run some Windows
+programs on a Unix/Linux system, and Cygwin allows Windows users to
+run Unix/Linux programs, too.
+So, whatever you're using right now will be fine. (unless you're on
+an Amiga or an OS/2 machine, or something wacky like that)
+
+* An Editor
+-----------
+So, what programs do you need to write GBA code?
+Technically, you don't need anything more than a simple text-editor!
+Of course, if you decide to crank out code in Notepad.exe, you're just
+going to make your life a living hell.
+Windows users: Do yourself a favor and pick up something like Borland
+C++ or Microsoft Visual Studio.  Linux users: Emacs is popular. :)
+
+* A Compiler
+------------
+Now that you can write the code, you're going to need to compile it
+into a binary file that the GBA (or an emulator) can actually understand.
+Since the Game Boy Advance runs on an ARM processor and isn't in the
+x86 family, (i.e. 386, Pentium, P3, etc.) just hitting a "Build" button
+in Visual Studio (or whatever editor you're using) won't work.
+You're going to need to compile your code specially for the GBA with a
+handy program called GCC, or more specifically, ARM/Thumb GCC.
+Additionally, Windows users are going to need some barebones Cygwin files,
+since GCC is natively meant for Unix and Linux systems. (See Your Favorite
+Operating System above, if you don't know what Cygwin is.)
+
+ARM/Thumb GCC for Windows: http://home.hiwaay.net/~jfrohwei/gameboy/armgcc.zip
+Cygwin library: http://home.hiwaay.net/~jfrohwei/gameboy/cygwin.zip
+Full set of binutils: http://home.hiwaay.net/~jfrohwei/gameboy/armgcc2.zip
+Standard GNU include header files: http://home.hiwaay.net/~jfrohwei/gameboy/arminc.zip
+
+	Windows Installation:
+	---------------------
+	Create a directory anywhere on your harddrive, and call it something like
+	"armgcc," or anything else that's easy to remember.  Extract armgcc.zip,
+	armgcc2.zip, and cygwin.zip into it.  Within that directory, create two
+	more called "include" and "lib."  Move any *.a files from the "armgcc" directory
+	into the "lib" directory.  Extract arminc.zip into "include."  Finally, you need
+	to create a special batch file.  Name it setup.bat or whatever you want, and
+	include a line like this in it:
+	path=[Path to armgcc directory];%path%
+
+	For example, mine looks like this:
+	path=C:\Misc\Programming\GBA\dev\armgcc;%path%
+
+	Now save it, and be sure to run that file before trying to compile anything, or
+	nothing is going to work right!
+
+Linux users: Go to http://www.devrs.com/gba/files/dwlinux.txt for info on how to
+compile GCC to compile for an ARM processor.
+
+For info on how to use GCC itself, go to: http://gcc.gnu.org/onlinedocs/gcc.html
+
+* An Emulator
+-------------
+Once you actually write and compile some code, you're going to need something to run it.
+Since, at the time of this writing, there are no Bung cart-writers for the GBA, this
+is where emulators come into play.
+iGBA and Mappy Virtual Machine are both excellent Windows emulators (Mappy has, by
+far, the most options) and VGBA is a DOS based emu that seems to have the highest
+compatibility with all the demos out right now.
+
+iGBA: http://igba.multimania.com/
+MappyVM: http://www.agbdev.net/joat/
+VGBA: http://www.komkon.org/fms/VGB/
+
+There!
+Now you're all set to start running your own Game Boy Advance code!
+Which brings us to our next section...
+
+
+So, How Do I Program for the GBA Anyway?
+----------------------------------------
+This is where you need to get down and dirty for yourself.
+Call upon your programming knowledge, and make full use of the items below:
+
+* Use Tools
+-----------
+Hack Suite (by Joat): A nice collection of little programs that allow you to
+convert bitmap images to GBA compatible files.
+http://www.agbdev.net/gbadev/files/hacksuite.html
+
+Sprite Stripper (by Joat): Strip down an image to a column suitable for use
+with Hack It (part of the Hack Suite) to create sprites and tilesets.
+http://www.agbdev.net/joat/
+
+Various other Graphics converters: There are several out there, including ones
+with Windows front-ends. Try 'em all to decide which one you like the best.
+
+GBAMAKE (by Warp): Visual C++ users, make your lives even simpler by using this
+program in combination with the ARM GCC compiler we installed earlier to allow
+you to compile code straight from VC++.
+http://www.agbdev.net/gbadev/files/gbamake.zip
+
+Check out http://www.agbdev.net/gbadev/ and http://www.devrs.com/gba for an
+extensive list of handy tools.
+
+* Use Code Libraries
+--------------------
+One of the golden rules of programming is "Don't write code someone else has
+already written for you!" Take that advice to heart, and grab a couple of code
+libraries that will allow you to shortcut many of the menial tasks of GBA programming.
+
+LibGBA:
+A promising work-in-progress library that should really streamline GBA development.
+http://sabrefire.dhs.org/emu/libgba/
+
+GfxLib: Another promising work-in-progress library that includes a JPEG
+decompressor and easy line and ellipse drawing.
+http://www.devrs.com/gba/asmcode.php#asmgraf
+
+* Read Docs
+-----------
+Read everything you can get your hands on!
+Even if you don't understand a doc the first time you read it, keep reading it
+until you do. :)
+Again, check out http://www.agbdev.net/gbadev and http://www.devrs.com/gba
+for FAQs and other Documents.
+
+* Read Source Code
+------------------
+What better way to get an idea of how to code than to take a look at actual code?
+Here are some good places for beginners to start:
+
+Hello World! (by Flavor) - This is a simple little Hello World/Splash Screen demo with step
+------------------------   by step instructions on how to code it.
+			   http://www.agbdev.net/gbadev/files/GBA_Splash01.zip
+
+
+Basic Tests (by Mic) - These draw some triangles to the screen.  Very simple, but then
+--------------------   again, it's always good to start out easy.
+                       http://www.agbdev.net/gbadev/files/gbal1.zip
+
+
+Key Demo (by Nokturn) - A nice simple demo that shows how to take input.
+---------------------   http://www.agbdev.net/gbadev/demos/Nok_Keysupd.zip
+
+
+Sprite Demo (by Warder1) - Draw a sprite to the screen...
+------------------------   http://www.agbdev.net/gbadev/files/sprite.zip
+
+
+Chrono Trigger Demo (by Warder1) - Draw a background and a sprite which can be moved around
+--------------------------------   the screen.  Magus is cool. :)
+				   http://www.agbdev.net/gbadev/files/chrono_source.zip
+
+After you've covered the basics, you can try your hand at 3D or Mode 7 graphics.
+Just check out the demos section at http://www.agbdev.net/gbadev.
+
+* Ask Your Peers
+----------------
+There's nothing better to clear up a problem than a conversation with someone who
+actually knows what they're doing. Join the e-mail discussion list
+(http://www.egroups.com/group/gbadev) or join #gbadev on EFNet for some real-time
+chat about GBA development.
+
+
+
+So, Somebody Needs to be Thanked, huh?
+--------------------------------------
+Big-time thanks go out to Simon B for running "gameboy advance development"
+(http://www.agbdev.net/gbadev) and its great collection of tools, demos, and sources.
+
+Just as big a thanks goes to Jeff Frohwein and Devrs.com and its list of apps and
+useful links.
+
+Finally, the biggest thanks goes to anyone who has contributed tools, source code,
+or documents.  Without them, the entire GBA dev community (much less this document)
+would not have been possible.
+
+
+--Tim
