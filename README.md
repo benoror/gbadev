@@ -11,7 +11,8 @@ Still listed in PDRoms from back in the day: https://pdroms.de/files/nintendo-ga
 Latest release: [@rkanoid LATEST - DEMO.gba](https://github.com/benoror/gbadev/blob/master/ROMS/@rkanoid%20LATEST%20-%20DEMO.gba?raw=true)
 
 
-![](/public/%40rkanoid%20LATEST%20-%20DEMO-1.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-7.png) ![](/public/%40rkanoid.gif) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-0.png)  ![](/public/%40rkanoid%20LATEST%20-%20DEMO-3.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-5.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-8.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-4.png) 
+![](/public/%40rkanoid.gif) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-0.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-1.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-7.png)  ![](/public/%40rkanoid%20LATEST%20-%20DEMO-2.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-3.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-5.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-8.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-4.png) 
+
 
 ## DexGex (formerly Mystic Quest)
 
