@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 1999-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OUT_OF_RANGE (The GNU Fortran Compiler)</title>
+
+<meta name="description" content="OUT_OF_RANGE (The GNU Fortran Compiler)">
+<meta name="keywords" content="OUT_OF_RANGE (The GNU Fortran Compiler)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Intrinsic-Procedures.html#Intrinsic-Procedures" rel="up" title="Intrinsic Procedures">
+<link href="PACK.html#PACK" rel="next" title="PACK">
+<link href="OR.html#OR" rel="prev" title="OR">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="OUT_005fOF_005fRANGE"></a>
+<div class="header">
+<p>
+Next: <a href="PACK.html#PACK" accesskey="n" rel="next">PACK</a>, Previous: <a href="OR.html#OR" accesskey="p" rel="prev">OR</a>, Up: <a href="Intrinsic-Procedures.html#Intrinsic-Procedures" accesskey="u" rel="up">Intrinsic Procedures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="OUT_005fOF_005fRANGE-_002d_002d_002d-Range-check-for-numerical-conversion"></a>
+<h3 class="section">8.212 <code>OUT_OF_RANGE</code> &mdash; Range check for numerical conversion</h3>
+<a name="index-OUT_005fOF_005fRANGE"></a>
+<a name="index-range-check_002c-numerical-conversion"></a>
+
+<dl compact="compact">
+<dt><em>Synopsis</em>:</dt>
+<dd><p><code>RESULT = OUT_OF_RANGE(X, MOLD[, ROUND])</code>
+</p>
+</dd>
+<dt><em>Description</em>:</dt>
+<dd><p><code>OUT_OF_RANGE(X, MOLD[, ROUND])</code> determines if the value of <code>X</code>
+can be safely converted to an object with the type of argument <code>MOLD</code>.
+</p>
+</dd>
+<dt><em>Class</em>:</dt>
+<dd><p>Elemental function
+</p>
+</dd>
+<dt><em>Arguments</em>:</dt>
+<dd><table>
+<tr><td width="15%"><var>X</var></td><td width="70%">The type shall be either <code>INTEGER</code>, <code>UNSIGNED</code>
+or <code>REAL</code>.</td></tr>
+<tr><td width="15%"><var>MOLD</var></td><td width="70%">The type shall be a scalar <code>INTEGER</code>,
+<code>UNSIGNED</code> or <code>REAL</code>.  If it is a variable, it need not be defined.</td></tr>
+<tr><td width="15%"><var>ROUND</var></td><td width="70%">(Optional) A scalar <code>LOGICAL</code> that shall only
+be present if <var>X</var> is of type <code>REAL</code> and <var>MOLD</var> is of type
+<code>INTEGER</code> or <code>UNSIGNED</code>.</td></tr>
+</table>
+
+</dd>
+<dt><em>Return value</em>:</dt>
+<dd><p>The return value is of type <code>LOGICAL</code>.
+</p>
+<p>If <var>MOLD</var> is of type <code>INTEGER</code> or <code>UNSIGNED</code>, and
+<var>ROUND</var> is absent or present with the value false, the result is
+true if and only if the value of <var>X</var> is an IEEE infinity or NaN, or
+if the integer with largest magnitude that lies between zero and <var>X</var>
+inclusive is not representable by objects with the type and kind of
+<var>MOLD</var>.
+</p>
+<p>If <var>MOLD</var> is of type <code>INTEGER</code> or <code>UNSIGNED</code>, and
+<var>ROUND</var> is present with the value true, the result is true if and
+only if the value of <var>X</var> is an IEEE infinity or NaN, or if the
+integer nearest <var>X</var>, or the integer of greater magnitude if two
+integers are equally near to <var>X</var>, is not representable by objects
+with the type and kind of <var>MOLD</var>.
+</p>
+<p>Otherwise, the result is true if and only if the value of <var>X</var> is an IEEE
+infinity or NaN that is not supported by objects of the type and kind of
+<var>MOLD</var>, or if <var>X</var> is a finite number and the result of rounding the
+value of <var>X</var> to the model for the kind of <var>MOLD</var> has magnitude larger
+than that of the largest finite number with the same sign as <var>X</var> that is
+representable by objects with the type and kind of <var>MOLD</var>.
+</p>
+</dd>
+<dt><em>Example</em>:</dt>
+<dd><div class="smallexample">
+<pre class="smallexample">PROGRAM test_out_of_range
+  PRINT *, OUT_OF_RANGE (-128.5, 0_1)           ! Will print: F
+  PRINT *, OUT_OF_RANGE (-128.5, 0_1, .TRUE.)   ! Will print: T
+END PROGRAM
+</pre></div>
+
+
+</dd>
+<dt><em>Standard</em>:</dt>
+<dd><p>Fortran 2018
+</p></dd>
+</dl>
+
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="PACK.html#PACK" accesskey="n" rel="next">PACK</a>, Previous: <a href="OR.html#OR" accesskey="p" rel="prev">OR</a>, Up: <a href="Intrinsic-Procedures.html#Intrinsic-Procedures" accesskey="u" rel="up">Intrinsic Procedures</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

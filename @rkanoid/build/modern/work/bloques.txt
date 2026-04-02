@@ -1,0 +1,78 @@
+/*----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o*/
+
+		for (i=0 ; i <= 108 ; i++)
+		{
+			if ( by == L[i].y-ALTO_BOLA && (bx >= L[i].x-ANCHO_BOLA && bx <= L[i].xM) )
+			{ fil = saltoY;
+			if (L[i].golpes > 0)
+				{
+				L[i].golpesCount++;
+				if (L[i].golpes == L[i].golpesCount)
+					{
+					L[i].destruye=TRUE;
+					}
+				}
+			if (L[i].destruye == TRUE)
+				{ 
+				L[i].x = L[i].y = L[i].xM = L[i].yM = 0;
+				blockMap[L[i].tile1] = N1; blockMap[L[i].tile2] = N2;
+				ScoreCount ++;
+				}
+			}
+
+			if ( by == L[i].yM && (bx >= L[i].x-ANCHO_BOLA && bx <= L[i].xM) )
+			{ fil = -saltoY;
+			if (L[i].golpes > 0)
+				{
+				L[i].golpesCount++;
+				if (L[i].golpes == L[i].golpesCount)
+					{
+					L[i].destruye=TRUE;
+					}
+				}
+			if (L[i].destruye == TRUE)
+				{ 
+				L[i].x = L[i].y = L[i].xM = L[i].yM = 0;
+				blockMap[L[i].tile1] = N1; blockMap[L[i].tile2] = N2;
+				ScoreCount ++;
+				}
+			}
+
+			if ( bx == L[i].x-ANCHO_BOLA && (by >= L[i].y-ALTO_BOLA && by <= L[i].yM) )
+			{ col = -saltoX;
+			if (L[i].golpes > 0)
+				{
+				L[i].golpesCount++;
+				if (L[i].golpes == L[i].golpesCount)
+					{
+					L[i].destruye=TRUE;
+					}
+				}
+			if (L[i].destruye == TRUE)
+				{ 
+				L[i].x = L[i].y = L[i].xM = L[i].yM = 0;
+				blockMap[L[i].tile1] = N1; blockMap[L[i].tile2] = N2;
+				ScoreCount ++;
+				}
+			}
+
+			if ( bx == L[i].xM && (by >= L[i].y-ALTO_BOLA && by <= L[i].yM) )
+			{ col = saltoX;
+			if (L[i].golpes > 0)
+				{
+				L[i].golpesCount++;
+				if (L[i].golpes == L[i].golpesCount)
+					{
+					L[i].destruye=TRUE;
+					}
+				}
+			if (L[i].destruye == TRUE)
+				{ 
+				L[i].x = L[i].y = L[i].xM = L[i].yM = 0;
+				blockMap[L[i].tile1] = N1; blockMap[L[i].tile2] = N2;
+				ScoreCount ++;
+				}
+			}
+		}
+
+/*----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o----o*/

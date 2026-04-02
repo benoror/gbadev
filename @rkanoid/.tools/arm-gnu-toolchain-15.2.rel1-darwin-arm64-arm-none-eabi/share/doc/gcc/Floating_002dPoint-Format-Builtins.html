@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Floating-Point Format Builtins (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="Floating-Point Format Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Floating-Point Format Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Numeric-Builtins.html#Numeric-Builtins" rel="up" title="Numeric Builtins">
+<link href="Bit-Operation-Builtins.html#Bit-Operation-Builtins" rel="next" title="Bit Operation Builtins">
+<link href="Numeric-Builtins.html#Numeric-Builtins" rel="prev" title="Numeric Builtins">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="Floating_002dPoint-Format-Builtins"></a>
+<div class="header">
+<p>
+Next: <a href="Bit-Operation-Builtins.html#Bit-Operation-Builtins" accesskey="n" rel="next">Bit Operation Builtins</a>, Up: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="u" rel="up">Numeric Builtins</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Floating_002dPoint-Format-Builtins-1"></a>
+<h4 class="subsection">7.2.1 Floating-Point Format Builtins</h4>
+<a name="index-floating_002dpoint-format-builtins"></a>
+<a name="index-NaN-builtins"></a>
+<a name="index-infinity-builtins"></a>
+<a name="index-huge-value-builtins"></a>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fval"></a>Built-in Function: <em>double</em> <strong>__builtin_huge_val</strong> <em>(void)</em></dt>
+<dd><p>Returns a positive infinity, if supported by the floating-point format,
+else <code>DBL_MAX</code>.  This function is suitable for implementing the
+ISO C macro <code>HUGE_VAL</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fvalf"></a>Built-in Function: <em>float</em> <strong>__builtin_huge_valf</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_huge_val</code>, except the return type is <code>float</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fvall"></a>Built-in Function: <em>long double</em> <strong>__builtin_huge_vall</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_huge_val</code>, except the return
+type is <code>long double</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fvalfn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_huge_valf<var>n</var></strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_huge_val</code>, except the return type is
+<code>_Float<var>n</var></code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fvalfnx"></a>Built-in Function: <em>_Float<var>n</var>x</em> <strong>__builtin_huge_valf<var>n</var>x</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_huge_val</code>, except the return type is
+<code>_Float<var>n</var>x</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005ffpclassify"></a>Built-in Function: <em>int</em> <strong>__builtin_fpclassify</strong> <em>(int, int, int, int, int, ...)</em></dt>
+<dd><p>This built-in implements the C99 fpclassify functionality.  The first
+five int arguments should be the target library&rsquo;s notion of the
+possible FP classes and are used for return values.  They must be
+constant values and they must appear in this order: <code>FP_NAN</code>,
+<code>FP_INFINITE</code>, <code>FP_NORMAL</code>, <code>FP_SUBNORMAL</code> and
+<code>FP_ZERO</code>.  The ellipsis is for exactly one floating-point value
+to classify.  GCC treats the last argument as type-generic, which
+means it does not do default promotion from float to double.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finf"></a>Built-in Function: <em>double</em> <strong>__builtin_inf</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_huge_val</code>, except a warning is generated
+if the target floating-point format does not support infinities.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finfd32"></a>Built-in Function: <em>_Decimal32</em> <strong>__builtin_infd32</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return type is <code>_Decimal32</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finfd64"></a>Built-in Function: <em>_Decimal64</em> <strong>__builtin_infd64</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return type is <code>_Decimal64</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finfd128"></a>Built-in Function: <em>_Decimal128</em> <strong>__builtin_infd128</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return type is <code>_Decimal128</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finff"></a>Built-in Function: <em>float</em> <strong>__builtin_inff</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return type is <code>float</code>.
+This function is suitable for implementing the ISO C99 macro <code>INFINITY</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finfl"></a>Built-in Function: <em>long double</em> <strong>__builtin_infl</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return
+type is <code>long double</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finffn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_inff<var>n</var></strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return
+type is <code>_Float<var>n</var></code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005finffnx"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_inff<var>n</var>x</strong> <em>(void)</em></dt>
+<dd><p>Similar to <code>__builtin_inf</code>, except the return
+type is <code>_Float<var>n</var>x</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fisinf_005fsign"></a>Built-in Function: <em>int</em> <strong>__builtin_isinf_sign</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>isinf</code>, except the return value is -1 for
+an argument of <code>-Inf</code> and 1 for an argument of <code>+Inf</code>.
+Note while the parameter list is an
+ellipsis, this function only accepts exactly one floating-point
+argument.  GCC treats this parameter as type-generic, which means it
+does not do default promotion from float to double.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnan"></a>Built-in Function: <em>double</em> <strong>__builtin_nan</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>This is an implementation of the ISO C99 function <code>nan</code>.
+</p>
+<p>Since ISO C99 defines this function in terms of <code>strtod</code>, which we
+do not implement, a description of the parsing is in order.  The string
+is parsed as by <code>strtol</code>; that is, the base is recognized by
+leading &lsquo;<samp>0</samp>&rsquo; or &lsquo;<samp>0x</samp>&rsquo; prefixes.  The number parsed is placed
+in the significand such that the least significant bit of the number
+is at the least significant bit of the significand.  The number is
+truncated to fit the significand field provided.  The significand is
+forced to be a quiet NaN.
+</p>
+<p>This function, if given a string literal all of which would have been
+consumed by <code>strtol</code>, is evaluated early enough that it is considered a
+compile-time constant.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnand32"></a>Built-in Function: <em>_Decimal32</em> <strong>__builtin_nand32</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is <code>_Decimal32</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnand64"></a>Built-in Function: <em>_Decimal64</em> <strong>__builtin_nand64</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is <code>_Decimal64</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnand128"></a>Built-in Function: <em>_Decimal128</em> <strong>__builtin_nand128</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is <code>_Decimal128</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnanf"></a>Built-in Function: <em>float</em> <strong>__builtin_nanf</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is <code>float</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnanl"></a>Built-in Function: <em>long double</em> <strong>__builtin_nanl</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is <code>long double</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnanfn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_nanf<var>n</var></strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is
+<code>_Float<var>n</var></code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnanfnx"></a>Built-in Function: <em>_Float<var>n</var>x</em> <strong>__builtin_nanf<var>n</var>x</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the return type is
+<code>_Float<var>n</var>x</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnans"></a>Built-in Function: <em>double</em> <strong>__builtin_nans</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nan</code>, except the significand is forced
+to be a signaling NaN.  The <code>nans</code> function is proposed by
+<a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n965.htm">WG14 N965</a>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansd32"></a>Built-in Function: <em>_Decimal32</em> <strong>__builtin_nansd32</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is <code>_Decimal32</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansd64"></a>Built-in Function: <em>_Decimal64</em> <strong>__builtin_nansd64</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is <code>_Decimal64</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansd128"></a>Built-in Function: <em>_Decimal128</em> <strong>__builtin_nansd128</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is <code>_Decimal128</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansf"></a>Built-in Function: <em>float</em> <strong>__builtin_nansf</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is <code>float</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansl"></a>Built-in Function: <em>long double</em> <strong>__builtin_nansl</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is <code>long double</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansfn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_nansf<var>n</var></strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is
+<code>_Float<var>n</var></code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fnansfnx"></a>Built-in Function: <em>_Float<var>n</var>x</em> <strong>__builtin_nansf<var>n</var>x</strong> <em>(const char *<var>str</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_nans</code>, except the return type is
+<code>_Float<var>n</var>x</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fissignaling"></a>Built-in Function: <em>int</em> <strong>__builtin_issignaling</strong> <em>(...)</em></dt>
+<dd><p>Return non-zero if the argument is a signaling NaN and zero otherwise.
+Note while the parameter list is an
+ellipsis, this function only accepts exactly one floating-point
+argument.  GCC treats this parameter as type-generic, which means it
+does not do default promotion from float to double.
+This built-in function can work even without the non-default
+<code>-fsignaling-nans</code> option, although if a signaling NaN is computed,
+stored or passed as argument to some function other than this built-in
+in the current translation unit, it is safer to use <code>-fsignaling-nans</code>.
+With <code>-ffinite-math-only</code> option this built-in function will always
+return 0.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fpowi"></a>Built-in Function: <em>double</em> <strong>__builtin_powi</strong> <em>(double, int)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fpowif"></a>Built-in Function: <em>float</em> <strong>__builtin_powif</strong> <em>(float, int)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fpowil"></a>Built-in Function: <em>long double</em> <strong>__builtin_powil</strong> <em>(long double, int)</em></dt>
+<dd><p>Returns the first argument raised to the power of the second.  Unlike the
+<code>pow</code> function no guarantees about precision and rounding are made.
+</p></dd></dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Bit-Operation-Builtins.html#Bit-Operation-Builtins" accesskey="n" rel="next">Bit Operation Builtins</a>, Up: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="u" rel="up">Numeric Builtins</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

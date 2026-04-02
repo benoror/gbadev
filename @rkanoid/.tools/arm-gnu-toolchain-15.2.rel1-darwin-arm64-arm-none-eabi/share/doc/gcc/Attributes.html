@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Attributes (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="Attributes (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Attributes (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="C-Extensions.html#C-Extensions" rel="up" title="C Extensions">
+<link href="Function-Attributes.html#Function-Attributes" rel="next" title="Function Attributes">
+<link href="Named-Address-Spaces.html#Named-Address-Spaces" rel="prev" title="Named Address Spaces">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="Attributes"></a>
+<div class="header">
+<p>
+Next: <a href="Pragmas.html#Pragmas" accesskey="n" rel="next">Pragmas</a>, Previous: <a href="Named-Address-Spaces.html#Named-Address-Spaces" accesskey="p" rel="prev">Named Address Spaces</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Attributes-Specific-to-GCC"></a>
+<h3 class="section">6.4 Attributes Specific to GCC</h3>
+<a name="index-attributes"></a>
+<a name="index-declaring-attributes"></a>
+<a name="index-GNU-attributes"></a>
+
+<p>Attributes provide a mechanism to declare additional properties of
+functions, variables, types, and statements.  For example, attributes
+can be used to control placement of objects in particular memory
+sections, or to specify properties that can allow the compiler to
+generate better code or diagnostics, such as declaring that a function
+never returns.  GCC supports a large number of such attributes, which
+are documented in this section.
+</p>
+<p>GCC provides two different ways to specify attributes: the traditional
+GNU syntax using &lsquo;<samp>__attribute__ ((...))</samp>&rsquo; annotations, and the
+newer standard C and C++ syntax using &lsquo;<samp>[[...]]</samp>&rsquo; with the
+&lsquo;<samp>gnu::</samp>&rsquo; namespace prefix on attribute names.
+The traditional syntax, described in detail in <a href="Attribute-Syntax.html#Attribute-Syntax">Attribute Syntax</a>,
+is supported in all non-strict C and C++ language dialects.
+The standard syntax is supported in C with <samp>-std=c23</samp> or later,
+in C++ with <samp>-std=c++11</samp> or later, and as an extension in older
+GNU C and C++ dialects.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Function-Attributes.html#Function-Attributes" accesskey="1">Function Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Declaring that functions have no side effects,
+                        or that they can never return.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Variable-Attributes.html#Variable-Attributes" accesskey="2">Variable Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying attributes of variables.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Type-Attributes.html#Type-Attributes" accesskey="3">Type Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying attributes of types.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Label-Attributes.html#Label-Attributes" accesskey="4">Label Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying attributes on labels.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Enumerator-Attributes.html#Enumerator-Attributes" accesskey="5">Enumerator Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying attributes on enumerators.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Statement-Attributes.html#Statement-Attributes" accesskey="6">Statement Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying attributes on statements.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Attribute-Syntax.html#Attribute-Syntax" accesskey="7">Attribute Syntax</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Formal syntax for attributes.
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Pragmas.html#Pragmas" accesskey="n" rel="next">Pragmas</a>, Previous: <a href="Named-Address-Spaces.html#Named-Address-Spaces" accesskey="p" rel="prev">Named Address Spaces</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
