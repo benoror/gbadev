@@ -1,0 +1,645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Library Builtins (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="Library Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Library Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Built_002din-Functions.html#Built_002din-Functions" rel="up" title="Built-in Functions">
+<link href="Numeric-Builtins.html#Numeric-Builtins" rel="next" title="Numeric Builtins">
+<link href="Built_002din-Functions.html#Built_002din-Functions" rel="prev" title="Built-in Functions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="Library-Builtins"></a>
+<div class="header">
+<p>
+Next: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="n" rel="next">Numeric Builtins</a>, Up: <a href="Built_002din-Functions.html#Built_002din-Functions" accesskey="u" rel="up">Built-in Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Builtins-for-C-Library-Functions"></a>
+<h3 class="section">7.1 Builtins for C Library Functions</h3>
+<a name="index-built_002din-library-functions"></a>
+<a name="index-library-function-builtins"></a>
+<a name="index-C-library-function-builtins"></a>
+
+<a name="index-_005f_005fbuiltin_005fiseqsig"></a>
+<a name="index-_005f_005fbuiltin_005fisfinite"></a>
+<a name="index-_005f_005fbuiltin_005fisnormal"></a>
+<a name="index-_005f_005fbuiltin_005fisgreater"></a>
+<a name="index-_005f_005fbuiltin_005fisgreaterequal"></a>
+<a name="index-_005f_005fbuiltin_005fisunordered"></a>
+<a name="index-_005f_005fbuiltin_005fspeculation_005fsafe_005fvalue"></a>
+<a name="index-_005fExit"></a>
+<a name="index-_005fexit"></a>
+<a name="index-abort"></a>
+<a name="index-abs"></a>
+<a name="index-acos"></a>
+<a name="index-acosf"></a>
+<a name="index-acosh"></a>
+<a name="index-acoshf"></a>
+<a name="index-acoshl"></a>
+<a name="index-acosl"></a>
+<a name="index-alloca"></a>
+<a name="index-asin"></a>
+<a name="index-asinf"></a>
+<a name="index-asinh"></a>
+<a name="index-asinhf"></a>
+<a name="index-asinhl"></a>
+<a name="index-asinl"></a>
+<a name="index-atan"></a>
+<a name="index-atan2"></a>
+<a name="index-atan2f"></a>
+<a name="index-atan2l"></a>
+<a name="index-atanf"></a>
+<a name="index-atanh"></a>
+<a name="index-atanhf"></a>
+<a name="index-atanhl"></a>
+<a name="index-atanl"></a>
+<a name="index-bcmp"></a>
+<a name="index-bzero"></a>
+<a name="index-cabs"></a>
+<a name="index-cabsf"></a>
+<a name="index-cabsl"></a>
+<a name="index-cacos"></a>
+<a name="index-cacosf"></a>
+<a name="index-cacosh"></a>
+<a name="index-cacoshf"></a>
+<a name="index-cacoshl"></a>
+<a name="index-cacosl"></a>
+<a name="index-calloc"></a>
+<a name="index-carg"></a>
+<a name="index-cargf"></a>
+<a name="index-cargl"></a>
+<a name="index-casin"></a>
+<a name="index-casinf"></a>
+<a name="index-casinh"></a>
+<a name="index-casinhf"></a>
+<a name="index-casinhl"></a>
+<a name="index-casinl"></a>
+<a name="index-catan"></a>
+<a name="index-catanf"></a>
+<a name="index-catanh"></a>
+<a name="index-catanhf"></a>
+<a name="index-catanhl"></a>
+<a name="index-catanl"></a>
+<a name="index-cbrt"></a>
+<a name="index-cbrtf"></a>
+<a name="index-cbrtl"></a>
+<a name="index-ccos"></a>
+<a name="index-ccosf"></a>
+<a name="index-ccosh"></a>
+<a name="index-ccoshf"></a>
+<a name="index-ccoshl"></a>
+<a name="index-ccosl"></a>
+<a name="index-ceil"></a>
+<a name="index-ceilf"></a>
+<a name="index-ceill"></a>
+<a name="index-cexp"></a>
+<a name="index-cexpf"></a>
+<a name="index-cexpl"></a>
+<a name="index-cimag"></a>
+<a name="index-cimagf"></a>
+<a name="index-cimagl"></a>
+<a name="index-clog"></a>
+<a name="index-clogf"></a>
+<a name="index-clogl"></a>
+<a name="index-clog10"></a>
+<a name="index-clog10f"></a>
+<a name="index-clog10l"></a>
+<a name="index-conj"></a>
+<a name="index-conjf"></a>
+<a name="index-conjl"></a>
+<a name="index-copysign"></a>
+<a name="index-copysignf"></a>
+<a name="index-copysignl"></a>
+<a name="index-cos"></a>
+<a name="index-cosf"></a>
+<a name="index-cosh"></a>
+<a name="index-coshf"></a>
+<a name="index-coshl"></a>
+<a name="index-cosl"></a>
+<a name="index-cpow"></a>
+<a name="index-cpowf"></a>
+<a name="index-cpowl"></a>
+<a name="index-cproj"></a>
+<a name="index-cprojf"></a>
+<a name="index-cprojl"></a>
+<a name="index-creal"></a>
+<a name="index-crealf"></a>
+<a name="index-creall"></a>
+<a name="index-csin"></a>
+<a name="index-csinf"></a>
+<a name="index-csinh"></a>
+<a name="index-csinhf"></a>
+<a name="index-csinhl"></a>
+<a name="index-csinl"></a>
+<a name="index-csqrt"></a>
+<a name="index-csqrtf"></a>
+<a name="index-csqrtl"></a>
+<a name="index-ctan"></a>
+<a name="index-ctanf"></a>
+<a name="index-ctanh"></a>
+<a name="index-ctanhf"></a>
+<a name="index-ctanhl"></a>
+<a name="index-ctanl"></a>
+<a name="index-dcgettext"></a>
+<a name="index-dgettext"></a>
+<a name="index-drem"></a>
+<a name="index-dremf"></a>
+<a name="index-dreml"></a>
+<a name="index-erf"></a>
+<a name="index-erfc"></a>
+<a name="index-erfcf"></a>
+<a name="index-erfcl"></a>
+<a name="index-erff"></a>
+<a name="index-erfl"></a>
+<a name="index-exit"></a>
+<a name="index-exp"></a>
+<a name="index-exp10"></a>
+<a name="index-exp10f"></a>
+<a name="index-exp10l"></a>
+<a name="index-exp2"></a>
+<a name="index-exp2f"></a>
+<a name="index-exp2l"></a>
+<a name="index-expf"></a>
+<a name="index-expl"></a>
+<a name="index-expm1"></a>
+<a name="index-expm1f"></a>
+<a name="index-expm1l"></a>
+<a name="index-fabs"></a>
+<a name="index-fabsf"></a>
+<a name="index-fabsl"></a>
+<a name="index-fdim"></a>
+<a name="index-fdimf"></a>
+<a name="index-fdiml"></a>
+<a name="index-ffs"></a>
+<a name="index-floor"></a>
+<a name="index-floorf"></a>
+<a name="index-floorl"></a>
+<a name="index-fma"></a>
+<a name="index-fmaf"></a>
+<a name="index-fmal"></a>
+<a name="index-fmax"></a>
+<a name="index-fmaxf"></a>
+<a name="index-fmaxl"></a>
+<a name="index-fmin"></a>
+<a name="index-fminf"></a>
+<a name="index-fminl"></a>
+<a name="index-fmod"></a>
+<a name="index-fmodf"></a>
+<a name="index-fmodl"></a>
+<a name="index-fprintf"></a>
+<a name="index-fprintf_005funlocked"></a>
+<a name="index-fputs"></a>
+<a name="index-fputs_005funlocked"></a>
+<a name="index-free"></a>
+<a name="index-frexp"></a>
+<a name="index-frexpf"></a>
+<a name="index-frexpl"></a>
+<a name="index-fscanf"></a>
+<a name="index-gamma"></a>
+<a name="index-gammaf"></a>
+<a name="index-gammal"></a>
+<a name="index-gamma_005fr"></a>
+<a name="index-gammaf_005fr"></a>
+<a name="index-gammal_005fr"></a>
+<a name="index-gettext"></a>
+<a name="index-hypot"></a>
+<a name="index-hypotf"></a>
+<a name="index-hypotl"></a>
+<a name="index-ilogb"></a>
+<a name="index-ilogbf"></a>
+<a name="index-ilogbl"></a>
+<a name="index-imaxabs"></a>
+<a name="index-index"></a>
+<a name="index-isalnum"></a>
+<a name="index-isalpha"></a>
+<a name="index-isascii"></a>
+<a name="index-isblank"></a>
+<a name="index-iscntrl"></a>
+<a name="index-isdigit"></a>
+<a name="index-isgraph"></a>
+<a name="index-islower"></a>
+<a name="index-isprint"></a>
+<a name="index-ispunct"></a>
+<a name="index-isspace"></a>
+<a name="index-isupper"></a>
+<a name="index-iswalnum"></a>
+<a name="index-iswalpha"></a>
+<a name="index-iswblank"></a>
+<a name="index-iswcntrl"></a>
+<a name="index-iswdigit"></a>
+<a name="index-iswgraph"></a>
+<a name="index-iswlower"></a>
+<a name="index-iswprint"></a>
+<a name="index-iswpunct"></a>
+<a name="index-iswspace"></a>
+<a name="index-iswupper"></a>
+<a name="index-iswxdigit"></a>
+<a name="index-isxdigit"></a>
+<a name="index-j0"></a>
+<a name="index-j0f"></a>
+<a name="index-j0l"></a>
+<a name="index-j1"></a>
+<a name="index-j1f"></a>
+<a name="index-j1l"></a>
+<a name="index-jn"></a>
+<a name="index-jnf"></a>
+<a name="index-jnl"></a>
+<a name="index-labs"></a>
+<a name="index-ldexp"></a>
+<a name="index-ldexpf"></a>
+<a name="index-ldexpl"></a>
+<a name="index-lgamma"></a>
+<a name="index-lgammaf"></a>
+<a name="index-lgammal"></a>
+<a name="index-lgamma_005fr"></a>
+<a name="index-lgammaf_005fr"></a>
+<a name="index-lgammal_005fr"></a>
+<a name="index-llabs"></a>
+<a name="index-llrint"></a>
+<a name="index-llrintf"></a>
+<a name="index-llrintl"></a>
+<a name="index-llround"></a>
+<a name="index-llroundf"></a>
+<a name="index-llroundl"></a>
+<a name="index-log"></a>
+<a name="index-log10"></a>
+<a name="index-log10f"></a>
+<a name="index-log10l"></a>
+<a name="index-log1p"></a>
+<a name="index-log1pf"></a>
+<a name="index-log1pl"></a>
+<a name="index-log2"></a>
+<a name="index-log2f"></a>
+<a name="index-log2l"></a>
+<a name="index-logb"></a>
+<a name="index-logbf"></a>
+<a name="index-logbl"></a>
+<a name="index-logf"></a>
+<a name="index-logl"></a>
+<a name="index-lrint"></a>
+<a name="index-lrintf"></a>
+<a name="index-lrintl"></a>
+<a name="index-lround"></a>
+<a name="index-lroundf"></a>
+<a name="index-lroundl"></a>
+<a name="index-malloc"></a>
+<a name="index-memchr"></a>
+<a name="index-memcmp"></a>
+<a name="index-memcpy"></a>
+<a name="index-mempcpy"></a>
+<a name="index-memset"></a>
+<a name="index-modf"></a>
+<a name="index-modff"></a>
+<a name="index-modfl"></a>
+<a name="index-nearbyint"></a>
+<a name="index-nearbyintf"></a>
+<a name="index-nearbyintl"></a>
+<a name="index-nextafter"></a>
+<a name="index-nextafterf"></a>
+<a name="index-nextafterl"></a>
+<a name="index-nexttoward"></a>
+<a name="index-nexttowardf"></a>
+<a name="index-nexttowardl"></a>
+<a name="index-pow"></a>
+<a name="index-pow10"></a>
+<a name="index-pow10f"></a>
+<a name="index-pow10l"></a>
+<a name="index-powf"></a>
+<a name="index-powl"></a>
+<a name="index-printf"></a>
+<a name="index-printf_005funlocked"></a>
+<a name="index-putchar"></a>
+<a name="index-puts"></a>
+<a name="index-realloc"></a>
+<a name="index-remainder"></a>
+<a name="index-remainderf"></a>
+<a name="index-remainderl"></a>
+<a name="index-remquo"></a>
+<a name="index-remquof"></a>
+<a name="index-remquol"></a>
+<a name="index-rindex"></a>
+<a name="index-rint"></a>
+<a name="index-rintf"></a>
+<a name="index-rintl"></a>
+<a name="index-round"></a>
+<a name="index-roundf"></a>
+<a name="index-roundl"></a>
+<a name="index-scalb"></a>
+<a name="index-scalbf"></a>
+<a name="index-scalbl"></a>
+<a name="index-scalbln"></a>
+<a name="index-scalblnf"></a>
+<a name="index-scalblnf-1"></a>
+<a name="index-scalbn"></a>
+<a name="index-scalbnf"></a>
+<a name="index-scanfnl"></a>
+<a name="index-signbit"></a>
+<a name="index-signbitf"></a>
+<a name="index-signbitl"></a>
+<a name="index-signbitd32"></a>
+<a name="index-signbitd64"></a>
+<a name="index-signbitd128"></a>
+<a name="index-significand"></a>
+<a name="index-significandf"></a>
+<a name="index-significandl"></a>
+<a name="index-sin"></a>
+<a name="index-sincos"></a>
+<a name="index-sincosf"></a>
+<a name="index-sincosl"></a>
+<a name="index-sinf"></a>
+<a name="index-sinh"></a>
+<a name="index-sinhf"></a>
+<a name="index-sinhl"></a>
+<a name="index-sinl"></a>
+<a name="index-snprintf"></a>
+<a name="index-sprintf"></a>
+<a name="index-sqrt"></a>
+<a name="index-sqrtf"></a>
+<a name="index-sqrtl"></a>
+<a name="index-sscanf"></a>
+<a name="index-stpcpy"></a>
+<a name="index-stpncpy"></a>
+<a name="index-strcasecmp"></a>
+<a name="index-strcat"></a>
+<a name="index-strchr"></a>
+<a name="index-strcmp"></a>
+<a name="index-strcpy"></a>
+<a name="index-strcspn"></a>
+<a name="index-strdup"></a>
+<a name="index-strfmon"></a>
+<a name="index-strftime"></a>
+<a name="index-strlen"></a>
+<a name="index-strncasecmp"></a>
+<a name="index-strncat"></a>
+<a name="index-strncmp"></a>
+<a name="index-strncpy"></a>
+<a name="index-strndup"></a>
+<a name="index-strnlen"></a>
+<a name="index-strpbrk"></a>
+<a name="index-strrchr"></a>
+<a name="index-strspn"></a>
+<a name="index-strstr"></a>
+<a name="index-tan"></a>
+<a name="index-tanf"></a>
+<a name="index-tanh"></a>
+<a name="index-tanhf"></a>
+<a name="index-tanhl"></a>
+<a name="index-tanl"></a>
+<a name="index-tgamma"></a>
+<a name="index-tgammaf"></a>
+<a name="index-tgammal"></a>
+<a name="index-toascii"></a>
+<a name="index-tolower"></a>
+<a name="index-toupper"></a>
+<a name="index-towlower"></a>
+<a name="index-towupper"></a>
+<a name="index-trunc"></a>
+<a name="index-truncf"></a>
+<a name="index-truncl"></a>
+<a name="index-vfprintf"></a>
+<a name="index-vfscanf"></a>
+<a name="index-vprintf"></a>
+<a name="index-vscanf"></a>
+<a name="index-vsnprintf"></a>
+<a name="index-vsprintf"></a>
+<a name="index-vsscanf"></a>
+<a name="index-y0"></a>
+<a name="index-y0f"></a>
+<a name="index-y0l"></a>
+<a name="index-y1"></a>
+<a name="index-y1f"></a>
+<a name="index-y1l"></a>
+<a name="index-yn"></a>
+<a name="index-ynf"></a>
+<a name="index-ynl"></a>
+
+<a name="index-fno_002dbuiltin-3"></a>
+<p>GCC includes built-in versions of many of the functions in the standard
+C library.  These functions come in two forms: one whose names start with
+the <code>__builtin_</code> prefix, and the other without.  Both forms have the
+same type (including prototype), the same address (when their address is
+taken), and the same meaning as the C library functions even if you specify
+the <samp>-fno-builtin</samp> option see <a href="C-Dialect-Options.html#C-Dialect-Options">C Dialect Options</a>).  Many of these
+functions are only optimized in certain cases; if they are not optimized in
+a particular case, a call to the library function is emitted.
+</p>
+<a name="index-ansi-2"></a>
+<a name="index-std-2"></a>
+<p>Outside strict ISO C mode (<samp>-ansi</samp>, <samp>-std=c90</samp>,
+<samp>-std=c99</samp> or <samp>-std=c11</samp>), the functions
+<code>_exit</code>, <code>alloca</code>, <code>bcmp</code>, <code>bzero</code>,
+<code>dcgettext</code>, <code>dgettext</code>, <code>dremf</code>, <code>dreml</code>,
+<code>drem</code>, <code>exp10f</code>, <code>exp10l</code>, <code>exp10</code>, <code>ffsll</code>,
+<code>ffsl</code>, <code>ffs</code>, <code>fprintf_unlocked</code>,
+<code>fputs_unlocked</code>, <code>gammaf</code>, <code>gammal</code>, <code>gamma</code>,
+<code>gammaf_r</code>, <code>gammal_r</code>, <code>gamma_r</code>, <code>gettext</code>,
+<code>index</code>, <code>isascii</code>, <code>j0f</code>, <code>j0l</code>, <code>j0</code>,
+<code>j1f</code>, <code>j1l</code>, <code>j1</code>, <code>jnf</code>, <code>jnl</code>, <code>jn</code>,
+<code>lgammaf_r</code>, <code>lgammal_r</code>, <code>lgamma_r</code>, <code>mempcpy</code>,
+<code>pow10f</code>, <code>pow10l</code>, <code>pow10</code>, <code>printf_unlocked</code>,
+<code>rindex</code>, <code>roundeven</code>, <code>roundevenf</code>, <code>roundevenl</code>,
+<code>scalbf</code>, <code>scalbl</code>, <code>scalb</code>,
+<code>signbit</code>, <code>signbitf</code>, <code>signbitl</code>, <code>signbitd32</code>,
+<code>signbitd64</code>, <code>signbitd128</code>, <code>significandf</code>,
+<code>significandl</code>, <code>significand</code>, <code>sincosf</code>,
+<code>sincosl</code>, <code>sincos</code>, <code>stpcpy</code>, <code>stpncpy</code>,
+<code>strcasecmp</code>, <code>strdup</code>, <code>strfmon</code>, <code>strncasecmp</code>,
+<code>strndup</code>, <code>strnlen</code>, <code>toascii</code>, <code>y0f</code>, <code>y0l</code>,
+<code>y0</code>, <code>y1f</code>, <code>y1l</code>, <code>y1</code>, <code>ynf</code>, <code>ynl</code> and
+<code>yn</code>
+may be handled as built-in functions.
+All these functions have corresponding versions
+prefixed with <code>__builtin_</code>, which may be used even in strict C90
+mode.
+</p>
+<p>The ISO C99 functions
+<code>_Exit</code>, <code>acoshf</code>, <code>acoshl</code>, <code>acosh</code>, <code>asinhf</code>,
+<code>asinhl</code>, <code>asinh</code>, <code>atanhf</code>, <code>atanhl</code>, <code>atanh</code>,
+<code>cabsf</code>, <code>cabsl</code>, <code>cabs</code>, <code>cacosf</code>, <code>cacoshf</code>,
+<code>cacoshl</code>, <code>cacosh</code>, <code>cacosl</code>, <code>cacos</code>,
+<code>cargf</code>, <code>cargl</code>, <code>carg</code>, <code>casinf</code>, <code>casinhf</code>,
+<code>casinhl</code>, <code>casinh</code>, <code>casinl</code>, <code>casin</code>,
+<code>catanf</code>, <code>catanhf</code>, <code>catanhl</code>, <code>catanh</code>,
+<code>catanl</code>, <code>catan</code>, <code>cbrtf</code>, <code>cbrtl</code>, <code>cbrt</code>,
+<code>ccosf</code>, <code>ccoshf</code>, <code>ccoshl</code>, <code>ccosh</code>, <code>ccosl</code>,
+<code>ccos</code>, <code>cexpf</code>, <code>cexpl</code>, <code>cexp</code>, <code>cimagf</code>,
+<code>cimagl</code>, <code>cimag</code>, <code>clogf</code>, <code>clogl</code>, <code>clog</code>,
+<code>conjf</code>, <code>conjl</code>, <code>conj</code>, <code>copysignf</code>, <code>copysignl</code>,
+<code>copysign</code>, <code>cpowf</code>, <code>cpowl</code>, <code>cpow</code>, <code>cprojf</code>,
+<code>cprojl</code>, <code>cproj</code>, <code>crealf</code>, <code>creall</code>, <code>creal</code>,
+<code>csinf</code>, <code>csinhf</code>, <code>csinhl</code>, <code>csinh</code>, <code>csinl</code>,
+<code>csin</code>, <code>csqrtf</code>, <code>csqrtl</code>, <code>csqrt</code>, <code>ctanf</code>,
+<code>ctanhf</code>, <code>ctanhl</code>, <code>ctanh</code>, <code>ctanl</code>, <code>ctan</code>,
+<code>erfcf</code>, <code>erfcl</code>, <code>erfc</code>, <code>erff</code>, <code>erfl</code>,
+<code>erf</code>, <code>exp2f</code>, <code>exp2l</code>, <code>exp2</code>, <code>expm1f</code>,
+<code>expm1l</code>, <code>expm1</code>, <code>fdimf</code>, <code>fdiml</code>, <code>fdim</code>,
+<code>fmaf</code>, <code>fmal</code>, <code>fmaxf</code>, <code>fmaxl</code>, <code>fmax</code>,
+<code>fma</code>, <code>fminf</code>, <code>fminl</code>, <code>fmin</code>, <code>hypotf</code>,
+<code>hypotl</code>, <code>hypot</code>, <code>ilogbf</code>, <code>ilogbl</code>, <code>ilogb</code>,
+<code>imaxabs</code>, <code>isblank</code>, <code>iswblank</code>, <code>lgammaf</code>,
+<code>lgammal</code>, <code>lgamma</code>, <code>llabs</code>, <code>llrintf</code>, <code>llrintl</code>,
+<code>llrint</code>, <code>llroundf</code>, <code>llroundl</code>, <code>llround</code>,
+<code>log1pf</code>, <code>log1pl</code>, <code>log1p</code>, <code>log2f</code>, <code>log2l</code>,
+<code>log2</code>, <code>logbf</code>, <code>logbl</code>, <code>logb</code>, <code>lrintf</code>,
+<code>lrintl</code>, <code>lrint</code>, <code>lroundf</code>, <code>lroundl</code>,
+<code>lround</code>, <code>nearbyintf</code>, <code>nearbyintl</code>, <code>nearbyint</code>,
+<code>nextafterf</code>, <code>nextafterl</code>, <code>nextafter</code>,
+<code>nexttowardf</code>, <code>nexttowardl</code>, <code>nexttoward</code>,
+<code>remainderf</code>, <code>remainderl</code>, <code>remainder</code>, <code>remquof</code>,
+<code>remquol</code>, <code>remquo</code>, <code>rintf</code>, <code>rintl</code>, <code>rint</code>,
+<code>roundf</code>, <code>roundl</code>, <code>round</code>, <code>scalblnf</code>,
+<code>scalblnl</code>, <code>scalbln</code>, <code>scalbnf</code>, <code>scalbnl</code>,
+<code>scalbn</code>, <code>snprintf</code>, <code>tgammaf</code>, <code>tgammal</code>,
+<code>tgamma</code>, <code>truncf</code>, <code>truncl</code>, <code>trunc</code>,
+<code>vfscanf</code>, <code>vscanf</code>, <code>vsnprintf</code> and <code>vsscanf</code>
+are handled as built-in functions
+except in strict ISO C90 mode (<samp>-ansi</samp> or <samp>-std=c90</samp>).
+</p>
+<p>There are also built-in versions of the ISO C99 functions
+<code>acosf</code>, <code>acosl</code>, <code>asinf</code>, <code>asinl</code>, <code>atan2f</code>,
+<code>atan2l</code>, <code>atanf</code>, <code>atanl</code>, <code>ceilf</code>, <code>ceill</code>,
+<code>cosf</code>, <code>coshf</code>, <code>coshl</code>, <code>cosl</code>, <code>expf</code>,
+<code>expl</code>, <code>fabsf</code>, <code>fabsl</code>, <code>floorf</code>, <code>floorl</code>,
+<code>fmodf</code>, <code>fmodl</code>, <code>frexpf</code>, <code>frexpl</code>, <code>ldexpf</code>,
+<code>ldexpl</code>, <code>log10f</code>, <code>log10l</code>, <code>logf</code>, <code>logl</code>,
+<code>modfl</code>, <code>modff</code>, <code>powf</code>, <code>powl</code>, <code>sinf</code>,
+<code>sinhf</code>, <code>sinhl</code>, <code>sinl</code>, <code>sqrtf</code>, <code>sqrtl</code>,
+<code>tanf</code>, <code>tanhf</code>, <code>tanhl</code> and <code>tanl</code>
+that are recognized in any mode since ISO C90 reserves these names for
+the purpose to which ISO C99 puts them.  All these functions have
+corresponding versions prefixed with <code>__builtin_</code>.
+</p>
+<p>There are also built-in functions <code>__builtin_fabsf<var>n</var></code>,
+<code>__builtin_fabsf<var>n</var>x</code>, <code>__builtin_copysignf<var>n</var></code> and
+<code>__builtin_copysignf<var>n</var>x</code>, corresponding to the TS 18661-3
+functions <code>fabsf<var>n</var></code>, <code>fabsf<var>n</var>x</code>,
+<code>copysignf<var>n</var></code> and <code>copysignf<var>n</var>x</code>, for supported
+types <code>_Float<var>n</var></code> and <code>_Float<var>n</var>x</code>.
+</p>
+<p>There are also GNU extension functions <code>clog10</code>, <code>clog10f</code> and
+<code>clog10l</code> which names are reserved by ISO C99 for future use.
+All these functions have versions prefixed with <code>__builtin_</code>.
+</p>
+<p>The ISO C94 functions
+<code>iswalnum</code>, <code>iswalpha</code>, <code>iswcntrl</code>, <code>iswdigit</code>,
+<code>iswgraph</code>, <code>iswlower</code>, <code>iswprint</code>, <code>iswpunct</code>,
+<code>iswspace</code>, <code>iswupper</code>, <code>iswxdigit</code>, <code>towlower</code> and
+<code>towupper</code>
+are handled as built-in functions
+except in strict ISO C90 mode (<samp>-ansi</samp> or <samp>-std=c90</samp>).
+</p>
+<p>The ISO C90 functions
+<code>abort</code>, <code>abs</code>, <code>acos</code>, <code>asin</code>, <code>atan2</code>,
+<code>atan</code>, <code>calloc</code>, <code>ceil</code>, <code>cosh</code>, <code>cos</code>,
+<code>exit</code>, <code>exp</code>, <code>fabs</code>, <code>floor</code>, <code>fmod</code>,
+<code>fprintf</code>, <code>fputs</code>, <code>free</code>, <code>frexp</code>, <code>fscanf</code>,
+<code>isalnum</code>, <code>isalpha</code>, <code>iscntrl</code>, <code>isdigit</code>,
+<code>isgraph</code>, <code>islower</code>, <code>isprint</code>, <code>ispunct</code>,
+<code>isspace</code>, <code>isupper</code>, <code>isxdigit</code>, <code>tolower</code>,
+<code>toupper</code>, <code>labs</code>, <code>ldexp</code>, <code>log10</code>, <code>log</code>,
+<code>malloc</code>, <code>memchr</code>, <code>memcmp</code>, <code>memcpy</code>,
+<code>memset</code>, <code>modf</code>, <code>pow</code>, <code>printf</code>, <code>putchar</code>,
+<code>puts</code>, <code>realloc</code>, <code>scanf</code>, <code>sinh</code>, <code>sin</code>,
+<code>snprintf</code>, <code>sprintf</code>, <code>sqrt</code>, <code>sscanf</code>, <code>strcat</code>,
+<code>strchr</code>, <code>strcmp</code>, <code>strcpy</code>, <code>strcspn</code>,
+<code>strlen</code>, <code>strncat</code>, <code>strncmp</code>, <code>strncpy</code>,
+<code>strpbrk</code>, <code>strrchr</code>, <code>strspn</code>, <code>strstr</code>,
+<code>tanh</code>, <code>tan</code>, <code>vfprintf</code>, <code>vprintf</code> and <code>vsprintf</code>
+are all recognized as built-in functions unless
+<samp>-fno-builtin</samp> is specified (or <samp>-fno-builtin-<var>function</var></samp>
+is specified for an individual function).  All of these functions have
+corresponding versions prefixed with <code>__builtin_</code>.
+</p>
+<p>GCC provides built-in versions of the ISO C99 floating-point comparison
+macros that avoid raising exceptions for unordered operands.  They have
+the same names as the standard macros ( <code>isgreater</code>,
+<code>isgreaterequal</code>, <code>isless</code>, <code>islessequal</code>,
+<code>islessgreater</code>, and <code>isunordered</code>) , with <code>__builtin_</code>
+prefixed.  We intend for a library implementor to be able to simply
+<code>#define</code> each standard macro to its built-in equivalent.
+In the same fashion, GCC provides <code>fpclassify</code>, <code>iseqsig</code>,
+<code>isfinite</code>, <code>isinf_sign</code>, <code>isnormal</code> and <code>signbit</code> built-ins
+used with <code>__builtin_</code> prefixed.  The <code>isinf</code> and <code>isnan</code>
+built-in functions appear both with and without the <code>__builtin_</code> prefix.
+With <code>-ffinite-math-only</code> option the <code>isinf</code> and <code>isnan</code>
+built-in functions will always return 0.
+</p>
+<p>GCC provides built-in versions of the ISO C99 floating-point rounding and
+exceptions handling functions <code>fegetround</code>, <code>feclearexcept</code> and
+<code>feraiseexcept</code>.  They may not be available for all targets, and because
+they need close interaction with libc internal values, they may not be available
+for all target libcs, but in all cases they will gracefully fallback to libc
+calls.  These built-in functions appear both with and without the
+<code>__builtin_</code> prefix.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="n" rel="next">Numeric Builtins</a>, Up: <a href="Built_002din-Functions.html#Built_002din-Functions" accesskey="u" rel="up">Built-in Functions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

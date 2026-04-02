@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Byte-Swapping Builtins (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="Byte-Swapping Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Byte-Swapping Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Numeric-Builtins.html#Numeric-Builtins" rel="up" title="Numeric Builtins">
+<link href="CRC-Builtins.html#CRC-Builtins" rel="next" title="CRC Builtins">
+<link href="Bit-Operation-Builtins.html#Bit-Operation-Builtins" rel="prev" title="Bit Operation Builtins">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="Byte_002dSwapping-Builtins"></a>
+<div class="header">
+<p>
+Next: <a href="CRC-Builtins.html#CRC-Builtins" accesskey="n" rel="next">CRC Builtins</a>, Previous: <a href="Bit-Operation-Builtins.html#Bit-Operation-Builtins" accesskey="p" rel="prev">Bit Operation Builtins</a>, Up: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="u" rel="up">Numeric Builtins</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Byte_002dSwapping-Builtins-1"></a>
+<h4 class="subsection">7.2.3 Byte-Swapping Builtins</h4>
+<a name="index-byte_002dswapping-builtins"></a>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fbswap16"></a>Built-in Function: <em>uint16_t</em> <strong>__builtin_bswap16</strong> <em>(uint16_t <var>x</var>)</em></dt>
+<dd><p>Returns <var>x</var> with the order of the bytes reversed; for example,
+<code>0xabcd</code> becomes <code>0xcdab</code>.  Byte here always means
+exactly 8 bits.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fbswap32"></a>Built-in Function: <em>uint32_t</em> <strong>__builtin_bswap32</strong> <em>(uint32_t <var>x</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_bswap16</code>, except the argument and return types
+are 32-bit.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fbswap64"></a>Built-in Function: <em>uint64_t</em> <strong>__builtin_bswap64</strong> <em>(uint64_t <var>x</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_bswap32</code>, except the argument and return types
+are 64-bit.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fbswap128"></a>Built-in Function: <em>uint128_t</em> <strong>__builtin_bswap128</strong> <em>(uint128_t <var>x</var>)</em></dt>
+<dd><p>Similar to <code>__builtin_bswap64</code>, except the argument and return types
+are 128-bit.  Only supported on targets when 128-bit types are supported.
+</p></dd></dl>
+
+
+
+
+</body>
+</html>

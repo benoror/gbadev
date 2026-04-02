@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Syntax Extensions (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="Syntax Extensions (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Syntax Extensions (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="C-Extensions.html#C-Extensions" rel="up" title="C Extensions">
+<link href="Statement-Exprs.html#Statement-Exprs" rel="next" title="Statement Exprs">
+<link href="Size-of-an-asm.html#Size-of-an-asm" rel="prev" title="Size of an asm">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="Syntax-Extensions"></a>
+<div class="header">
+<p>
+Next: <a href="Semantic-Extensions.html#Semantic-Extensions" accesskey="n" rel="next">Semantic Extensions</a>, Previous: <a href="Using-Assembly-Language-with-C.html#Using-Assembly-Language-with-C" accesskey="p" rel="prev">Using Assembly Language with C</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Other-Extensions-to-C-Syntax"></a>
+<h3 class="section">6.12 Other Extensions to C Syntax</h3>
+
+<p>GNU C has traditionally supported numerous extensions to standard C
+syntax.  Some of these features were originally intended for
+compatibility with other compilers or to ease traditional C
+compatibility, some have been adopted into subsequent versions of the
+C and/or C++ standards, while others remain specific to GNU C.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Statement-Exprs.html#Statement-Exprs" accesskey="1">Statement Exprs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Putting statements and declarations inside expressions.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Local-Labels.html#Local-Labels" accesskey="2">Local Labels</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Labels local to a block.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Labels-as-Values.html#Labels-as-Values" accesskey="3">Labels as Values</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Getting pointers to labels, and computed gotos.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Nested-Functions.html#Nested-Functions" accesskey="4">Nested Functions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Nested functions in GNU C.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Typeof.html#Typeof" accesskey="5">Typeof</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top"><code>typeof</code>: referring to the type of an expression.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Offsetof.html#Offsetof" accesskey="6">Offsetof</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Special syntax for <code>offsetof</code>.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Alignment.html#Alignment" accesskey="7">Alignment</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Determining the alignment of a function, type or variable.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Enum-Extensions.html#Enum-Extensions" accesskey="8">Enum Extensions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Forward declarations and specifying the underlying type.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Boolean-Type.html#Boolean-Type" accesskey="9">Boolean Type</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Support for the <code>_Bool</code> keyword.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Variadic-Macros.html#Variadic-Macros">Variadic Macros</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Macros with a variable number of arguments.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Conditionals.html#Conditionals">Conditionals</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Omitting the middle operand of a &lsquo;<samp>?:</samp>&rsquo; expression.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Case-Ranges.html#Case-Ranges">Case Ranges</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">&lsquo;case 1 ... 9&rsquo; and such.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Mixed-Labels-and-Declarations.html#Mixed-Labels-and-Declarations">Mixed Labels and Declarations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Mixing declarations, labels and code.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="C_002b_002b-Comments.html#C_002b_002b-Comments">C++ Comments</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">C++ comments are recognized.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Escaped-Newlines.html#Escaped-Newlines">Escaped Newlines</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Slightly looser rules for escaped newlines.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Hex-Floats.html#Hex-Floats">Hex Floats</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Hexadecimal floating-point constants.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Binary-constants.html#Binary-constants">Binary constants</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Binary constants using the &lsquo;<samp>0b</samp>&rsquo; prefix.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Dollar-Signs.html#Dollar-Signs">Dollar Signs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Dollar sign is allowed in identifiers.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Character-Escapes.html#Character-Escapes">Character Escapes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">&lsquo;<samp>\e</samp>&rsquo; stands for the character <tt class="key">ESC</tt>.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Raw-String-Literals.html#Raw-String-Literals">Raw String Literals</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">C++ raw string literals are supported in C.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Alternate-Keywords.html#Alternate-Keywords">Alternate Keywords</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top"><code>__const__</code>, <code>__asm__</code>, etc., for header files.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Function-Names.html#Function-Names">Function Names</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Printable strings which are the name of the current
+                        function.
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Semantic-Extensions.html#Semantic-Extensions" accesskey="n" rel="next">Semantic Extensions</a>, Previous: <a href="Using-Assembly-Language-with-C.html#Using-Assembly-Language-with-C" accesskey="p" rel="prev">Using Assembly Language with C</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

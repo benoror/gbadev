@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OpenMP and OpenACC Options (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="OpenMP and OpenACC Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="OpenMP and OpenACC Options (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Invoking-GCC.html#Invoking-GCC" rel="up" title="Invoking GCC">
+<link href="Diagnostic-Message-Formatting-Options.html#Diagnostic-Message-Formatting-Options" rel="next" title="Diagnostic Message Formatting Options">
+<link href="Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options.html#Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options" rel="prev" title="Objective-C and Objective-C++ Dialect Options">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="OpenMP-and-OpenACC-Options"></a>
+<div class="header">
+<p>
+Next: <a href="Diagnostic-Message-Formatting-Options.html#Diagnostic-Message-Formatting-Options" accesskey="n" rel="next">Diagnostic Message Formatting Options</a>, Previous: <a href="Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options.html#Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options" accesskey="p" rel="prev">Objective-C and Objective-C++ Dialect Options</a>, Up: <a href="Invoking-GCC.html#Invoking-GCC" accesskey="u" rel="up">Invoking GCC</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Options-Controlling-OpenMP-and-OpenACC"></a>
+<h3 class="section">3.7 Options Controlling OpenMP and OpenACC</h3>
+<a name="index-OpenMP-options"></a>
+<a name="index-OpenACC-options"></a>
+
+<p>GCC supports OpenMP extensions to the C, C++, and Fortran languages
+with the <samp>-fopenmp</samp> option.  Similarly, OpenACC extensions are
+supported in all three languages with <samp>-fopenacc</samp>.
+See <a href="OpenMP.html#OpenMP">OpenMP</a> and <a href="OpenACC.html#OpenACC">OpenACC</a> for an overview of these extensions.
+</p>
+<dl compact="compact">
+<dd><a name="index-foffload"></a>
+<a name="index-Offloading-targets"></a>
+<a name="index-OpenACC-offloading-targets"></a>
+<a name="index-OpenMP-offloading-targets"></a>
+</dd>
+<dt><code>-foffload=disable</code></dt>
+<dt><code>-foffload=default</code></dt>
+<dt><code>-foffload=<var>target-list</var></code></dt>
+<dd><p>Specify for which OpenMP and OpenACC offload targets code should be generated.
+The default behavior, equivalent to <samp>-foffload=default</samp>, is to generate
+code for all supported offload targets.  The <samp>-foffload=disable</samp> form
+generates code only for the host fallback, while
+<samp>-foffload=<var>target-list</var></samp> generates code only for the specified
+comma-separated list of offload targets.
+</p>
+<p>Offload targets are specified in GCC&rsquo;s internal target-triplet format. You can
+run the compiler with <samp>-v</samp> to show the list of configured offload targets
+under <code>OFFLOAD_TARGET_NAMES</code>.
+</p>
+<a name="index-foffload_002doptions"></a>
+<a name="index-Offloading-options"></a>
+<a name="index-OpenACC-offloading-options"></a>
+<a name="index-OpenMP-offloading-options"></a>
+</dd>
+<dt><code>-foffload-options=<var>options</var></code></dt>
+<dt><code>-foffload-options=<var>target-triplet-list</var>=<var>options</var></code></dt>
+<dd>
+<p>With <samp>-foffload-options=<var>options</var></samp>, GCC passes the specified
+<var>options</var> to the compilers for all enabled offloading targets.  You can
+specify options that apply only to a specific target or targets by using
+the <samp>-foffload-options=<var>target-list</var>=<var>options</var></samp> form.  The
+<var>target-list</var> is a comma-separated list in the same format as for the
+<samp>-foffload=</samp> option.
+</p>
+<p>Typical command lines are
+</p>
+<div class="smallexample">
+<pre class="smallexample">-foffload-options='-fno-math-errno -ffinite-math-only' \
+        -foffload-options=nvptx-none=-latomic
+-foffload-options=amdgcn-amdhsa=-march=gfx906
+</pre></div>
+
+<a name="index-fopenacc"></a>
+<a name="index-OpenACC-accelerator-programming"></a>
+</dd>
+<dt><code>-fopenacc</code></dt>
+<dd><p>Enable handling of OpenACC directives &lsquo;<samp>#pragma acc</samp>&rsquo; in C/C++ and
+&lsquo;<samp>!$acc</samp>&rsquo; in free-form Fortran and &lsquo;<samp>!$acc</samp>&rsquo;, &lsquo;<samp>c$acc</samp>&rsquo; and
+&lsquo;<samp>*$acc</samp>&rsquo; in fixed-form Fortran.  This option
+implies <samp>-pthread</samp>, and thus is only supported on targets that
+have support for <samp>-pthread</samp>.
+</p>
+<a name="index-fopenacc_002ddim"></a>
+</dd>
+<dt><code>-fopenacc-dim=<var>geom</var></code></dt>
+<dd><p>Specify default compute dimensions for parallel offload regions that do
+not explicitly specify them.  The <var>geom</var> value is a triple of
+&lsquo;<samp>:</samp>&rsquo;-separated sizes, in order <var>gang</var>, <var>worker</var>, and <var>vector</var>.
+A size can be omitted, to use a target-specific default value.
+</p>
+<a name="index-fopenmp"></a>
+<a name="index-OpenMP-parallel"></a>
+</dd>
+<dt><code>-fopenmp</code></dt>
+<dd><p>Enable handling of OpenMP directives &lsquo;<samp>#pragma omp</samp>&rsquo;,
+&lsquo;<samp>[[omp::directive(...)]]</samp>&rsquo;, &lsquo;<samp>[[omp::decl(...)]]</samp>&rsquo;,
+and &lsquo;<samp>[[omp::sequence(...)]]</samp>&rsquo; in C/C++.  In Fortran, it enables
+&lsquo;<samp>!$omp</samp>&rsquo; and the conditional compilation sentinel &lsquo;<samp>!$</samp>&rsquo;.
+In fixed source form Fortran, the sentinels can also start with
+&lsquo;<samp>c</samp>&rsquo; or &lsquo;<samp>*</samp>&rsquo;.
+</p>
+<p>This option implies <samp>-pthread</samp>, and thus is only supported on
+targets that have support for <samp>-pthread</samp>. <samp>-fopenmp</samp>
+implies <samp>-fopenmp-simd</samp>.
+</p>
+<a name="index-fopenmp_002dsimd"></a>
+<a name="index-OpenMP-SIMD"></a>
+<a name="index-SIMD"></a>
+</dd>
+<dt><code>-fopenmp-simd</code></dt>
+<dd><p>Enable handling of OpenMP&rsquo;s <code>simd</code>, <code>declare simd</code>,
+<code>declare reduction</code>, <code>assume</code>, <code>ordered</code>, <code>scan</code>
+and <code>loop</code> directive, and of combined or composite directives with
+<code>simd</code> as constituent with <code>#pragma omp</code>,
+<code>[[omp::directive(...)]]</code>, <code>[[omp::sequence(...)]]</code> and
+<code>[[omp::decl(...)]]</code> in C/C++ and <code>!$omp</code> in Fortran.  It
+additionally enables the conditional compilation sentinel &lsquo;<samp>!$</samp>&rsquo; in
+Fortran.  In fixed source form Fortran, the sentinels can also start with
+&lsquo;<samp>c</samp>&rsquo; or &lsquo;<samp>*</samp>&rsquo;.  Other OpenMP directives are ignored.  Unless
+<samp>-fopenmp</samp> is additionally specified, the <code>loop</code> region binds
+to the current task region, independent of the specified <code>bind</code> clause.
+</p>
+<a name="index-fopenmp_002dtarget_002dsimd_002dclone"></a>
+<a name="index-OpenMP-target-SIMD-clone"></a>
+</dd>
+<dt><code>-fopenmp-target-simd-clone</code></dt>
+<dt><code>-fopenmp-target-simd-clone=<var>device-type</var></code></dt>
+<dd><p>In addition to generating SIMD clones for functions marked with the
+<code>declare simd</code> directive, GCC also generates clones
+for functions marked with the OpenMP <code>declare target</code> directive
+that are suitable for vectorization when this option is in effect.  The
+<var>device-type</var> may be one of <code>none</code>, <code>host</code>, <code>nohost</code>,
+and <code>any</code>, which correspond to keywords for the <code>device_type</code>
+clause of the <code>declare target</code> directive; clones are generated for
+the intersection of devices specified.
+<samp>-fopenmp-target-simd-clone</samp> is equivalent to
+<samp>-fopenmp-target-simd-clone=any</samp> and
+<samp>-fno-openmp-target-simd-clone</samp> is equivalent to
+<samp>-fopenmp-target-simd-clone=none</samp>.
+</p>
+<p>At <samp>-O2</samp> and higher (but not <samp>-Os</samp> or <samp>-Og</samp>) this
+optimization defaults to <samp>-fopenmp-target-simd-clone=nohost</samp>; otherwise
+it is disabled by default.
+</p>
+</dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Diagnostic-Message-Formatting-Options.html#Diagnostic-Message-Formatting-Options" accesskey="n" rel="next">Diagnostic Message Formatting Options</a>, Previous: <a href="Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options.html#Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options" accesskey="p" rel="prev">Objective-C and Objective-C++ Dialect Options</a>, Up: <a href="Invoking-GCC.html#Invoking-GCC" accesskey="u" rel="up">Invoking GCC</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

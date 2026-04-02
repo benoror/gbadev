@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the use of the GNU compilers.
+
+Copyright (C) 1988-2025 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Funding Free Software", the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the section entitled
+"GNU Free Documentation License".
+
+(a) The FSF's Front-Cover Text is:
+
+A GNU Manual
+
+(b) The FSF's Back-Cover Text is:
+
+You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bit Operation Builtins (Using the GNU Compiler Collection (GCC))</title>
+
+<meta name="description" content="Bit Operation Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Bit Operation Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Indices.html#Indices" rel="index" title="Indices">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Numeric-Builtins.html#Numeric-Builtins" rel="up" title="Numeric Builtins">
+<link href="Byte_002dSwapping-Builtins.html#Byte_002dSwapping-Builtins" rel="next" title="Byte-Swapping Builtins">
+<link href="Floating_002dPoint-Format-Builtins.html#Floating_002dPoint-Format-Builtins" rel="prev" title="Floating-Point Format Builtins">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en_US">
+<a name="Bit-Operation-Builtins"></a>
+<div class="header">
+<p>
+Next: <a href="Byte_002dSwapping-Builtins.html#Byte_002dSwapping-Builtins" accesskey="n" rel="next">Byte-Swapping Builtins</a>, Previous: <a href="Floating_002dPoint-Format-Builtins.html#Floating_002dPoint-Format-Builtins" accesskey="p" rel="prev">Floating-Point Format Builtins</a>, Up: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="u" rel="up">Numeric Builtins</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Bit-Operation-Builtins-1"></a>
+<h4 class="subsection">7.2.2 Bit Operation Builtins</h4>
+<a name="index-bit-operation-builtins"></a>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fffs"></a>Built-in Function: <em>int</em> <strong>__builtin_ffs</strong> <em>(int <var>x</var>)</em></dt>
+<dd><p>Returns one plus the index of the least significant 1-bit of <var>x</var>, or
+if <var>x</var> is zero, returns zero.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclz"></a>Built-in Function: <em>int</em> <strong>__builtin_clz</strong> <em>(unsigned int <var>x</var>)</em></dt>
+<dd><p>Returns the number of leading 0-bits in <var>x</var>, starting at the most
+significant bit position.  If <var>x</var> is 0, the result is undefined.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fctz"></a>Built-in Function: <em>int</em> <strong>__builtin_ctz</strong> <em>(unsigned int <var>x</var>)</em></dt>
+<dd><p>Returns the number of trailing 0-bits in <var>x</var>, starting at the least
+significant bit position.  If <var>x</var> is 0, the result is undefined.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclrsb"></a>Built-in Function: <em>int</em> <strong>__builtin_clrsb</strong> <em>(int <var>x</var>)</em></dt>
+<dd><p>Returns the number of leading redundant sign bits in <var>x</var>, i.e. the
+number of bits following the most significant bit that are identical
+to it.  There are no special cases for 0 or other values.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fpopcount"></a>Built-in Function: <em>int</em> <strong>__builtin_popcount</strong> <em>(unsigned int <var>x</var>)</em></dt>
+<dd><p>Returns the number of 1-bits in <var>x</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fparity"></a>Built-in Function: <em>int</em> <strong>__builtin_parity</strong> <em>(unsigned int <var>x</var>)</em></dt>
+<dd><p>Returns the parity of <var>x</var>, i.e. the number of 1-bits in <var>x</var>
+modulo 2.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fffsl"></a>Built-in Function: <em>int</em> <strong>__builtin_ffsl</strong> <em>(long)</em></dt>
+<dd><p>Similar to <code>__builtin_ffs</code>, except the argument type is
+<code>long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclzl"></a>Built-in Function: <em>int</em> <strong>__builtin_clzl</strong> <em>(unsigned long)</em></dt>
+<dd><p>Similar to <code>__builtin_clz</code>, except the argument type is
+<code>unsigned long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fctzl"></a>Built-in Function: <em>int</em> <strong>__builtin_ctzl</strong> <em>(unsigned long)</em></dt>
+<dd><p>Similar to <code>__builtin_ctz</code>, except the argument type is
+<code>unsigned long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclrsbl"></a>Built-in Function: <em>int</em> <strong>__builtin_clrsbl</strong> <em>(long)</em></dt>
+<dd><p>Similar to <code>__builtin_clrsb</code>, except the argument type is
+<code>long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fpopcountl"></a>Built-in Function: <em>int</em> <strong>__builtin_popcountl</strong> <em>(unsigned long)</em></dt>
+<dd><p>Similar to <code>__builtin_popcount</code>, except the argument type is
+<code>unsigned long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fparityl"></a>Built-in Function: <em>int</em> <strong>__builtin_parityl</strong> <em>(unsigned long)</em></dt>
+<dd><p>Similar to <code>__builtin_parity</code>, except the argument type is
+<code>unsigned long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fffsll"></a>Built-in Function: <em>int</em> <strong>__builtin_ffsll</strong> <em>(long long)</em></dt>
+<dd><p>Similar to <code>__builtin_ffs</code>, except the argument type is
+<code>long long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclzll"></a>Built-in Function: <em>int</em> <strong>__builtin_clzll</strong> <em>(unsigned long long)</em></dt>
+<dd><p>Similar to <code>__builtin_clz</code>, except the argument type is
+<code>unsigned long long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fctzll"></a>Built-in Function: <em>int</em> <strong>__builtin_ctzll</strong> <em>(unsigned long long)</em></dt>
+<dd><p>Similar to <code>__builtin_ctz</code>, except the argument type is
+<code>unsigned long long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclrsbll"></a>Built-in Function: <em>int</em> <strong>__builtin_clrsbll</strong> <em>(long long)</em></dt>
+<dd><p>Similar to <code>__builtin_clrsb</code>, except the argument type is
+<code>long long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fpopcountll"></a>Built-in Function: <em>int</em> <strong>__builtin_popcountll</strong> <em>(unsigned long long)</em></dt>
+<dd><p>Similar to <code>__builtin_popcount</code>, except the argument type is
+<code>unsigned long long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fparityll"></a>Built-in Function: <em>int</em> <strong>__builtin_parityll</strong> <em>(unsigned long long)</em></dt>
+<dd><p>Similar to <code>__builtin_parity</code>, except the argument type is
+<code>unsigned long long</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fffsg"></a>Built-in Function: <em>int</em> <strong>__builtin_ffsg</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>__builtin_ffs</code>, except the argument is type-generic
+signed integer (standard, extended or bit-precise).  No integral argument
+promotions are performed on the argument.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclzg"></a>Built-in Function: <em>int</em> <strong>__builtin_clzg</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>__builtin_clz</code>, except the argument is type-generic
+unsigned integer (standard, extended or bit-precise) and there is
+optional second argument with int type.  No integral argument promotions
+are performed on the first argument.  If two arguments are specified,
+and first argument is 0, the result is the second argument.  If only
+one argument is specified and it is 0, the result is undefined.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fctzg"></a>Built-in Function: <em>int</em> <strong>__builtin_ctzg</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>__builtin_ctz</code>, except the argument is type-generic
+unsigned integer (standard, extended or bit-precise) and there is
+optional second argument with int type.  No integral argument promotions
+are performed on the first argument.  If two arguments are specified,
+and first argument is 0, the result is the second argument.  If only
+one argument is specified and it is 0, the result is undefined.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fclrsbg"></a>Built-in Function: <em>int</em> <strong>__builtin_clrsbg</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>__builtin_clrsb</code>, except the argument is type-generic
+signed integer (standard, extended or bit-precise).  No integral argument
+promotions are performed on the argument.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fpopcountg"></a>Built-in Function: <em>int</em> <strong>__builtin_popcountg</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>__builtin_popcount</code>, except the argument is type-generic
+unsigned integer (standard, extended or bit-precise).  No integral argument
+promotions are performed on the argument.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fparityg"></a>Built-in Function: <em>int</em> <strong>__builtin_parityg</strong> <em>(...)</em></dt>
+<dd><p>Similar to <code>__builtin_parity</code>, except the argument is type-generic
+unsigned integer (standard, extended or bit-precise).  No integral argument
+promotions are performed on the argument.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fbit_005fceil"></a>Built-in Function: <em><var>type</var></em> <strong>__builtin_stdc_bit_ceil</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_bit_ceil</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code><var>arg</var> &lt;= 1 ? (<var>type</var>) 1
+: (<var>type</var>) 2 &lt;&lt; (<var>prec</var> - 1 - __builtin_clzg ((<var>type</var>) (<var>arg</var> - 1)))</code>
+where <var>prec</var> is bit width of <var>type</var>, except that side-effects
+in <var>arg</var> are evaluated just once.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fbit_005ffloor"></a>Built-in Function: <em><var>type</var></em> <strong>__builtin_stdc_bit_floor</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_bit_floor</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code><var>arg</var> == 0 ? (<var>type</var>) 0
+: (<var>type</var>) 1 &lt;&lt; (<var>prec</var> - 1 - __builtin_clzg (<var>arg</var>))</code>
+where <var>prec</var> is bit width of <var>type</var>, except that side-effects
+in <var>arg</var> are evaluated just once.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fbit_005fwidth"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_bit_width</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_bit_width</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) (<var>prec</var> - __builtin_clzg (<var>arg</var>, <var>prec</var>))</code>
+where <var>prec</var> is bit width of <var>type</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fcount_005fones"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_count_ones</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_count_ones</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) __builtin_popcountg (<var>arg</var>)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fcount_005fzeros"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_count_zeros</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_count_zeros</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) __builtin_popcountg ((<var>type</var>) ~<var>arg</var>)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005ffirst_005fleading_005fone"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_first_leading_one</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_first_leading_one</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>__builtin_clzg (<var>arg</var>, -1) + 1U</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005ffirst_005fleading_005fzero"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_first_leading_zero</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_first_leading_zero</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>__builtin_clzg ((<var>type</var>) ~<var>arg</var>, -1) + 1U</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005ffirst_005ftrailing_005fone"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_first_trailing_one</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_first_trailing_one</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>__builtin_ctzg (<var>arg</var>, -1) + 1U</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005ffirst_005ftrailing_005fzero"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_first_trailing_zero</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_first_trailing_zero</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>__builtin_ctzg ((<var>type</var>) ~<var>arg</var>, -1) + 1U</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fhas_005fsingle_005fbit"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_has_single_bit</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_has_single_bit</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(_Bool) (__builtin_popcountg (<var>arg</var>) == 1)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fleading_005fones"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_leading_ones</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_leading_ones</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) __builtin_clzg ((<var>type</var>) ~<var>arg</var>, <var>prec</var>)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005fleading_005fzeros"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_leading_zeros</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_leading_zeros</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) __builtin_clzg (<var>arg</var>, <var>prec</var>)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005ftrailing_005fones"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_trailing_ones</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_trailing_ones</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) __builtin_ctzg ((<var>type</var>) ~<var>arg</var>, <var>prec</var>)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005ftrailing_005fzeros"></a>Built-in Function: <em>unsigned int</em> <strong>__builtin_stdc_trailing_zeros</strong> <em>(<var>type</var> <var>arg</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_trailing_zeros</code> function is available only
+in C.  It is type-generic, the argument can be any unsigned integer
+(standard, extended or bit-precise).  No integral argument promotions are
+performed on the argument.  It is equivalent to
+<code>(unsigned int) __builtin_ctzg (<var>arg</var>, <var>prec</var>)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005frotate_005fleft"></a>Built-in Function: <em><var>type1</var></em> <strong>__builtin_stdc_rotate_left</strong> <em>(<var>type1</var> <var>arg1</var>, <var>type2</var> <var>arg2</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_rotate_left</code> function is available only
+in C.  It is type-generic, the first argument can be any unsigned integer
+(standard, extended or bit-precise) and second argument any signed or
+unsigned integer or <code>char</code>.  No integral argument promotions are
+performed on the arguments.  It is equivalent to
+<code>(<var>type1</var>) ((<var>arg1</var> &lt;&lt; (<var>arg2</var> % <var>prec</var>))
+| (<var>arg1</var> &gt;&gt; ((-(unsigned <var>type2</var>) <var>arg2</var>) % <var>prec</var>)))</code>
+where <var>prec</var> is bit width of <var>type1</var>, except that side-effects
+in <var>arg1</var> and <var>arg2</var> are evaluated just once.  The behavior is
+undefined if <var>arg2</var> is negative.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fstdc_005frotate_005fright"></a>Built-in Function: <em><var>type1</var></em> <strong>__builtin_stdc_rotate_right</strong> <em>(<var>type1</var> <var>arg1</var>, <var>type2</var> <var>arg2</var>)</em></dt>
+<dd><p>The <code>__builtin_stdc_rotate_right</code> function is available only
+in C.  It is type-generic, the first argument can be any unsigned integer
+(standard, extended or bit-precise) and second argument any signed or
+unsigned integer or <code>char</code>.  No integral argument promotions are
+performed on the arguments.  It is equivalent to
+<code>(<var>type1</var>) ((<var>arg1</var> &gt;&gt; (<var>arg2</var> % <var>prec</var>))
+| (<var>arg1</var> &lt;&lt; ((-(unsigned <var>type2</var>) <var>arg2</var>) % <var>prec</var>)))</code>
+where <var>prec</var> is bit width of <var>type1</var>, except that side-effects
+in <var>arg1</var> and <var>arg2</var> are evaluated just once.  The behavior is
+undefined if <var>arg2</var> is negative.
+</p></dd></dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Byte_002dSwapping-Builtins.html#Byte_002dSwapping-Builtins" accesskey="n" rel="next">Byte-Swapping Builtins</a>, Previous: <a href="Floating_002dPoint-Format-Builtins.html#Floating_002dPoint-Format-Builtins" accesskey="p" rel="prev">Floating-Point Format Builtins</a>, Up: <a href="Numeric-Builtins.html#Numeric-Builtins" accesskey="u" rel="up">Numeric Builtins</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indices.html#Indices" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
