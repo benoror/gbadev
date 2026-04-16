@@ -65,23 +65,31 @@ void ProcessBlockCollisions(const FrameState *frame, RuntimeState *runtime, int 
     u8 *levelTileMap, u32 *score)
 {
     u16 index;
+    /*
+     * Only resolve a face if the ball was moving *toward* that face this frame.
+     * Otherwise two adjacent blocks can both register an edge hit on the same pixel
+     * (shared vertical seam: right face of left block + left face of right block),
+     * and applying both flips stepX twice (wrong / "opposite" bounce).
+     */
+    const int incomingX = *stepX;
+    const int incomingY = *stepY;
 
     for (index = 0; index < BLOCK_CAPACITY; ++index) {
         Block *block = &gBlocks[index];
 
-        if (frame->ballY == block->y - runtime->ballHeight &&
+        if (incomingY > 0 && frame->ballY == block->y - runtime->ballHeight &&
             frame->ballX >= block->x - runtime->ballWidth && frame->ballX <= block->right) {
             ResolveBlockHit(block, runtime, stepY, -1, 1, TRUE, levelTileMap, score);
         }
-        if (frame->ballY == block->bottom &&
+        if (incomingY < 0 && frame->ballY == block->bottom &&
             frame->ballX >= block->x - runtime->ballWidth && frame->ballX <= block->right) {
             ResolveBlockHit(block, runtime, stepY, 1, -1, TRUE, levelTileMap, score);
         }
-        if (frame->ballX == block->x - runtime->ballWidth &&
+        if (incomingX > 0 && frame->ballX == block->x - runtime->ballWidth &&
             frame->ballY >= block->y - runtime->ballHeight && frame->ballY <= block->bottom) {
             ResolveBlockHit(block, runtime, stepX, -1, 1, FALSE, levelTileMap, score);
         }
-        if (frame->ballX == block->right &&
+        if (incomingX < 0 && frame->ballX == block->right &&
             frame->ballY >= block->y - runtime->ballHeight && frame->ballY <= block->bottom) {
             ResolveBlockHit(block, runtime, stepX, 1, -1, TRUE, levelTileMap, score);
         }
