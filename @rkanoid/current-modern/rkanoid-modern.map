@@ -185,30 +185,30 @@ END GROUP
 .rel.dyn        0x0802a338        0x0
  .rel.iplt      0x0802a338        0x0 start_gnu.o
 
-.data           0x03000000      0x894 load address 0x0802a338
+.data           0x03000000      0x8b0 load address 0x0802a338
                 0x03000000                        __data_start__ = .
  *(.data*)
  .data          0x03000000      0x654 levels_data.o
- .data          0x03000654      0x23f level_render.o
+ .data          0x03000654      0x259 level_render.o
                 0x03000654                gBackgroundMap
-                0x03000894                        . = ALIGN (0x4)
- *fill*         0x03000893        0x1 
-                0x03000894                        __data_end__ = .
+                0x030008b0                        . = ALIGN (0x4)
+ *fill*         0x030008ad        0x3 
+                0x030008b0                        __data_end__ = .
                 0x0802a338                        __data_lma = LOADADDR (.data)
 
-.igot.plt       0x03000894        0x0 load address 0x0802abcc
- .igot.plt      0x03000894        0x0 start_gnu.o
+.igot.plt       0x030008b0        0x0 load address 0x0802abe8
+ .igot.plt      0x030008b0        0x0 start_gnu.o
 
-.bss            0x03000898     0x1950 load address 0x0802abd0
-                0x03000898                        __bss_start__ = .
+.bss            0x030008b0     0x1950 load address 0x0802abe8
+                0x030008b0                        __bss_start__ = .
  *(.bss*)
- .bss           0x03000898     0x1950 level_state.o
-                0x03000898                gBlocks
+ .bss           0x030008b0     0x1950 level_state.o
+                0x030008b0                gBlocks
  *(COMMON)
-                0x030021e8                        . = ALIGN (0x4)
-                0x030021e8                        __bss_end__ = .
-                0x030021e8                        end = .
-                0x030021e8                        _end = .
+                0x03002200                        . = ALIGN (0x4)
+                0x03002200                        __bss_end__ = .
+                0x03002200                        end = .
+                0x03002200                        _end = .
 
 /DISCARD/
  *(.comment*)

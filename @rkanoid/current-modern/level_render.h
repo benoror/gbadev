@@ -4,7 +4,7 @@
 #include "game_types.h"
 #include "gba_types.h"
 
-extern u8 gBackgroundMap[];
+extern u8 gBackgroundMap[601];
 
 void ApplyShieldFloor(void);
 void CopyLevelTileMapToBackground(u16 level);
