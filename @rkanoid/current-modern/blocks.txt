@@ -1,0 +1,12 @@
+Legacy collision note
+---------------------
+
+This file preserves an early block-collision sketch from the original codebase.
+
+The active implementation now lives in:
+
+- `game_loop.c` for collision orchestration
+- `levels_data.c` for level seed data
+- `levels_runtime.c` for runtime block state
+
+The old draft repeated the same hit-handling rules for each block face. The refactored lane now centralizes that logic in shared helpers while keeping the original gameplay rules intact.

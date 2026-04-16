@@ -1,0 +1,174 @@
+#include "regs.h"
+#include "game_sprites.h"
+
+#define OFFSCREEN_X 240
+#define OFFSCREEN_Y 160
+#define OAM_CAPACITY 128
+#define SCORE_SLOT_START 1
+#define LEVEL_SLOT 8
+#define PADDLE_SLOT_START 9
+#define PADDLE_SLOT_COUNT 6
+#define LIFE_SLOT_START 15
+#define BALL_SLOT_HEAD 17
+#define BALL_TRAIL_SLOT_COUNT 6
+#define BONUS_SLOT_START 23
+#define DIGIT_TILE_BASE 10
+#define PLAYER_ONE 1
+#define PLAYER_TWO 2
+
+typedef struct
+{
+    signed char xOffset;
+    signed char yOffset;
+    u16 tileOffset;
+} TrailStep;
+
+typedef struct
+{
+    signed char xOffset;
+    u16 centerTile;
+} PaddleSegment;
+
+static const TrailStep kTrailSteps[4][BALL_TRAIL_SLOT_COUNT] = {
+    {{0, 0, 30}, {2, 2, 30}, {4, 4, 32}, {6, 6, 34}, {8, 8, 36}, {10, 10, 38}},
+    {{0, 0, 30}, {2, -2, 30}, {4, -4, 32}, {6, -6, 34}, {8, -8, 36}, {10, -10, 38}},
+    {{0, 0, 30}, {-2, 2, 30}, {-4, 4, 32}, {-6, 6, 34}, {-8, 8, 36}, {-10, 10, 38}},
+    {{0, 0, 30}, {-2, -2, 30}, {-4, -4, 32}, {-6, -6, 34}, {-8, -8, 36}, {-10, -10, 38}},
+};
+
+static const PaddleSegment kShortPaddle[PADDLE_SLOT_COUNT] = {
+    {0, 0}, {8, 2}, {16, 4}, {24, 6}, {0, 4}, {0, 6},
+};
+
+static const PaddleSegment kLongPaddle[PADDLE_SLOT_COUNT] = {
+    {0, 0}, {8, 4}, {16, 2}, {24, 4}, {32, 2}, {40, 6},
+};
+
+static void HideSpriteSlot(u16 slot)
+{
+    OAM[slot].Attrib0 = 0x2000 + OFFSCREEN_Y + 8;
+    OAM[slot].Attrib1 = OFFSCREEN_X + 8;
+}
+
+static void FormatTwoDigits(u16 value, u16 digits[2])
+{
+    digits[0] = (value / 10) % 10;
+    digits[1] = value % 10;
+}
+
+static void FormatSevenDigits(u32 value, u16 digits[7])
+{
+    u16 index;
+
+    for (index = 0; index < 7; ++index)
+        digits[index] = 20;
+    for (index = 0; index < 7; ++index) {
+        digits[6 - index] = value % 10;
+        value /= 10;
+        if (value == 0)
+            break;
+    }
+}
+
+void ClearAllSprites(void)
+{
+    u16 slot;
+
+    for (slot = 0; slot < OAM_CAPACITY; ++slot)
+        HideSpriteSlot(slot);
+}
+
+void SetBallSprite(u16 x, u16 y, boolean trailEnabled, u16 direction, u16 ballTileBase)
+{
+    u16 step;
+
+    if (trailEnabled == TRUE) {
+        for (step = 0; step < BALL_TRAIL_SLOT_COUNT; ++step) {
+            OAM[BALL_SLOT_HEAD + step].Attrib0 = 0x2000 + y + kTrailSteps[direction][step].yOffset;
+            OAM[BALL_SLOT_HEAD + step].Attrib1 = x + kTrailSteps[direction][step].xOffset;
+            OAM[BALL_SLOT_HEAD + step].Attrib2 = kTrailSteps[direction][step].tileOffset;
+        }
+        return;
+    }
+
+    for (step = 1; step < BALL_TRAIL_SLOT_COUNT; ++step)
+        HideSpriteSlot(BALL_SLOT_HEAD + step);
+    OAM[BALL_SLOT_HEAD].Attrib0 = 0x2000 + y;
+    OAM[BALL_SLOT_HEAD].Attrib1 = x;
+    OAM[BALL_SLOT_HEAD].Attrib2 = ballTileBase;
+}
+
+void UpdateBonusSprite(u16 x, u16 y, u16 tileBase, u16 spriteOffset)
+{
+    OAM[BONUS_SLOT_START + spriteOffset].Attrib0 = 0x2000 + y;
+    OAM[BONUS_SLOT_START + spriteOffset].Attrib1 = x;
+    OAM[BONUS_SLOT_START + spriteOffset].Attrib2 = tileBase;
+
+    OAM[BONUS_SLOT_START + spriteOffset + 1].Attrib0 = 0x2000 + y;
+    OAM[BONUS_SLOT_START + spriteOffset + 1].Attrib1 = x + 8;
+    OAM[BONUS_SLOT_START + spriteOffset + 1].Attrib2 = tileBase + 2;
+}
+
+void HideBonusSprite(u16 spriteOffset)
+{
+    HideSpriteSlot(BONUS_SLOT_START + spriteOffset);
+    HideSpriteSlot(BONUS_SLOT_START + spriteOffset + 1);
+}
+
+void UpdateLifeDisplay(u16 lives)
+{
+    u16 digits[2];
+
+    FormatTwoDigits(lives, digits);
+    OAM[LIFE_SLOT_START].Attrib0 = 0x2000 + 56;
+    OAM[LIFE_SLOT_START].Attrib1 = 176;
+    OAM[LIFE_SLOT_START].Attrib2 = DIGIT_TILE_BASE + (digits[0] * 2);
+
+    OAM[LIFE_SLOT_START + 1].Attrib0 = 0x2000 + 56;
+    OAM[LIFE_SLOT_START + 1].Attrib1 = 184;
+    OAM[LIFE_SLOT_START + 1].Attrib2 = DIGIT_TILE_BASE + (digits[1] * 2);
+}
+
+void UpdateScoreDisplay(u32 score)
+{
+    u16 digits[7];
+    u16 slot;
+
+    FormatSevenDigits(score, digits);
+    for (slot = 0; slot < 7; ++slot) {
+        OAM[SCORE_SLOT_START + slot].Attrib0 = 0x2000 + 24;
+        OAM[SCORE_SLOT_START + slot].Attrib1 = 176 + (slot * 8);
+        OAM[SCORE_SLOT_START + slot].Attrib2 = DIGIT_TILE_BASE + (digits[slot] * 2);
+    }
+}
+
+void UpdateLevelDisplay(u16 level)
+{
+    OAM[LEVEL_SLOT].Attrib0 = 0x2000 + 88;
+    OAM[LEVEL_SLOT].Attrib1 = 176;
+    OAM[LEVEL_SLOT].Attrib2 = DIGIT_TILE_BASE + (level * 2);
+}
+
+void SetPaddleSprite(u16 x, u16 y, boolean longPaddle, u16 playerIndex)
+{
+    const PaddleSegment *segments = longPaddle ? kLongPaddle : kShortPaddle;
+    u16 slot;
+    u16 leftCapTile = (playerIndex == PLAYER_ONE) ? 0x0800 + 0 : 0x0800 + 46;
+    u16 rightCapTile = (playerIndex == PLAYER_ONE) ? 0x0800 + 6 : 0x0800 + 48;
+
+    for (slot = 0; slot < PADDLE_SLOT_COUNT; ++slot) {
+        OAM[PADDLE_SLOT_START + slot].Attrib0 = 0x2000 + y;
+        OAM[PADDLE_SLOT_START + slot].Attrib1 = x + segments[slot].xOffset;
+        OAM[PADDLE_SLOT_START + slot].Attrib2 = 0x0800 + segments[slot].centerTile;
+    }
+
+    OAM[PADDLE_SLOT_START].Attrib2 = leftCapTile;
+    OAM[PADDLE_SLOT_START + PADDLE_SLOT_COUNT - 1].Attrib2 = rightCapTile;
+    if (longPaddle == FALSE) {
+        HideSpriteSlot(PADDLE_SLOT_START + 4);
+        HideSpriteSlot(PADDLE_SLOT_START + 5);
+        OAM[PADDLE_SLOT_START + 3].Attrib0 = 0x2000 + y;
+        OAM[PADDLE_SLOT_START + 3].Attrib1 = x + 24;
+        OAM[PADDLE_SLOT_START + 3].Attrib2 = rightCapTile;
+    }
+}
