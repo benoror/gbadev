@@ -85,12 +85,6 @@ void RunGame(u16 playerCount)
         BallNormalizeVelocity(&frame.ballVelX, &frame.ballVelY, BALL_SPEED_MAG);
 
         while (session.lives > 0 && session.level <= 5) {
-            ApplyWorldBounds(&frame, &runtime, &session, &lostLife);
-            if (lostLife)
-                break;
-
-            ApplyPaddleCollision(&frame, &runtime);
-            ProcessBlockCollisions(&frame, &runtime, session.levelTileMap, &session.score);
             UpdateFallingBonuses(&runtime, frame.paddleX, frame.paddleY, &session.lives);
 
             buttons = ReadJoypad();
