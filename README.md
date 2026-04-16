@@ -10,8 +10,18 @@ Still listed in PDRoms from back in the day: https://pdroms.de/files/nintendo-ga
 
 Latest release: [@rkanoid LATEST - DEMO.gba](https://github.com/benoror/gbadev/blob/master/ROMS/@rkanoid%20LATEST%20-%20DEMO.gba?raw=true)
 
+Playable showcase: [/public/index.html](/public/index.html)
 
-![](/public/%40rkanoid.gif) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-0.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-1.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-2.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-3.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-5.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-8.png) ![](/public/%40rkanoid%20LATEST%20-%20DEMO-4.png) 
+Run locally via HTTP (required for gbajs3):
+
+```bash
+cd /Users/benoror/code/benoror/gbadev/public
+python3 serve.py
+# then open http://127.0.0.1:8000/
+```
+
+
+![](/public/images/%40rkanoid.gif) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-0.png) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-1.png) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-2.png) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-3.png) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-5.png) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-8.png) ![](/public/images/%40rkanoid%20LATEST%20-%20DEMO-4.png) 
 
 
 ## DexGex (formerly Mystic Quest)
@@ -22,7 +32,7 @@ Latest release: [mystic_q.gba](https://github.com/benoror/gbadev/blob/master/ROM
 
 \*Fun note: Was planning to make a library for developing RPGs on the GBA: [grpglib.txt](https://github.com/benoror/gbadev/blob/master/dreamsoft.es.fm/grpglib.txt)
 
-![](/public/dezgex-0.png) ![](/public/dexgex.gif)
+![](/public/images/dezgex-0.png) ![](/public/images/dexgex.gif)
 
 ## Cebelix
 
@@ -30,4 +40,4 @@ A yet-to-be platformer mainly to test high-res(\*) images inspired by pseudo-3d 
 
 Latest release: [cebelix.gba](https://github.com/benoror/gbadev/blob/master/ROMS/cebelix.gba?raw=true)
 
-![](/public/cebelix.gif)
+![](/public/images/cebelix.gif)

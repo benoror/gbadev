@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GBA Dev Showcase</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #111; color: #eee; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    h1 { margin: 0 0 8px; }
+    p { color: #bbb; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+    a.btn { text-decoration: none; background: #2d6cdf; color: #fff; padding: 10px 14px; border-radius: 8px; font-weight: 600; }
+    a.btn.secondary { background: #333; }
+    iframe { width: 100%; height: 72vh; border: 1px solid #333; border-radius: 10px; background: #000; }
+    .note { font-size: 13px; color: #999; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>GBA Dev Playable Showcase</h1>
+    <p id="file-warning" style="display:none; color:#ffb86b; font-weight:600;">
+      You are running from <code>file://</code>. gbajs3 requires <code>http://</code> or <code>https://</code> for manifest/service-worker/module loading.
+      Start a local server and open <code>http://localhost:8000/public/</code>.
+    </p>
+    <p>
+      This page uses a local build of <code>gbajs3</code> (mGBA WASM core). Pick a ROM shortcut below or open the emulator directly.
+    </p>
+
+    <div class="links">
+      <a id="play-rkanoid" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Modern Recompiled)</a>
+      <a id="play-dexgex" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play DexGex</a>
+      <a id="play-cebelix" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play Cebelix</a>
+      <a class="btn secondary" href="./gbajs3-app/" target="_blank" rel="noopener">Open Emulator Only</a>
+      <a class="btn secondary" href="https://github.com/thenick775/gbajs3" target="_blank" rel="noopener">gbajs3 Project</a>
+    </div>
+
+    <iframe id="emulator-frame" src="./gbajs3-app/" title="gbajs3 emulator"></iframe>
+    <div class="note">
+      gbajs3 expects <code>romURL</code> query parameter (full URL). If it still does not autoload, use the emulator UI to import from <code>public/roms/</code>.
+    </div>
+  </div>
+  <script>
+    function emulatorUrlFor(romFileName) {
+      var romUrl = new URL("./roms/" + romFileName, window.location.href).href;
+      return "./gbajs3-app/?romURL=" + encodeURIComponent(romUrl);
+    }
+
+    var rkanoidUrl = emulatorUrlFor("@rkanoid MODERN - RECOMPILED.gba");
+    var dexgexUrl = emulatorUrlFor("dezgex.gba");
+    var cebelixUrl = emulatorUrlFor("cebelix.gba");
+
+    var rkanoidLink = document.getElementById("play-rkanoid");
+    var dexgexLink = document.getElementById("play-dexgex");
+    var cebelixLink = document.getElementById("play-cebelix");
+    var frame = document.getElementById("emulator-frame");
+
+    if (rkanoidLink) rkanoidLink.href = rkanoidUrl;
+    if (dexgexLink) dexgexLink.href = dexgexUrl;
+    if (cebelixLink) cebelixLink.href = cebelixUrl;
+    if (frame) frame.src = rkanoidUrl;
+
+    if (window.location.protocol === "file:") {
+      var warning = document.getElementById("file-warning");
+      if (warning) warning.style.display = "block";
+    }
+  </script>
+</body>
+</html>
