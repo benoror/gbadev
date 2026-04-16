@@ -47,7 +47,9 @@ and reads BMPs from:
 
 Level tile maps + block seeds are generated into `levels_data.c` from:
 
-- `tools/levels_source/levelXX.{tilemap,seeds}`
+- `tools/levels_source/tiles.map` — shared glyph legend (ASCII + emoji aliases)
+- `tools/levels_source/levelXX.level` — 18×9 glyph grid per level
+- `tools/levels_source/levelXX.seeds` — block seeds per level
 
 Commands:
 
@@ -75,7 +77,9 @@ Generator:
 - `levels_data.c` - generated (committed) C tables for tile maps + block seeds
 - `level_state.c` - mutable block runtime (`gBlocks`), level init/clear queries
 - `level_render.c` - background composition (`gBackgroundMap`) + VRAM upload helpers
-- `assets.h`, `gameplay.h`, `levels.h`, `levels_data.h`, `levels_runtime.h`, `level_state.h`, `level_render.h` - explicit gameplay and level module boundaries
+- `ball_motion.c` - fixed-point ball position / velocity helpers + trail-offset math
+- `assets.h`, `gameplay.h`, `levels.h`, `levels_data.h`, `level_state.h`, `level_render.h` - explicit gameplay and level module boundaries
+- `fixed_point.h`, `ball_motion.h` - fixed-point primitives shared by physics and rendering
 - `gba_*.h`, `regs.h` - split platform helpers for registers, input, DMA, waits, fades, and audio
 - `start_gnu.s`, `wait_vbl_done.s`, `data_gnu.S`, `linker.ld` - public-toolchain runtime/build files
 

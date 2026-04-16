@@ -6,8 +6,7 @@ This lane translates Spanish-era naming into clearer English-oriented names whil
 
 - `demo.c` -> `app_flow.c`
 - `juego.c` -> `game_loop.c`
-- `niveles.c` -> `levels_data.c` + `levels_runtime.c`
-- `bloques.txt` -> `blocks.txt`
+- `niveles.c` -> `levels_data.c` (generated) + `level_state.c` + `level_render.c`
 - `proyecto/` -> `project/`
 - `proyecto/backup_t/` -> `project/source_art/`
 
