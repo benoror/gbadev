@@ -49,14 +49,14 @@ void C_Entry()				// Main
 	Inicia();				// Inicia Registros
 
 	MuestraDream();
-	fade_in(2, 0, 1);
+	fade_in(30, 0, 1);
 
 	Wait(100);	//Espera 3 segundos
 	
-	fade_out(2, 0, 0);
+	fade_out(30, 0, 0);
 
 	MuestraTitulo();			// Muestra el titulo
-	fade_in(2, 0, 0);
+	fade_in(30, 0, 0);
 
 	limpia_oam();
 	DMA3Call((u32)&sprite_palette, (u32)OBJ_PLTT, 0x84000080);
@@ -65,7 +65,7 @@ void C_Entry()				// Main
 	//Musica();
 	Menu();
 
-	fade_out(2, 1, 0);
+	fade_out(30, 1, 0);
 
 	IniciaBG();
 	DMA3Call((u32)&sprite_palette, (u32)OBJ_PLTT, 0x84000080);
@@ -73,15 +73,15 @@ void C_Entry()				// Main
 
 	Main(PLAYERS);
 
-	fade_out(2, 1, 0);
+	fade_out(30, 1, 0);
 	MuestraGameOver();
-	fade_in(2, 1, 0);
+	fade_in(30, 1, 0);
 	boton=joypad();			// Espera si se presiona un botón (Starr)
 	while ((boton & J_START))		// Mientras sea diferente de Start
 	{
 		boton=joypad();		// Sigue esperando a que se presione Start
 	}
-	fade_out(2, 1, 0);
+	fade_out(30, 1, 0);
  }
 
 /*<><<>><><<>><><<>><><<>><><<>><><<>><><<>><><<>><><<>><><><><<>><><<*/
@@ -97,7 +97,7 @@ void MuestraDream(void)
 
 	   	for (i=0;i<256;i++) BG_PLTT[i]=tmp_pal[i];
 
-	   	for(i=0;i<240*160;i++) BG0_DATA[i]=tmp_img[i];
+	   	for(i=0;i<19200;i++) BG0_DATA[i]=tmp_img[i];
 
    		for (y=0;y<20;y++) {
 		   for (x=0;x<30;x++) {
@@ -115,7 +115,7 @@ void MuestraTitulo(void)
 
 	   	for (i=0;i<256;i++) BG_PLTT[i]=tmp_pal[i];
 
-	   	for(i=0;i<64*600;i++) BG0_DATA[i]=tmp_img[i];
+	   	for(i=0;i<19200;i++) BG0_DATA[i]=tmp_img[i];
 
    		for (y=0;y<20;y++) {
 		   for (x=0;x<30;x++) {
@@ -160,7 +160,7 @@ void IniciaBG(void)
 
 	   	for (i=0;i<256;i++) BG_PLTT[i]=tmp_pal[i];
 
-	   	for(i=0;i<240*160;i++) BG0_DATA[i]=tmp_img[i];
+	   	for(i=0;i<1600;i++) BG0_DATA[i]=tmp_img[i];
 }
 
 void MuestraGameOver(void)
@@ -172,7 +172,7 @@ void MuestraGameOver(void)
 
 	   	for (i=0;i<256;i++) BG_PLTT[i]=tmp_pal[i];
 
-	   	for(i=0;i<64*600;i++) BG0_DATA[i]=tmp_img[i];
+	   	for(i=0;i<19200;i++) BG0_DATA[i]=tmp_img[i];
 
    		for (y=0;y<20;y++) {
 		   for (x=0;x<30;x++) {
@@ -190,7 +190,7 @@ void MuestraFin(void)
 
 	   	for (i=0;i<256;i++) BG_PLTT[i]=tmp_pal[i];
 
-	   	for(i=0;i<64*600;i++) BG0_DATA[i]=tmp_img[i];
+	   	for(i=0;i<19200;i++) BG0_DATA[i]=tmp_img[i];
 
    		for (y=0;y<20;y++) {
 		   for (x=0;x<30;x++) {
