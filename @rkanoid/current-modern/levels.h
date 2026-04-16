@@ -58,13 +58,5 @@ typedef struct
 } Block;
 
 extern Block gBlocks[162];
-extern u8 gBackgroundMap[];
-
-void ApplyShieldFloor(void);
-void CopyLevelTileMapToBackground(u16 level);
-void CopyBackgroundMapToVram(void);
-void InitializeBlocksForLevel(u16 level);
-void ResetActiveBonusPositions(void);
-u16 IsLevelCleared(void);
 
 #endif

@@ -23,4 +23,24 @@ typedef struct
     u16 ballX;
 } ServeState;
 
+typedef struct
+{
+    u16 ballX;
+    u16 ballY;
+    u16 paddleX;
+    u16 paddleY;
+    int stepX;
+    int stepY;
+} FrameState;
+
+typedef struct
+{
+    u16 playerCount;
+    u16 activePlayer;
+    u16 lives;
+    u16 level;
+    u32 score;
+    u8 *levelTileMap;
+} GameSession;
+
 #endif

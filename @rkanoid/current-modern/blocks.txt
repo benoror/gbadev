@@ -5,8 +5,10 @@ This file preserves an early block-collision sketch from the original codebase.
 
 The active implementation now lives in:
 
-- `game_loop.c` for collision orchestration
-- `levels_data.c` for level seed data
-- `levels_runtime.c` for runtime block state
+- `game_loop.c` for gameplay orchestration
+- `collisions.c` for brick + paddle collision resolution
+- `levels_data.c` for level seed + tile map tables (generated from `tools/levels_source/`)
+- `level_state.c` for runtime block state (`gBlocks`)
+- `level_render.c` for background composition + VRAM upload (`gBackgroundMap`)
 
 The old draft repeated the same hit-handling rules for each block face. The refactored lane now centralizes that logic in shared helpers while keeping the original gameplay rules intact.

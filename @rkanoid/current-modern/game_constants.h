@@ -1,0 +1,20 @@
+#ifndef RKANOID_GAME_CONSTANTS_H
+#define RKANOID_GAME_CONSTANTS_H
+
+#define MIN_X 16
+#define MIN_Y 8
+#define MAX_X 160
+
+#define BALL_TILE_SMALL 8
+#define BALL_TILE_LARGE 40
+
+#define DEFAULT_PADDLE_X 16
+#define DEFAULT_PADDLE_Y 144
+
+#define PLAYER_ONE 1
+#define PLAYER_TWO 2
+
+#define MAX_LIVES 99
+#define BLOCK_CAPACITY 162
+
+#endif
