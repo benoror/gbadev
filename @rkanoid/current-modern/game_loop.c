@@ -52,7 +52,7 @@ void RunGame(u16 playerCount)
     frame.paddleX = DEFAULT_PADDLE_X;
     frame.paddleY = DEFAULT_PADDLE_Y;
 
-    while (session.lives > 0 && session.level <= 5) {
+    while (session.lives > 0 && session.level <= 10) {
         if (session.level > 1)
             FadeOut(30, TRUE, FALSE);
 
@@ -84,7 +84,7 @@ void RunGame(u16 playerCount)
         frame.ballVelY = -FIX_ONE;
         BallNormalizeVelocity(&frame.ballVelX, &frame.ballVelY, BALL_SPEED_MAG);
 
-        while (session.lives > 0 && session.level <= 5) {
+        while (session.lives > 0 && session.level <= 10) {
             UpdateFallingBonuses(&runtime, frame.paddleX, frame.paddleY, &session.lives);
 
             buttons = ReadJoypad();

@@ -124,44 +124,30 @@ def emit_seeds(name: str, seeds: list[tuple[str, str, str, str, str, str, str]])
 
 
 def emit_getters() -> list[str]:
-    return [
-        "const BlockSeed *GetLevelBlockSeeds(u16 level, u16 *count)",
-        "{",
-        "    switch (level) {",
-        "    case 1:",
-        "        *count = sizeof(level1BlockSeeds) / sizeof(level1BlockSeeds[0]);",
-        "        return level1BlockSeeds;",
-        "    case 2:",
-        "        *count = sizeof(level2BlockSeeds) / sizeof(level2BlockSeeds[0]);",
-        "        return level2BlockSeeds;",
-        "    case 3:",
-        "        *count = sizeof(level3BlockSeeds) / sizeof(level3BlockSeeds[0]);",
-        "        return level3BlockSeeds;",
-        "    case 4:",
-        "        *count = sizeof(level4BlockSeeds) / sizeof(level4BlockSeeds[0]);",
-        "        return level4BlockSeeds;",
-        "    case 5:",
-        "        *count = sizeof(level5BlockSeeds) / sizeof(level5BlockSeeds[0]);",
-        "        return level5BlockSeeds;",
-        "    default:",
-        "        *count = 0;",
-        "        return level1BlockSeeds;",
-        "    }",
-        "}",
-        "",
-        "u8 *GetLevelTileMap(u16 level)",
-        "{",
-        "    switch (level) {",
-        "    case 1: return level1TileMap;",
-        "    case 2: return level2TileMap;",
-        "    case 3: return level3TileMap;",
-        "    case 4: return level4TileMap;",
-        "    case 5: return level5TileMap;",
-        "    default: return level1TileMap;",
-        "    }",
-        "}",
-        "",
-    ]
+    lines: list[str] = []
+    lines.append("const BlockSeed *GetLevelBlockSeeds(u16 level, u16 *count)")
+    lines.append("{")
+    lines.append("    switch (level) {")
+    for level in range(1, 11):
+        lines.append(f"    case {level}:")
+        lines.append(f"        *count = sizeof(level{level}BlockSeeds) / sizeof(level{level}BlockSeeds[0]);")
+        lines.append(f"        return level{level}BlockSeeds;")
+    lines.append("    default:")
+    lines.append("        *count = 0;")
+    lines.append("        return level1BlockSeeds;")
+    lines.append("    }")
+    lines.append("}")
+    lines.append("")
+    lines.append("u8 *GetLevelTileMap(u16 level)")
+    lines.append("{")
+    lines.append("    switch (level) {")
+    for level in range(1, 11):
+        lines.append(f"    case {level}: return level{level}TileMap;")
+    lines.append("    default: return level1TileMap;")
+    lines.append("    }")
+    lines.append("}")
+    lines.append("")
+    return lines
 
 
 def generate(paths: Paths) -> str:
@@ -175,7 +161,7 @@ def generate(paths: Paths) -> str:
     tilemaps: list[tuple[str, list[list[tuple[str, str]]]]] = []
     seed_arrays: list[tuple[str, list[tuple[str, str, str, str, str, str, str]]]] = []
 
-    for level in range(1, 6):
+    for level in range(1, 11):
         level_path = paths.source_dir / f"level{level:02d}.level"
         seeds_path = paths.source_dir / f"level{level:02d}.seeds"
         tilemaps.append((f"level{level}TileMap", read_level(level_path, tiles)))
