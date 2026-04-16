@@ -7,6 +7,7 @@ This directory is organized for long-term readability and historical preservatio
 - `current/` - most recent top-level snapshot (source + currently available assets)
 - `legacy/` - historical variants kept as separate artifacts
 - `docs/` - research and preservation documentation
+- `current-modern/` - maintainable modernization lane derived from the faithful rebuild
 - `build/original/` - original toolchain rebuild notes and attempt logs
 - `build/modern/` - modern-toolchain parallel build path
 - `build/faithful/` - comparison-focused rebuild lane closer to original startup/runtime
@@ -22,6 +23,7 @@ This directory is organized for long-term readability and historical preservatio
 - Phase 2 rebuild notes: `build/original/README.md`
 - Modern build result: `build/modern/README.md`
 - Faithful comparison lane: `build/faithful/README.md`
+- Active modernization lane: `current-modern/README.md`
 
 ## Preservation rules
 
