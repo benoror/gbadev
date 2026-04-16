@@ -9,7 +9,7 @@ OBJCOPY := $(TOOLROOT)/arm-none-eabi-objcopy
 
 TARGET := rkanoid-modern
 OBJS := start_gnu.o wait_vbl_done.o data_gnu.o app_flow.o menu.o screens.o game_sprites.o \
-	physics.o collisions.o bonuses.o serve_state.o frame_present.o \
+	ball_motion.o physics.o collisions.o bonuses.o serve_state.o frame_present.o \
 	game_loop.o levels_data.o level_state.o level_render.o
 
 CPPFLAGS := -I.
@@ -50,13 +50,17 @@ game_sprites.o: game_sprites.c game_sprites.h regs.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c game_sprites.c -o $@
 
 game_loop.o: game_loop.c gameplay.h game_sprites.h game_state.h game_constants.h levels_data.h \
-	level_state.h level_render.h physics.h collisions.h bonuses.h serve_state.h frame_present.h regs.h
+	level_state.h level_render.h physics.h collisions.h bonuses.h serve_state.h frame_present.h \
+	ball_motion.h fixed_point.h regs.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c game_loop.c -o $@
 
-physics.o: physics.c regs.h game_constants.h physics.h game_state.h
+ball_motion.o: ball_motion.c ball_motion.h fixed_point.h game_state.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c ball_motion.c -o $@
+
+physics.o: physics.c regs.h game_constants.h physics.h game_state.h ball_motion.h collisions.h fixed_point.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c physics.c -o $@
 
-collisions.o: collisions.c game_constants.h collisions.h levels.h game_state.h
+collisions.o: collisions.c game_constants.h collisions.h levels.h game_state.h ball_motion.h fixed_point.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c collisions.c -o $@
 
 bonuses.o: bonuses.c game_constants.h bonuses.h game_sprites.h levels.h level_state.h game_state.h

@@ -4,6 +4,7 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned long u32;
+typedef signed long s32;
 
 typedef struct Sprite
 {
