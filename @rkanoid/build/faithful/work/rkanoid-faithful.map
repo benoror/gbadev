@@ -1,0 +1,192 @@
+Archive member included to satisfy reference by file (symbol)
+
+/Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)
+                              demo.o (memcpy)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 start_gnu.o
+ .data          0x00000000        0x0 start_gnu.o
+ .bss           0x00000000        0x0 start_gnu.o
+ .text          0x00000000        0x0 wait_vbl_done.o
+ .data          0x00000000        0x0 wait_vbl_done.o
+ .bss           0x00000000        0x0 wait_vbl_done.o
+ .text          0x00000000        0x0 data_gnu.o
+ .data          0x00000000        0x0 data_gnu.o
+ .bss           0x00000000        0x0 data_gnu.o
+ .comment       0x00000000       0x46 demo.o
+ .text          0x00000000        0x0 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)
+ .data          0x00000000        0x0 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)
+ .bss           0x00000000        0x0 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x08000000         0x02000000         xr
+iwram            0x03000000         0x00008000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD start_gnu.o
+LOAD wait_vbl_done.o
+LOAD data_gnu.o
+LOAD demo.o
+START GROUP
+LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/libgcc.a
+LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a
+END GROUP
+START GROUP
+LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/libgcc.a
+LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a
+LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libnosys.a
+END GROUP
+
+.text           0x08000000     0x4bdc
+ *(.text._start)
+ .text._start   0x08000000      0x148 start_gnu.o
+                0x08000000                _start
+ *(.text*)
+ .text.wait_vbl_done
+                0x08000148       0x18 wait_vbl_done.o
+                0x08000148                wait_vbl_done
+ .text          0x08000160     0x4958 demo.o
+                0x08000564                joypad
+                0x08000584                DMA3Call
+                0x08000598                Wait
+                0x080005c0                fade_out
+                0x080006a4                fade_in
+                0x08000780                Sonido
+                0x080007d4                PropNivel1
+                0x08000aa8                PropNivel2
+                0x08000f3c                PropNivel3
+                0x080017f8                PropNivel4
+                0x080021ec                PropNivel5
+                0x08002740                do_mesias
+                0x0800276c                Refresca_blockMap
+                0x080027fc                IniciaPropiedadesBloques
+                0x08002950                limpia_activoBonXY
+                0x080029a4                ChecaTerminadoNivel
+                0x080029f0                FormateaDec2
+                0x08002a24                FormateaDec7
+                0x08002a7c                RefrescaBG
+                0x08002b10                EstableceBola
+                0x08002b80                RefrescaBonus
+                0x08002bc8                RefrescaLife
+                0x08002c40                RefrescaScore
+                0x08002da4                RefrescaNivel
+                0x08002dd0                EstableceRaqueta
+                0x08002ff8                limpia_oam
+                0x08003028                IniciaMovimientoRaqueta
+                0x08003230                Main
+                0x08004220                MuestraDream
+                0x080042e4                MuestraTitulo
+                0x080043a8                Menu
+                0x08004520                IniciaBG
+                0x080045a0                MuestraGameOver
+                0x08004664                C_Entry
+                0x08004948                MuestraFin
+                0x08004a0c                Musica
+                0x08004a94                Inicia
+ .text.memcpy   0x08004ab8      0x124 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)
+                0x08004ab8                memcpy
+                0x08004bdc                        . = ALIGN (0x4)
+                0x08004bdc                        __text_end = .
+
+.glue_7         0x08004bdc        0x0
+ .glue_7        0x08004bdc        0x0 linker stubs
+
+.glue_7t        0x08004bdc        0x0
+ .glue_7t       0x08004bdc        0x0 linker stubs
+
+.vfp11_veneer   0x08004bdc        0x0
+ .vfp11_veneer  0x08004bdc        0x0 linker stubs
+
+.v4_bx          0x08004bdc        0x0
+ .v4_bx         0x08004bdc        0x0 linker stubs
+
+.iplt           0x08004bdc        0x0
+ .iplt          0x08004bdc        0x0 start_gnu.o
+
+.rodata         0x08004bdc    0x27a48
+ *(.rodata*)
+ .rodata        0x08004bdc    0x27a00 data_gnu.o
+                0x08004bdc                sprites
+                0x0800555c                sprite_palette
+                0x0800575c                bg
+                0x080063dc                bg_pal
+                0x080065dc                titulo
+                0x0800fbdc                titulo_pal
+                0x0800fddc                gameOver
+                0x080193dc                gameOver_pal
+                0x080195dc                fin
+                0x08022bdc                fin_pal
+                0x08022ddc                dream
+                0x0802c3dc                dream_pal
+ .rodata        0x0802c5dc       0x48 demo.o
+ *(.rodata.*)
+                0x0802c624                        . = ALIGN (0x4)
+
+.rel.dyn        0x0802c624        0x0
+ .rel.iplt      0x0802c624        0x0 start_gnu.o
+
+.data           0x03000000      0x8bc load address 0x0802c624
+                0x03000000                        __data_start__ = .
+ *(.data*)
+ .data          0x03000000      0x8bc demo.o
+                0x03000000                bgMap
+                0x0300025c                blockMap_1
+                0x030003a0                blockMap_5
+                0x030004e4                blockMap_4
+                0x03000628                blockMap_3
+                0x0300076c                blockMap_2
+                0x030008b0                ALTO_BOLA
+                0x030008b2                ANCHO_RAQUETA
+                0x030008b4                ANCHO_BOLA
+                0x030008b6                MAX_Y
+                0x030008b8                ALTO_RAQUETA
+                0x030008ba                PLAYERS
+                0x030008bc                        . = ALIGN (0x4)
+                0x030008bc                        __data_end__ = .
+                0x0802c624                        __data_lma = LOADADDR (.data)
+
+.igot.plt       0x030008bc        0x0 load address 0x0802cee0
+ .igot.plt      0x030008bc        0x0 start_gnu.o
+
+.bss            0x030008c0     0x1960 load address 0x0802cee8
+                0x030008c0                        __bss_start__ = .
+ *(.bss*)
+ .bss           0x030008c0     0x1960 demo.o
+                0x030008c0                Inicio_Bx
+                0x030008c2                Inicio_Rx
+                0x030008c4                tmp_img
+                0x030008c8                tmp_pal
+                0x030008d0                L
+ *(COMMON)
+                0x03002220                        . = ALIGN (0x4)
+                0x03002220                        __bss_end__ = .
+                0x03002220                        end = .
+                0x03002220                        _end = .
+
+/DISCARD/
+ *(.comment*)
+ *(.note*)
+ *(.eh_frame*)
+OUTPUT(rkanoid-faithful.elf elf32-littlearm)
+LOAD linker stubs
+
+.ARM.attributes
+                0x00000000       0x26
+ .ARM.attributes
+                0x00000000       0x1a start_gnu.o
+ .ARM.attributes
+                0x0000001a       0x1a wait_vbl_done.o
+ .ARM.attributes
+                0x00000034       0x1a data_gnu.o
+ .ARM.attributes
+                0x0000004e       0x2a demo.o
+ .ARM.attributes
+                0x00000078       0x2a /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)
+
+.debug_frame    0x00000000       0x3c
+ .debug_frame   0x00000000       0x3c /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libc.a(libc_a-memcpy-stub.o)

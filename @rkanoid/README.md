@@ -9,6 +9,7 @@ This directory is organized for long-term readability and historical preservatio
 - `docs/` - research and preservation documentation
 - `build/original/` - original toolchain rebuild notes and attempt logs
 - `build/modern/` - modern-toolchain parallel build path
+- `build/faithful/` - comparison-focused rebuild lane closer to original startup/runtime
 - `archive/` - build artifacts, emulator saves, and non-source historical outputs
 
 ## Quick navigation
@@ -20,6 +21,7 @@ This directory is organized for long-term readability and historical preservatio
 - Version matrix: `docs/version-matrix.md`
 - Phase 2 rebuild notes: `build/original/README.md`
 - Modern build result: `build/modern/README.md`
+- Faithful comparison lane: `build/faithful/README.md`
 
 ## Preservation rules
 

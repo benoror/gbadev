@@ -28,7 +28,9 @@
     </p>
 
     <div class="links">
-      <a id="play-rkanoid" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Modern Recompiled)</a>
+      <a id="play-rkanoid-original" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Original Shipped ROM)</a>
+      <a id="play-rkanoid-faithful" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Faithful Comparison)</a>
+      <a id="play-rkanoid-modern" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Modern Recompiled)</a>
       <a id="play-dexgex" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play DexGex</a>
       <a id="play-cebelix" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play Cebelix</a>
       <a class="btn secondary" href="./gbajs3-app/" target="_blank" rel="noopener">Open Emulator Only</a>
@@ -37,7 +39,7 @@
 
     <iframe id="emulator-frame" src="./gbajs3-app/" title="gbajs3 emulator"></iframe>
     <div class="note">
-      gbajs3 expects <code>romURL</code> query parameter (full URL). If it still does not autoload, use the emulator UI to import from <code>public/roms/</code>.
+      Compare the original shipped ROM against the faithful and modern rebuilds. The embedded view defaults to the faithful comparison ROM. If autoload ever fails, use the emulator UI to import from <code>public/roms/</code>.
     </div>
   </div>
   <script>
@@ -46,19 +48,25 @@
       return "./gbajs3-app/?romURL=" + encodeURIComponent(romUrl);
     }
 
-    var rkanoidUrl = emulatorUrlFor("@rkanoid MODERN - RECOMPILED.gba");
+    var rkanoidOriginalUrl = emulatorUrlFor("@rkanoid LATEST - DEMO.gba");
+    var rkanoidFaithfulUrl = emulatorUrlFor("@rkanoid FAITHFUL - COMPARISON.gba");
+    var rkanoidModernUrl = emulatorUrlFor("@rkanoid MODERN - RECOMPILED.gba");
     var dexgexUrl = emulatorUrlFor("dezgex.gba");
     var cebelixUrl = emulatorUrlFor("cebelix.gba");
 
-    var rkanoidLink = document.getElementById("play-rkanoid");
+    var rkanoidOriginalLink = document.getElementById("play-rkanoid-original");
+    var rkanoidFaithfulLink = document.getElementById("play-rkanoid-faithful");
+    var rkanoidModernLink = document.getElementById("play-rkanoid-modern");
     var dexgexLink = document.getElementById("play-dexgex");
     var cebelixLink = document.getElementById("play-cebelix");
     var frame = document.getElementById("emulator-frame");
 
-    if (rkanoidLink) rkanoidLink.href = rkanoidUrl;
+    if (rkanoidOriginalLink) rkanoidOriginalLink.href = rkanoidOriginalUrl;
+    if (rkanoidFaithfulLink) rkanoidFaithfulLink.href = rkanoidFaithfulUrl;
+    if (rkanoidModernLink) rkanoidModernLink.href = rkanoidModernUrl;
     if (dexgexLink) dexgexLink.href = dexgexUrl;
     if (cebelixLink) cebelixLink.href = cebelixUrl;
-    if (frame) frame.src = rkanoidUrl;
+    if (frame) frame.src = rkanoidFaithfulUrl;
 
     if (window.location.protocol === "file:") {
       var warning = document.getElementById("file-warning");

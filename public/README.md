@@ -20,15 +20,25 @@ Then open:
 - Showcase: `http://127.0.0.1:8000/`
 - Emulator direct: `http://127.0.0.1:8000/gbajs3-app/`
 
-## ROM used by default in showcase
+## `@rkanoid` ROMs in showcase
 
-The main `@rkanoid` launch button and iframe load:
+Exposed in the showcase UI:
 
+- `public/roms/@rkanoid LATEST - DEMO.gba`
+- `public/roms/@rkanoid FAITHFUL - COMPARISON.gba`
 - `public/roms/@rkanoid MODERN - RECOMPILED.gba`
+
+Default embedded iframe loads:
+
+- `public/roms/@rkanoid FAITHFUL - COMPARISON.gba`
 
 This file is copied from:
 
-- `@rkanoid/archive/build-artifacts/modern/rkanoid-modern.bin`
+- `@rkanoid/build/faithful/work/rkanoid-faithful.bin`
+
+This file is copied from:
+
+- `@rkanoid/build/modern/work/rkanoid-modern.bin`
 
 Fallback (works for non-threaded paths only):
 

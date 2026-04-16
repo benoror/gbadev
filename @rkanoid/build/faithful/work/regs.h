@@ -49,12 +49,7 @@ void DMA3Call(u32 Src,u32 Dst,u32 Cnt)				//used to load our sprite info into vr
 	DMA3CNT = Cnt;									//how much data should be loaded
 }
 
-void wait_vbl_done(void)
-{
-	volatile u16 *vcount = (volatile u16 *)0x04000006;
-	while (*vcount >= 160) { }
-	while (*vcount < 160) { }
-}
+void wait_vbl_done(void);
 
 void Wait( u32 HowManyVSyncs )
 {
@@ -77,12 +72,12 @@ void fade_out(u8 retardo_fin, u8 sprfade, u8 bn)
  u8 Phase;
  u8 retardo_ini;
 
- if (sprfade)       //Si sprfade == 1, hacemos fade de los sprites también...
+ if (sprfade)       //Si sprfade == 1, hacemos fade de los sprites tambin...
       	{
 	if (bn == 0) { BLDMOD = 0x00FF;  }	// Si bn == 0 (negro)
 	if (bn == 1) { BLDMOD = 0x00BF;  }	// Si bn == 1 (blanco)
 	}
- else               //...si no, sólo de los fondos
+ else               //...si no, slo de los fondos
    	{
 	if (bn == 0) { BLDMOD =0x00EF;  }	// Si bn == 0 (negro)
 	if (bn == 1) { BLDMOD = 0x00AF;  }	// Si bn == 1 (blanco)
@@ -104,12 +99,12 @@ void fade_in(u8 retardo_fin, u8 sprfade, u8 bn)
  int Phase;
  u8 retardo_ini;
 
- if (sprfade)       //Si sprfade == 1, hacemos fade de los sprites también...
+ if (sprfade)       //Si sprfade == 1, hacemos fade de los sprites tambin...
       	{
 	if (bn == 0) { BLDMOD = 0x00FF;  }	// Si bn == 0 (negro)
 	if (bn == 1) { BLDMOD = 0x00BF;  }	// Si bn == 1 (blanco)
 	}
- else               //...si no, sólo de los fondos
+ else               //...si no, slo de los fondos
    	{
 	if (bn == 0) { BLDMOD = 0x00EF;  }	// Si bn == 0 (negro)
 	if (bn == 1) { BLDMOD = 0x00AF;  }	// Si bn == 1 (blanco)
