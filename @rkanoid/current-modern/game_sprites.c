@@ -6,6 +6,7 @@
 #define OFFSCREEN_Y 160
 #define OAM_CAPACITY 128
 #define SCORE_SLOT_START 1
+#define LEVEL_TENS_SLOT 0
 #define LEVEL_SLOT 8
 #define PADDLE_SLOT_START 9
 #define PADDLE_SLOT_COUNT 6
@@ -141,9 +142,19 @@ void UpdateScoreDisplay(u32 score)
 
 void UpdateLevelDisplay(u16 level)
 {
+    u16 digits[2];
+
+    FormatTwoDigits(level, digits);
+    if (digits[0] != 0) {
+        OAM[LEVEL_TENS_SLOT].Attrib0 = 0x2000 + 88;
+        OAM[LEVEL_TENS_SLOT].Attrib1 = 168;
+        OAM[LEVEL_TENS_SLOT].Attrib2 = DIGIT_TILE_BASE + (digits[0] * 2);
+    } else {
+        HideSpriteSlot(LEVEL_TENS_SLOT);
+    }
     OAM[LEVEL_SLOT].Attrib0 = 0x2000 + 88;
     OAM[LEVEL_SLOT].Attrib1 = 176;
-    OAM[LEVEL_SLOT].Attrib2 = DIGIT_TILE_BASE + (level * 2);
+    OAM[LEVEL_SLOT].Attrib2 = DIGIT_TILE_BASE + (digits[1] * 2);
 }
 
 void SetPaddleSprite(u16 x, u16 y, boolean longPaddle, u16 playerIndex)
