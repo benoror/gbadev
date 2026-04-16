@@ -11,6 +11,8 @@
 #include "bonuses.h"
 #include "serve_state.h"
 #include "frame_present.h"
+#include "ball_motion.h"
+#include "fixed_point.h"
 
 static void InitializeRuntime(RuntimeState *runtime)
 {
@@ -77,17 +79,18 @@ void RunGame(u16 playerCount)
             frame.ballX = serve.ballX;
             frame.ballY = frame.paddleY - runtime.ballHeight;
         }
-        frame.stepX = 1;
-        frame.stepY = -1;
+        BallSyncFixedFromPixels(&frame);
+        frame.ballVelX = FIX_ONE;
+        frame.ballVelY = -FIX_ONE;
+        BallNormalizeVelocity(&frame.ballVelX, &frame.ballVelY, BALL_SPEED_MAG);
 
         while (session.lives > 0 && session.level <= 5) {
             ApplyWorldBounds(&frame, &runtime, &session, &lostLife);
             if (lostLife)
                 break;
 
-            ApplyPaddleCollision(&frame, &runtime, &frame.stepX, &frame.stepY);
-            ProcessBlockCollisions(&frame, &runtime, &frame.stepX, &frame.stepY, session.levelTileMap,
-                &session.score);
+            ApplyPaddleCollision(&frame, &runtime);
+            ProcessBlockCollisions(&frame, &runtime, session.levelTileMap, &session.score);
             UpdateFallingBonuses(&runtime, frame.paddleX, frame.paddleY, &session.lives);
 
             buttons = ReadJoypad();
@@ -95,8 +98,10 @@ void RunGame(u16 playerCount)
             if (!(buttons & J_SELECT))
                 break;
 
-            frame.ballX += frame.stepX;
-            frame.ballY += frame.stepY;
+            IntegrateBallMotionThisFrame(&frame, &runtime, &session, &lostLife, session.levelTileMap,
+                &session.score);
+            if (lostLife)
+                break;
 
             PresentGameplayFrame(&frame, &runtime, session.activePlayer, session.score, &session.lives);
             if (IsLevelCleared() == TRUE) {

@@ -8,6 +8,8 @@ u16 GetPaddleSpeed(u16 buttons);
 u16 ClampPaddleX(u16 paddleX, u16 paddleWidth);
 
 void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *session, int *lostLifeThisFrame);
+void IntegrateBallMotionThisFrame(FrameState *frame, RuntimeState *runtime, GameSession *session,
+    int *lostLifeThisFrame, u8 *levelTileMap, u32 *score);
 void MovePaddleFromInput(u16 buttons, FrameState *frame, const RuntimeState *runtime);
 
 #endif

@@ -4,8 +4,7 @@
 #include "game_state.h"
 #include "gba_types.h"
 
-void ApplyPaddleCollision(const FrameState *frame, RuntimeState *runtime, int *stepX, int *stepY);
-void ProcessBlockCollisions(const FrameState *frame, RuntimeState *runtime, int *stepX, int *stepY,
-    u8 *levelTileMap, u32 *score);
+void ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime);
+boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *levelTileMap, u32 *score);
 
 #endif

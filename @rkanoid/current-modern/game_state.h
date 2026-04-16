@@ -27,10 +27,12 @@ typedef struct
 {
     u16 ballX;
     u16 ballY;
+    s32 ballPosX;
+    s32 ballPosY;
+    s32 ballVelX;
+    s32 ballVelY;
     u16 paddleX;
     u16 paddleY;
-    int stepX;
-    int stepY;
 } FrameState;
 
 typedef struct
