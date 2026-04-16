@@ -570,6 +570,98 @@ TEST_CASE(integrate_steep_velocity_catches_brick)
     CHECK_EQ(hitBrick, 1);
 }
 
+TEST_CASE(trail_offset_step_zero_is_head)
+{
+    s32 ox = 99;
+    s32 oy = 99;
+    BallComputeTrailOffset(FIX_ONE, -FIX_ONE, BALL_SPEED_MAG, 0, 2, &ox, &oy);
+    CHECK_EQ(ox, 0);
+    CHECK_EQ(oy, 0);
+}
+
+TEST_CASE(trail_offset_opposes_velocity_up_right)
+{
+    /* Moving up-right: trail should go down-left (offset negative x, positive y in screen coords). */
+    s32 vx = FIX_ONE;
+    s32 vy = -FIX_ONE;
+    BallNormalizeVelocity(&vx, &vy, BALL_SPEED_MAG);
+    s32 ox;
+    s32 oy;
+    BallComputeTrailOffset(vx, vy, BALL_SPEED_MAG, 3, 2, &ox, &oy);
+    CHECK(ox < 0);
+    CHECK(oy > 0);
+}
+
+TEST_CASE(trail_offset_opposes_velocity_down_left)
+{
+    s32 vx = -FIX_ONE;
+    s32 vy = FIX_ONE;
+    BallNormalizeVelocity(&vx, &vy, BALL_SPEED_MAG);
+    s32 ox;
+    s32 oy;
+    BallComputeTrailOffset(vx, vy, BALL_SPEED_MAG, 3, 2, &ox, &oy);
+    CHECK(ox > 0);
+    CHECK(oy < 0);
+}
+
+TEST_CASE(trail_offset_grows_monotonically_with_step)
+{
+    /* Offset magnitude should be non-decreasing across trail slots. */
+    s32 vx = FIX_ONE;
+    s32 vy = -FIX_ONE;
+    BallNormalizeVelocity(&vx, &vy, BALL_SPEED_MAG);
+    u16 k;
+    s32 lastAbs = -1;
+    for (k = 0; k < 6; k++) {
+        s32 ox, oy;
+        BallComputeTrailOffset(vx, vy, BALL_SPEED_MAG, k, 2, &ox, &oy);
+        s32 absOx = ox < 0 ? -ox : ox;
+        s32 absOy = oy < 0 ? -oy : oy;
+        s32 totalAbs = absOx + absOy;
+        CHECK(totalAbs >= lastAbs);
+        lastAbs = totalAbs;
+    }
+}
+
+TEST_CASE(trail_offset_steep_angle_favors_y_axis)
+{
+    /* Steep angle: |vy| >> |vx|; trail offset should be mostly vertical. */
+    s32 vx = FIX_ONE / 2;
+    s32 vy = -FIX_FROM_INT(2);
+    BallNormalizeVelocity(&vx, &vy, BALL_SPEED_MAG);
+    s32 ox;
+    s32 oy;
+    BallComputeTrailOffset(vx, vy, BALL_SPEED_MAG, 5, 2, &ox, &oy);
+    s32 absOx = ox < 0 ? -ox : ox;
+    s32 absOy = oy < 0 ? -oy : oy;
+    CHECK(absOy > absOx);
+    CHECK(oy > 0); /* moving up → trail goes down */
+}
+
+TEST_CASE(trail_offset_shallow_angle_favors_x_axis)
+{
+    /* Shallow angle: |vx| >> |vy|; trail offset mostly horizontal. */
+    s32 vx = -FIX_FROM_INT(2);
+    s32 vy = FIX_ONE / 2;
+    BallNormalizeVelocity(&vx, &vy, BALL_SPEED_MAG);
+    s32 ox;
+    s32 oy;
+    BallComputeTrailOffset(vx, vy, BALL_SPEED_MAG, 5, 2, &ox, &oy);
+    s32 absOx = ox < 0 ? -ox : ox;
+    s32 absOy = oy < 0 ? -oy : oy;
+    CHECK(absOx > absOy);
+    CHECK(ox > 0); /* moving left → trail goes right */
+}
+
+TEST_CASE(trail_offset_zero_velocity_yields_zero)
+{
+    s32 ox = 7;
+    s32 oy = 7;
+    BallComputeTrailOffset(0, 0, BALL_SPEED_MAG, 4, 2, &ox, &oy);
+    CHECK_EQ(ox, 0);
+    CHECK_EQ(oy, 0);
+}
+
 TEST_CASE(ball_never_lands_outside_playfield_after_snap)
 {
     FrameState frame;
@@ -621,6 +713,13 @@ int main(void)
         brick_pierce_with_trail_destroys_and_keeps_velocity_wrapper,
         integrate_keeps_constant_speed_across_frames_wrapper,
         integrate_steep_velocity_catches_brick_wrapper,
+        trail_offset_step_zero_is_head_wrapper,
+        trail_offset_opposes_velocity_up_right_wrapper,
+        trail_offset_opposes_velocity_down_left_wrapper,
+        trail_offset_grows_monotonically_with_step_wrapper,
+        trail_offset_steep_angle_favors_y_axis_wrapper,
+        trail_offset_shallow_angle_favors_x_axis_wrapper,
+        trail_offset_zero_velocity_yields_zero_wrapper,
         ball_never_lands_outside_playfield_after_snap_wrapper,
     };
     size_t n = sizeof(tests) / sizeof(tests[0]);

@@ -1,5 +1,6 @@
 #include "regs.h"
 #include "game_sprites.h"
+#include "ball_motion.h"
 
 #define OFFSCREEN_X 240
 #define OFFSCREEN_Y 160
@@ -19,22 +20,15 @@
 typedef struct
 {
     signed char xOffset;
-    signed char yOffset;
-    u16 tileOffset;
-} TrailStep;
-
-typedef struct
-{
-    signed char xOffset;
     u16 centerTile;
 } PaddleSegment;
 
-static const TrailStep kTrailSteps[4][BALL_TRAIL_SLOT_COUNT] = {
-    {{0, 0, 30}, {2, 2, 30}, {4, 4, 32}, {6, 6, 34}, {8, 8, 36}, {10, 10, 38}},
-    {{0, 0, 30}, {2, -2, 30}, {4, -4, 32}, {6, -6, 34}, {8, -8, 36}, {10, -10, 38}},
-    {{0, 0, 30}, {-2, 2, 30}, {-4, 4, 32}, {-6, 6, 34}, {-8, 8, 36}, {-10, 10, 38}},
-    {{0, 0, 30}, {-2, -2, 30}, {-4, -4, 32}, {-6, -6, 34}, {-8, -8, 36}, {-10, -10, 38}},
-};
+/* Tile per trail slot (head + 5 fade steps). Previously varied per direction but is the same
+ * across all four legacy layouts — the direction only changed the positional offsets. */
+static const u16 kTrailTiles[BALL_TRAIL_SLOT_COUNT] = {30, 30, 32, 34, 36, 38};
+
+/* Pixel spacing between consecutive trail slots along the motion direction. */
+#define TRAIL_STEP_SPACING 2
 
 static const PaddleSegment kShortPaddle[PADDLE_SLOT_COUNT] = {
     {0, 0}, {8, 2}, {16, 4}, {24, 6}, {0, 4}, {0, 6},
@@ -78,15 +72,18 @@ void ClearAllSprites(void)
         HideSpriteSlot(slot);
 }
 
-void SetBallSprite(u16 x, u16 y, boolean trailEnabled, u16 direction, u16 ballTileBase)
+void SetBallSprite(u16 x, u16 y, boolean trailEnabled, s32 velX, s32 velY, u16 ballTileBase)
 {
     u16 step;
 
     if (trailEnabled == TRUE) {
         for (step = 0; step < BALL_TRAIL_SLOT_COUNT; ++step) {
-            OAM[BALL_SLOT_HEAD + step].Attrib0 = 0x2000 + y + kTrailSteps[direction][step].yOffset;
-            OAM[BALL_SLOT_HEAD + step].Attrib1 = x + kTrailSteps[direction][step].xOffset;
-            OAM[BALL_SLOT_HEAD + step].Attrib2 = kTrailSteps[direction][step].tileOffset;
+            s32 offX;
+            s32 offY;
+            BallComputeTrailOffset(velX, velY, BALL_SPEED_MAG, step, TRAIL_STEP_SPACING, &offX, &offY);
+            OAM[BALL_SLOT_HEAD + step].Attrib0 = 0x2000 + (u16)((s32)y + offY);
+            OAM[BALL_SLOT_HEAD + step].Attrib1 = (u16)((s32)x + offX);
+            OAM[BALL_SLOT_HEAD + step].Attrib2 = kTrailTiles[step];
         }
         return;
     }
