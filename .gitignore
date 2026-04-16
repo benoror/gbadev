@@ -1,2 +1,15 @@
 .DS_Store
 *.sav
+
+# Build artifacts
+*.o
+*.elf
+*.bin
+*.map
+
+# Python
+__pycache__/
+*.pyc
+
+# Test runners
+@rkanoid/current-modern/tests/test_runner

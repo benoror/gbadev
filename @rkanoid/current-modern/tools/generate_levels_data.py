@@ -3,18 +3,19 @@
 Deterministically regenerate `levels_data.c` from small text sources.
 
 Inputs (committed):
-  tools/levels_source/level01.tilemap
-  tools/levels_source/level01.seeds
+  tools/levels_source/tiles.map       shared glyph -> (left, right) tile mapping
+  tools/levels_source/level01.level   9x18 glyph grid (whitespace-separated cells)
+  tools/levels_source/level01.seeds   block seeds (bonuses, hit counts)
   ... level05.*
 
-Tilemap format:
-  - 18 non-empty lines
-  - each line has 9 tab-separated cells
-  - each cell is `LEFT,RIGHT` where LEFT/RIGHT are either decimal integers or C identifiers
-    (typically `TILE_*` macros from `levels.h`)
+Level format:
+  - 18 non-empty, non-comment rows
+  - each row has 9 whitespace-separated tokens (one brick per token)
+  - each token is a glyph defined in tiles.map (ASCII letter, '.', or emoji)
 
-Note: a logical row is 9 brick-columns wide, but each column is stored as two `u8` tile indices
-(LEFT/RIGHT halves). That matches the 18-wide `u8` indexing used by `CopyLevelTileMapToBackground()`.
+Tiles.map format:
+  - `<glyph> <left_tile> <right_tile>` per non-comment line
+  - multiple glyphs may map to the same tile pair (aliases)
 
 Seeds format:
   - one seed per non-empty, non-comment line
@@ -27,12 +28,8 @@ This generator is intentionally boring: stable ordering, stable whitespace, and 
 from __future__ import annotations
 
 import argparse
-import re
 from dataclasses import dataclass
 from pathlib import Path
-
-
-CELL_RE = re.compile(r"^([^,]+),([^,]+)$")
 
 
 @dataclass(frozen=True)
@@ -42,27 +39,41 @@ class Paths:
     source_dir: Path
 
 
-def read_tilemap(path: Path) -> list[list[tuple[str, str]]]:
+def read_tiles_map(path: Path) -> dict[str, tuple[str, str]]:
+    mapping: dict[str, tuple[str, str]] = {}
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split()
+        if len(parts) != 3:
+            raise ValueError(f"{path}: expected `<glyph> <left> <right>` in {raw!r}")
+        glyph, left, right = parts
+        if glyph in mapping and mapping[glyph] != (left, right):
+            raise ValueError(f"{path}: glyph {glyph!r} already maps to {mapping[glyph]}, cannot remap to {(left, right)}")
+        mapping[glyph] = (left, right)
+    if not mapping:
+        raise ValueError(f"{path}: no glyph mappings found")
+    return mapping
+
+
+def read_level(path: Path, tiles: dict[str, tuple[str, str]]) -> list[list[tuple[str, str]]]:
     lines = [ln.rstrip("\n") for ln in path.read_text(encoding="utf-8").splitlines()]
     lines = [ln for ln in lines if ln.strip() and not ln.lstrip().startswith("#")]
     if len(lines) != 18:
-        raise ValueError(f"{path}: expected 18 tilemap rows, got {len(lines)}")
+        raise ValueError(f"{path}: expected 18 rows, got {len(lines)}")
 
     grid: list[list[tuple[str, str]]] = []
     for row_index, ln in enumerate(lines, start=1):
-        cells = ln.split("\t")
-        if len(cells) != 9:
-            raise ValueError(f"{path}: row {row_index} expected 9 tab-separated cells, got {len(cells)}")
+        tokens = ln.split()
+        if len(tokens) != 9:
+            raise ValueError(f"{path}: row {row_index} expected 9 glyphs, got {len(tokens)} ({ln!r})")
         row: list[tuple[str, str]] = []
-        for col_index, cell in enumerate(cells, start=1):
-            c = cell.strip()
-            m = CELL_RE.match(c)
-            if not m:
-                raise ValueError(f"{path}: row {row_index} col {col_index} bad cell {cell!r}")
-            left, right = m.group(1).strip(), m.group(2).strip()
-            if not left or not right:
-                raise ValueError(f"{path}: row {row_index} col {col_index} empty half in {cell!r}")
-            row.append((left, right))
+        for col_index, glyph in enumerate(tokens, start=1):
+            pair = tiles.get(glyph)
+            if pair is None:
+                raise ValueError(f"{path}: row {row_index} col {col_index} unknown glyph {glyph!r}")
+            row.append(pair)
         grid.append(row)
     return grid
 
@@ -159,13 +170,15 @@ def generate(paths: Paths) -> str:
     chunks.append('#include "levels.h"')
     chunks.append("")
 
+    tiles = read_tiles_map(paths.source_dir / "tiles.map")
+
     tilemaps: list[tuple[str, list[list[tuple[str, str]]]]] = []
     seed_arrays: list[tuple[str, list[tuple[str, str, str, str, str, str, str]]]] = []
 
     for level in range(1, 6):
-        tilemap_path = paths.source_dir / f"level{level:02d}.tilemap"
+        level_path = paths.source_dir / f"level{level:02d}.level"
         seeds_path = paths.source_dir / f"level{level:02d}.seeds"
-        tilemaps.append((f"level{level}TileMap", read_tilemap(tilemap_path)))
+        tilemaps.append((f"level{level}TileMap", read_level(level_path, tiles)))
         seed_arrays.append((f"level{level}BlockSeeds", read_seeds(seeds_path)))
 
     for name, grid in tilemaps:

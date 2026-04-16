@@ -1,0 +1,24 @@
+# Glyph legend for .level files.
+#
+# Each line maps ONE glyph to a brick's two u8 tile halves (left, right).
+# Multiple glyphs may map to the same tile pair so you can pick whichever
+# renders best in your editor.
+#
+# Blank lines and lines starting with '#' are ignored.
+#
+# Format: <glyph> <whitespace> <left> <whitespace> <right>
+#
+# glyph  left              right
+.        TILE_EMPTY_1      TILE_EMPTY_2
+B        TILE_BLUE_1       TILE_BLUE_2
+R        TILE_RED_1        TILE_RED_2
+G        TILE_GREEN_1      TILE_GREEN_2
+Y        TILE_YELLOW_1     TILE_YELLOW_2
+O        TILE_BROWN_1      TILE_BROWN_2
+A        TILE_GRAY_1       TILE_GRAY_2
+P        TILE_PURPLE_1     TILE_PURPLE_2
+K        TILE_PINK_1       TILE_PINK_2
+M        TILE_SMILE_1      TILE_SMILE_2
+T        TILE_TITANIUM_1   TILE_TITANIUM_2
+I        TILE_IRIS_1       TILE_IRIS_2
+S        TILE_SHIELD_1     TILE_SHIELD_2
