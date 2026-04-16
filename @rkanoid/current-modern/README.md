@@ -27,6 +27,20 @@ make
 make publish
 ```
 
+One-shot manual-test pipeline (regen levels → verify → build ROM → publish):
+
+```sh
+make ship         # incremental (fast)
+make ship-clean   # clean rebuild
+```
+
+Standalone verification (physics tests + `levels_data.c` drift check), ideal for CI or
+pre-commit hooks:
+
+```sh
+make check
+```
+
 ## Asset pipeline
 
 Rebuild generated `.raw` / `.pal` assets from preserved BMPs:

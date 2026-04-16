@@ -104,4 +104,25 @@ test: tests/test_runner
 tests/test_runner: $(TEST_SOURCES) tests/regs.h
 	$(TEST_CC) $(TEST_CFLAGS) $(TEST_SOURCES) -lm -o $@
 
-.PHONY: all assets levels-data levels-data-check publish clean test
+# Aggregate verification: physics tests + `levels_data.c` consistency with sources.
+# Use in CI / pre-commit hooks, or any time you want a full check without building the ROM.
+check:
+	$(MAKE) test
+	$(MAKE) levels-data-check
+
+# One-shot manual-test pipeline: regenerate level data from .level + .seeds sources,
+# verify everything, rebuild the ROM, and copy it into public/roms/ so the emulator
+# picks up the new layout on next reload. Stops on the first failure.
+ship:
+	$(MAKE) levels-data
+	$(MAKE) check
+	$(MAKE) publish
+
+# Same as ship but with a clean slate (safer if you suspect stale artifacts).
+ship-clean:
+	$(MAKE) clean
+	$(MAKE) levels-data
+	$(MAKE) check
+	$(MAKE) publish
+
+.PHONY: all assets levels-data levels-data-check publish clean test check ship ship-clean
