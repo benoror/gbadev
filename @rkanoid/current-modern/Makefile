@@ -92,5 +92,16 @@ publish: $(TARGET).bin
 
 clean:
 	rm -f *.o *.elf *.bin *.map
+	rm -f tests/test_runner
 
-.PHONY: all assets levels-data levels-data-check publish clean
+TEST_CC := gcc
+TEST_CFLAGS := -std=gnu99 -Wall -Wno-unused-function -O1 -g -iquote tests -iquote .
+TEST_SOURCES := tests/test_physics.c ball_motion.c collisions.c physics.c
+
+test: tests/test_runner
+	./tests/test_runner
+
+tests/test_runner: $(TEST_SOURCES) tests/regs.h
+	$(TEST_CC) $(TEST_CFLAGS) $(TEST_SOURCES) -lm -o $@
+
+.PHONY: all assets levels-data levels-data-check publish clean test

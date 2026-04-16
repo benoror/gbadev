@@ -24,12 +24,20 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
     *lostLifeThisFrame = 0;
 
     if (frame->ballX >= (MAX_X - runtime->ballWidth)) {
-        frame->ballVelX = -frame->ballVelX;
-        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        if (frame->ballVelX > 0) {
+            frame->ballVelX = -frame->ballVelX;
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        }
+        frame->ballPosX = FIX_FROM_INT((s32)MAX_X - (s32)runtime->ballWidth - 1);
+        Ball_SyncPixelsFromFixedPos(frame);
     }
     if (frame->ballX <= MIN_X) {
-        frame->ballVelX = -frame->ballVelX;
-        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        if (frame->ballVelX < 0) {
+            frame->ballVelX = -frame->ballVelX;
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        }
+        frame->ballPosX = FIX_FROM_INT((s32)MIN_X + 1);
+        Ball_SyncPixelsFromFixedPos(frame);
     }
     if (frame->ballY >= (runtime->maxBallY - runtime->ballHeight)) {
         if (runtime->shieldActive == FALSE) {
@@ -37,14 +45,22 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
             *lostLifeThisFrame = 1;
             return;
         }
-        frame->ballVelY = -frame->ballVelY;
-        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        if (frame->ballVelY > 0) {
+            frame->ballVelY = -frame->ballVelY;
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        }
+        frame->ballPosY = FIX_FROM_INT((s32)runtime->maxBallY - (s32)runtime->ballHeight - 1);
+        Ball_SyncPixelsFromFixedPos(frame);
         runtime->shieldActive = FALSE;
         runtime->maxBallY = 160;
     }
     if (frame->ballY <= MIN_Y) {
-        frame->ballVelY = -frame->ballVelY;
-        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        if (frame->ballVelY < 0) {
+            frame->ballVelY = -frame->ballVelY;
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        }
+        frame->ballPosY = FIX_FROM_INT((s32)MIN_Y + 1);
+        Ball_SyncPixelsFromFixedPos(frame);
     }
 }
 
@@ -114,6 +130,15 @@ void IntegrateBallMotionThisFrame(FrameState *frame, RuntimeState *runtime, Game
             }
 
             if (ProcessBlockCollisions(frame, runtime, levelTileMap, score) == TRUE) {
+                ri = (s32)n - (s32)i;
+                remX = (frame->ballVelX * ri) / (s32)n;
+                remY = (frame->ballVelY * ri) / (s32)n;
+                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                hitSegment = 1;
+                break;
+            }
+
+            if (ApplyPaddleCollision(frame, runtime) == TRUE) {
                 ri = (s32)n - (s32)i;
                 remX = (frame->ballVelX * ri) / (s32)n;
                 remY = (frame->ballVelY * ri) / (s32)n;

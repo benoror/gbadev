@@ -14,9 +14,9 @@ void BallNormalizeVelocity(s32 *vx, s32 *vy, s32 speedMag)
     vy0 = *vy;
     mag2_u = (u32)(vx0 * vx0 + vy0 * vy0);
     if (mag2_u == 0) {
-        *vx = FIX_ONE;
-        *vy = -FIX_ONE;
-        mag2_u = (u32)(FIX_ONE * FIX_ONE + FIX_ONE * FIX_ONE);
+        vx0 = FIX_ONE;
+        vy0 = -FIX_ONE;
+        mag2_u = (u32)(vx0 * vx0 + vy0 * vy0);
     }
 
     mag = u32_isqrt(mag2_u);
@@ -40,8 +40,21 @@ void BallSyncFixedFromPixels(FrameState *frame)
 
 void Ball_SyncPixelsFromFixedPos(FrameState *frame)
 {
-    frame->ballX = (u16)FIX_TO_INT_ROUND(frame->ballPosX);
-    frame->ballY = (u16)FIX_TO_INT_ROUND(frame->ballPosY);
+    s32 rx;
+    s32 ry;
+
+    rx = FIX_TO_INT_ROUND(frame->ballPosX);
+    ry = FIX_TO_INT_ROUND(frame->ballPosY);
+    if (rx < 0)
+        rx = 0;
+    if (ry < 0)
+        ry = 0;
+    if (rx > 511)
+        rx = 511;
+    if (ry > 255)
+        ry = 255;
+    frame->ballX = (u16)rx;
+    frame->ballY = (u16)ry;
 }
 
 void BallIntegrateAndSyncPixels(FrameState *frame)
