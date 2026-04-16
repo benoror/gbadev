@@ -82,7 +82,7 @@ LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.r
 LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libnosys.a
 END GROUP
 
-.text           0x08000000     0x1c74
+.text           0x08000000     0x1ca0
  *(.text._start)
  .text._start   0x08000000      0x148 start_gnu.o
                 0x08000000                _start
@@ -92,100 +92,100 @@ END GROUP
                 0x08000148                wait_vbl_done
  .text          0x08000160      0x230 app_flow.o
                 0x08000160                C_Entry
- .text          0x08000390      0x154 menu.o
+ .text          0x08000390      0x178 menu.o
                 0x08000390                RunMainMenu
- .text          0x080004e4      0x1d8 screens.o
-                0x08000588                InitializeDisplay
-                0x080005ac                LoadSpriteGraphics
-                0x08000604                LoadGameplayBackground
-                0x0800066c                ShowSplashScreen
-                0x08000680                ShowTitleScreen
-                0x08000694                ShowGameOverScreen
-                0x080006a8                ShowEndingScreen
- .text          0x080006bc      0x3b8 game_sprites.o
-                0x080006bc                ClearAllSprites
-                0x080006ec                SetBallSprite
-                0x080007b4                UpdateBonusSprite
-                0x080007fc                HideBonusSprite
-                0x08000844                UpdateLifeDisplay
-                0x080008bc                UpdateScoreDisplay
-                0x08000968                UpdateLevelDisplay
-                0x08000994                SetPaddleSprite
- .text          0x08000a74      0x180 physics.o
-                0x08000a74                GetPaddleSpeed
-                0x08000a84                ClampPaddleX
-                0x08000aa8                ApplyWorldBounds
-                0x08000b48                MovePaddleFromInput
- .text          0x08000bf4      0x450 collisions.o
-                0x08000d2c                ApplyPaddleCollision
-                0x08000e44                ProcessBlockCollisions
- .text          0x08001044      0x1c8 bonuses.o
-                0x08001044                UpdateFallingBonuses
- .text          0x0800120c      0x1e0 serve_state.o
-                0x0800120c                RunServeState
- .text          0x080013ec      0x154 frame_present.o
-                0x080013ec                PresentGameplayFrame
- .text          0x08001540      0x318 game_loop.o
-                0x08001540                RunGame
- .text          0x08001858       0xbc levels_data.o
-                0x08001858                GetLevelBlockSeeds
-                0x080018e8                GetLevelTileMap
- .text          0x08001914      0x240 level_state.o
-                0x08001914                ResetBlock
-                0x08001958                HideBonus
-                0x08001978                InitializeBlocksForLevel
-                0x08001ab8                ResetActiveBonusPositions
-                0x08001b0c                IsLevelCleared
- .text          0x08001b54      0x120 level_render.o
-                0x08001b54                ApplyShieldFloor
-                0x08001b80                CopyLevelTileMapToBackground
-                0x08001bc8                CopyBackgroundMapToVram
-                0x08001c18                RefreshBackground
-                0x08001c74                        . = ALIGN (0x4)
-                0x08001c74                        __text_end = .
+ .text          0x08000508      0x1d8 screens.o
+                0x080005ac                InitializeDisplay
+                0x080005d0                LoadSpriteGraphics
+                0x08000628                LoadGameplayBackground
+                0x08000690                ShowSplashScreen
+                0x080006a4                ShowTitleScreen
+                0x080006b8                ShowGameOverScreen
+                0x080006cc                ShowEndingScreen
+ .text          0x080006e0      0x3b8 game_sprites.o
+                0x080006e0                ClearAllSprites
+                0x08000710                SetBallSprite
+                0x080007d8                UpdateBonusSprite
+                0x08000820                HideBonusSprite
+                0x08000868                UpdateLifeDisplay
+                0x080008e0                UpdateScoreDisplay
+                0x0800098c                UpdateLevelDisplay
+                0x080009b8                SetPaddleSprite
+ .text          0x08000a98      0x180 physics.o
+                0x08000a98                GetPaddleSpeed
+                0x08000aa8                ClampPaddleX
+                0x08000acc                ApplyWorldBounds
+                0x08000b6c                MovePaddleFromInput
+ .text          0x08000c18      0x450 collisions.o
+                0x08000d50                ApplyPaddleCollision
+                0x08000e68                ProcessBlockCollisions
+ .text          0x08001068      0x1c8 bonuses.o
+                0x08001068                UpdateFallingBonuses
+ .text          0x08001230      0x1e8 serve_state.o
+                0x08001230                RunServeState
+ .text          0x08001418      0x154 frame_present.o
+                0x08001418                PresentGameplayFrame
+ .text          0x0800156c      0x318 game_loop.o
+                0x0800156c                RunGame
+ .text          0x08001884       0xbc levels_data.o
+                0x08001884                GetLevelBlockSeeds
+                0x08001914                GetLevelTileMap
+ .text          0x08001940      0x240 level_state.o
+                0x08001940                ResetBlock
+                0x08001984                HideBonus
+                0x080019a4                InitializeBlocksForLevel
+                0x08001ae4                ResetActiveBonusPositions
+                0x08001b38                IsLevelCleared
+ .text          0x08001b80      0x120 level_render.o
+                0x08001b80                ApplyShieldFloor
+                0x08001bac                CopyLevelTileMapToBackground
+                0x08001bf4                CopyBackgroundMapToVram
+                0x08001c44                RefreshBackground
+                0x08001ca0                        . = ALIGN (0x4)
+                0x08001ca0                        __text_end = .
 
-.glue_7         0x08001c74        0x0
- .glue_7        0x08001c74        0x0 linker stubs
+.glue_7         0x08001ca0        0x0
+ .glue_7        0x08001ca0        0x0 linker stubs
 
-.glue_7t        0x08001c74        0x0
- .glue_7t       0x08001c74        0x0 linker stubs
+.glue_7t        0x08001ca0        0x0
+ .glue_7t       0x08001ca0        0x0 linker stubs
 
-.vfp11_veneer   0x08001c74        0x0
- .vfp11_veneer  0x08001c74        0x0 linker stubs
+.vfp11_veneer   0x08001ca0        0x0
+ .vfp11_veneer  0x08001ca0        0x0 linker stubs
 
-.v4_bx          0x08001c74        0x0
- .v4_bx         0x08001c74        0x0 linker stubs
+.v4_bx          0x08001ca0        0x0
+ .v4_bx         0x08001ca0        0x0 linker stubs
 
-.iplt           0x08001c74        0x0
- .iplt          0x08001c74        0x0 start_gnu.o
+.iplt           0x08001ca0        0x0
+ .iplt          0x08001ca0        0x0 start_gnu.o
 
-.rodata         0x08001c74    0x286c4
+.rodata         0x08001ca0    0x286c4
  *(.rodata*)
- .rodata        0x08001c74    0x27a00 data_gnu.o
-                0x08001c74                spriteTiles
-                0x080025f4                spritePalette
-                0x080027f4                backgroundTiles
-                0x08003474                backgroundPalette
-                0x08003674                titleScreenTiles
-                0x0800cc74                titleScreenPalette
-                0x0800ce74                gameOverScreenTiles
-                0x08016474                gameOverScreenPalette
-                0x08016674                endingScreenTiles
-                0x0801fc74                endingScreenPalette
-                0x0801fe74                splashScreenTiles
-                0x08029474                splashScreenPalette
- .rodata        0x08029674        0x8 menu.o
- .rodata        0x0802967c       0x90 game_sprites.o
- .rodata        0x0802970c       0x11 bonuses.o
- *fill*         0x0802971d        0x3 
- .rodata        0x08029720      0xc18 levels_data.o
+ .rodata        0x08001ca0    0x27a00 data_gnu.o
+                0x08001ca0                spriteTiles
+                0x08002620                spritePalette
+                0x08002820                backgroundTiles
+                0x080034a0                backgroundPalette
+                0x080036a0                titleScreenTiles
+                0x0800cca0                titleScreenPalette
+                0x0800cea0                gameOverScreenTiles
+                0x080164a0                gameOverScreenPalette
+                0x080166a0                endingScreenTiles
+                0x0801fca0                endingScreenPalette
+                0x0801fea0                splashScreenTiles
+                0x080294a0                splashScreenPalette
+ .rodata        0x080296a0        0x8 menu.o
+ .rodata        0x080296a8       0x90 game_sprites.o
+ .rodata        0x08029738       0x11 bonuses.o
+ *fill*         0x08029749        0x3 
+ .rodata        0x0802974c      0xc18 levels_data.o
  *(.rodata.*)
-                0x0802a338                        . = ALIGN (0x4)
+                0x0802a364                        . = ALIGN (0x4)
 
-.rel.dyn        0x0802a338        0x0
- .rel.iplt      0x0802a338        0x0 start_gnu.o
+.rel.dyn        0x0802a364        0x0
+ .rel.iplt      0x0802a364        0x0 start_gnu.o
 
-.data           0x03000000      0x8b0 load address 0x0802a338
+.data           0x03000000      0x8b0 load address 0x0802a364
                 0x03000000                        __data_start__ = .
  *(.data*)
  .data          0x03000000      0x654 levels_data.o
@@ -194,12 +194,12 @@ END GROUP
                 0x030008b0                        . = ALIGN (0x4)
  *fill*         0x030008ad        0x3 
                 0x030008b0                        __data_end__ = .
-                0x0802a338                        __data_lma = LOADADDR (.data)
+                0x0802a364                        __data_lma = LOADADDR (.data)
 
-.igot.plt       0x030008b0        0x0 load address 0x0802abe8
+.igot.plt       0x030008b0        0x0 load address 0x0802ac14
  .igot.plt      0x030008b0        0x0 start_gnu.o
 
-.bss            0x030008b0     0x1950 load address 0x0802abe8
+.bss            0x030008b0     0x1950 load address 0x0802ac18
                 0x030008b0                        __bss_start__ = .
  *(.bss*)
  .bss           0x030008b0     0x1950 level_state.o
