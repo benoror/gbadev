@@ -43,18 +43,47 @@ and reads BMPs from:
 
 - `project/source_art/`
 
+## Level data generation
+
+Level tile maps + block seeds are generated into `levels_data.c` from:
+
+- `tools/levels_source/levelXX.{tilemap,seeds}`
+
+Commands:
+
+```sh
+make levels-data
+make levels-data-check
+```
+
+Generator:
+
+- `tools/generate_levels_data.py`
+
 ## Structure
 
 - `app_flow.c` - entry flow, fades, and top-level screen sequencing
 - `menu.c` - title menu input and cursor sprites
 - `screens.c` - shared full-screen presenters and background/sprite asset loading
-- `game_loop.c` - gameplay orchestration, serve state, collisions, and bonuses
+- `game_loop.c` - gameplay loop orchestration (round/level flow), calling focused helpers
+- `physics.c` - paddle movement + world/ball bounds rules
+- `collisions.c` - paddle + brick collision resolution
+- `bonuses.c` - falling bonus motion + pickup rules
+- `serve_state.c` - pre-serve paddle/ball positioning + input
+- `frame_present.c` - per-frame sprite/HUD presentation sequencing
 - `game_sprites.c` - OAM layout, HUD digits, paddle, ball, and bonus sprite helpers
-- `levels_data.c` - data-driven level seeds and tile maps
-- `levels_runtime.c` - runtime block initialization and background map synchronization
-- `assets.h`, `gameplay.h`, `levels.h`, `levels_data.h`, `levels_runtime.h` - explicit gameplay and level module boundaries
+- `levels_data.c` - generated (committed) C tables for tile maps + block seeds
+- `level_state.c` - mutable block runtime (`gBlocks`), level init/clear queries
+- `level_render.c` - background composition (`gBackgroundMap`) + VRAM upload helpers
+- `assets.h`, `gameplay.h`, `levels.h`, `levels_data.h`, `levels_runtime.h`, `level_state.h`, `level_render.h` - explicit gameplay and level module boundaries
 - `gba_*.h`, `regs.h` - split platform helpers for registers, input, DMA, waits, fades, and audio
 - `start_gnu.s`, `wait_vbl_done.s`, `data_gnu.S`, `linker.ld` - public-toolchain runtime/build files
+
+### Sprite module note
+
+`game_sprites.c` is intentionally still a **single module** after the gameplay split: it is ~175 LOC,
+mostly static tables + small OAM writers, and splitting further would mostly churn include edges
+without improving readability yet.
 
 ## Translation pass
 
