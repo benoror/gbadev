@@ -82,7 +82,7 @@ LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.r
 LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libnosys.a
 END GROUP
 
-.text           0x08000000     0x1ca0
+.text           0x08000000     0x1cd8
  *(.text._start)
  .text._start   0x08000000      0x148 start_gnu.o
                 0x08000000                _start
@@ -116,76 +116,76 @@ END GROUP
                 0x08000aa8                ClampPaddleX
                 0x08000acc                ApplyWorldBounds
                 0x08000b6c                MovePaddleFromInput
- .text          0x08000c18      0x450 collisions.o
+ .text          0x08000c18      0x488 collisions.o
                 0x08000d50                ApplyPaddleCollision
                 0x08000e68                ProcessBlockCollisions
- .text          0x08001068      0x1c8 bonuses.o
-                0x08001068                UpdateFallingBonuses
- .text          0x08001230      0x1e8 serve_state.o
-                0x08001230                RunServeState
- .text          0x08001418      0x154 frame_present.o
-                0x08001418                PresentGameplayFrame
- .text          0x0800156c      0x318 game_loop.o
-                0x0800156c                RunGame
- .text          0x08001884       0xbc levels_data.o
-                0x08001884                GetLevelBlockSeeds
-                0x08001914                GetLevelTileMap
- .text          0x08001940      0x240 level_state.o
-                0x08001940                ResetBlock
-                0x08001984                HideBonus
-                0x080019a4                InitializeBlocksForLevel
-                0x08001ae4                ResetActiveBonusPositions
-                0x08001b38                IsLevelCleared
- .text          0x08001b80      0x120 level_render.o
-                0x08001b80                ApplyShieldFloor
-                0x08001bac                CopyLevelTileMapToBackground
-                0x08001bf4                CopyBackgroundMapToVram
-                0x08001c44                RefreshBackground
-                0x08001ca0                        . = ALIGN (0x4)
-                0x08001ca0                        __text_end = .
+ .text          0x080010a0      0x1c8 bonuses.o
+                0x080010a0                UpdateFallingBonuses
+ .text          0x08001268      0x1e8 serve_state.o
+                0x08001268                RunServeState
+ .text          0x08001450      0x154 frame_present.o
+                0x08001450                PresentGameplayFrame
+ .text          0x080015a4      0x318 game_loop.o
+                0x080015a4                RunGame
+ .text          0x080018bc       0xbc levels_data.o
+                0x080018bc                GetLevelBlockSeeds
+                0x0800194c                GetLevelTileMap
+ .text          0x08001978      0x240 level_state.o
+                0x08001978                ResetBlock
+                0x080019bc                HideBonus
+                0x080019dc                InitializeBlocksForLevel
+                0x08001b1c                ResetActiveBonusPositions
+                0x08001b70                IsLevelCleared
+ .text          0x08001bb8      0x120 level_render.o
+                0x08001bb8                ApplyShieldFloor
+                0x08001be4                CopyLevelTileMapToBackground
+                0x08001c2c                CopyBackgroundMapToVram
+                0x08001c7c                RefreshBackground
+                0x08001cd8                        . = ALIGN (0x4)
+                0x08001cd8                        __text_end = .
 
-.glue_7         0x08001ca0        0x0
- .glue_7        0x08001ca0        0x0 linker stubs
+.glue_7         0x08001cd8        0x0
+ .glue_7        0x08001cd8        0x0 linker stubs
 
-.glue_7t        0x08001ca0        0x0
- .glue_7t       0x08001ca0        0x0 linker stubs
+.glue_7t        0x08001cd8        0x0
+ .glue_7t       0x08001cd8        0x0 linker stubs
 
-.vfp11_veneer   0x08001ca0        0x0
- .vfp11_veneer  0x08001ca0        0x0 linker stubs
+.vfp11_veneer   0x08001cd8        0x0
+ .vfp11_veneer  0x08001cd8        0x0 linker stubs
 
-.v4_bx          0x08001ca0        0x0
- .v4_bx         0x08001ca0        0x0 linker stubs
+.v4_bx          0x08001cd8        0x0
+ .v4_bx         0x08001cd8        0x0 linker stubs
 
-.iplt           0x08001ca0        0x0
- .iplt          0x08001ca0        0x0 start_gnu.o
+.iplt           0x08001cd8        0x0
+ .iplt          0x08001cd8        0x0 start_gnu.o
 
-.rodata         0x08001ca0    0x286c4
+.rodata         0x08001cd8    0x286c4
  *(.rodata*)
- .rodata        0x08001ca0    0x27a00 data_gnu.o
-                0x08001ca0                spriteTiles
-                0x08002620                spritePalette
-                0x08002820                backgroundTiles
-                0x080034a0                backgroundPalette
-                0x080036a0                titleScreenTiles
-                0x0800cca0                titleScreenPalette
-                0x0800cea0                gameOverScreenTiles
-                0x080164a0                gameOverScreenPalette
-                0x080166a0                endingScreenTiles
-                0x0801fca0                endingScreenPalette
-                0x0801fea0                splashScreenTiles
-                0x080294a0                splashScreenPalette
- .rodata        0x080296a0        0x8 menu.o
- .rodata        0x080296a8       0x90 game_sprites.o
- .rodata        0x08029738       0x11 bonuses.o
- *fill*         0x08029749        0x3 
- .rodata        0x0802974c      0xc18 levels_data.o
+ .rodata        0x08001cd8    0x27a00 data_gnu.o
+                0x08001cd8                spriteTiles
+                0x08002658                spritePalette
+                0x08002858                backgroundTiles
+                0x080034d8                backgroundPalette
+                0x080036d8                titleScreenTiles
+                0x0800ccd8                titleScreenPalette
+                0x0800ced8                gameOverScreenTiles
+                0x080164d8                gameOverScreenPalette
+                0x080166d8                endingScreenTiles
+                0x0801fcd8                endingScreenPalette
+                0x0801fed8                splashScreenTiles
+                0x080294d8                splashScreenPalette
+ .rodata        0x080296d8        0x8 menu.o
+ .rodata        0x080296e0       0x90 game_sprites.o
+ .rodata        0x08029770       0x11 bonuses.o
+ *fill*         0x08029781        0x3 
+ .rodata        0x08029784      0xc18 levels_data.o
  *(.rodata.*)
-                0x0802a364                        . = ALIGN (0x4)
+                0x0802a39c                        . = ALIGN (0x4)
 
-.rel.dyn        0x0802a364        0x0
- .rel.iplt      0x0802a364        0x0 start_gnu.o
+.rel.dyn        0x0802a39c        0x0
+ .rel.iplt      0x0802a39c        0x0 start_gnu.o
 
-.data           0x03000000      0x8b0 load address 0x0802a364
+.data           0x03000000      0x8b0 load address 0x0802a39c
                 0x03000000                        __data_start__ = .
  *(.data*)
  .data          0x03000000      0x654 levels_data.o
@@ -194,12 +194,12 @@ END GROUP
                 0x030008b0                        . = ALIGN (0x4)
  *fill*         0x030008ad        0x3 
                 0x030008b0                        __data_end__ = .
-                0x0802a364                        __data_lma = LOADADDR (.data)
+                0x0802a39c                        __data_lma = LOADADDR (.data)
 
-.igot.plt       0x030008b0        0x0 load address 0x0802ac14
+.igot.plt       0x030008b0        0x0 load address 0x0802ac4c
  .igot.plt      0x030008b0        0x0 start_gnu.o
 
-.bss            0x030008b0     0x1950 load address 0x0802ac18
+.bss            0x030008b0     0x1950 load address 0x0802ac50
                 0x030008b0                        __bss_start__ = .
  *(.bss*)
  .bss           0x030008b0     0x1950 level_state.o
