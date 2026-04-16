@@ -32,13 +32,13 @@ Default embedded iframe loads:
 
 - `public/roms/@rkanoid FAITHFUL - COMPARISON.gba`
 
-This file is copied from:
+Faithful comparison ROM source:
 
 - `@rkanoid/build/faithful/work/rkanoid-faithful.bin`
 
-This file is copied from:
+Modern recompiled ROM source:
 
-- `@rkanoid/build/modern/work/rkanoid-modern.bin`
+- `@rkanoid/current-modern/rkanoid-modern.bin`
 
 Fallback (works for non-threaded paths only):
 
