@@ -13,7 +13,7 @@ ServeState RunServeState(u16 paddleX, u16 paddleY, u16 playerIndex, u32 scoreCou
     state.paddleX = paddleX;
     state.ballX = paddleX + 13;
     SetPaddleSprite(state.paddleX, paddleY, runtime->longPaddle, playerIndex);
-    SetBallSprite(state.ballX, paddleY - runtime->ballHeight, FALSE, 0, BALL_TILE_SMALL);
+    SetBallSprite(state.ballX, paddleY - runtime->ballHeight, FALSE, 0, 0, BALL_TILE_SMALL);
     buttons = ReadJoypad();
     while (buttons & J_A) {
         buttons = ReadJoypad();
@@ -33,7 +33,7 @@ ServeState RunServeState(u16 paddleX, u16 paddleY, u16 playerIndex, u32 scoreCou
                 ++state.ballX;
         }
         SetPaddleSprite(state.paddleX, paddleY, runtime->longPaddle, playerIndex);
-        SetBallSprite(state.ballX, paddleY - runtime->ballHeight, FALSE, 0, BALL_TILE_SMALL);
+        SetBallSprite(state.ballX, paddleY - runtime->ballHeight, FALSE, 0, 0, BALL_TILE_SMALL);
         UpdateScoreDisplay(scoreCount);
         wait_vbl_done();
     }

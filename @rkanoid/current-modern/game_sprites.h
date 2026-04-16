@@ -5,7 +5,11 @@
 #include "gba_types.h"
 
 void ClearAllSprites(void);
-void SetBallSprite(u16 x, u16 y, boolean trailEnabled, u16 direction, u16 ballTileBase);
+/*
+ * Render the ball sprite. When `trailEnabled` is TRUE, additional trail slots are placed behind the
+ * head along the negative velocity direction (`velX`, `velY` in Q8.8). When FALSE, velocity is ignored.
+ */
+void SetBallSprite(u16 x, u16 y, boolean trailEnabled, s32 velX, s32 velY, u16 ballTileBase);
 void SetPaddleSprite(u16 x, u16 y, boolean longPaddle, u16 playerIndex);
 void UpdateBonusSprite(u16 x, u16 y, u16 tileBase, u16 spriteOffset);
 void HideBonusSprite(u16 spriteOffset);

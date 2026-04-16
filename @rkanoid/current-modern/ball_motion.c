@@ -63,3 +63,13 @@ void BallIntegrateAndSyncPixels(FrameState *frame)
     frame->ballPosY += frame->ballVelY;
     Ball_SyncPixelsFromFixedPos(frame);
 }
+
+void BallComputeTrailOffset(s32 vx, s32 vy, s32 speedMag, u16 step, s32 stepSpacing, s32 *outX, s32 *outY)
+{
+    s32 denom;
+
+    denom = speedMag > 0 ? speedMag : 1;
+    /* Trail points go opposite to the velocity direction. Round toward zero via integer divide. */
+    *outX = -((s32)step * stepSpacing * vx) / denom;
+    *outY = -((s32)step * stepSpacing * vy) / denom;
+}

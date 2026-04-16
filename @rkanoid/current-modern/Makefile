@@ -46,7 +46,7 @@ menu.o: menu.c menu.h regs.h
 screens.o: screens.c assets.h regs.h screens.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c screens.c -o $@
 
-game_sprites.o: game_sprites.c game_sprites.h regs.h
+game_sprites.o: game_sprites.c game_sprites.h regs.h ball_motion.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c game_sprites.c -o $@
 
 game_loop.o: game_loop.c gameplay.h game_sprites.h game_state.h game_constants.h levels_data.h \
