@@ -1,51 +1,51 @@
 
 	AREA demo_data, DATA, READONLY
-	  EXPORT sprites
-	  EXPORT sprite_palette
-	  EXPORT bg
-	  EXPORT bg_pal
-	  EXPORT titulo
-	  EXPORT titulo_pal
-	  EXPORT gameOver
-	  EXPORT gameOver_pal
-	  EXPORT fin
-	  EXPORT fin_pal
-	  EXPORT dream
-	  EXPORT dream_pal
-sprites
+	  EXPORT spriteTiles
+	  EXPORT spritePalette
+	  EXPORT backgroundTiles
+	  EXPORT backgroundPalette
+	  EXPORT titleScreenTiles
+	  EXPORT titleScreenPalette
+	  EXPORT gameOverScreenTiles
+	  EXPORT gameOverScreenPalette
+	  EXPORT endingScreenTiles
+	  EXPORT endingScreenPalette
+	  EXPORT splashScreenTiles
+	  EXPORT splashScreenPalette
+spriteTiles
 	INCBIN Bitmaps/sprites.raw
 
-sprite_palette
+spritePalette
 	INCBIN Palettes/sprites.pal
 
-bg
+backgroundTiles
 	INCBIN Bitmaps/bg.raw
 
-bg_pal
+backgroundPalette
 	INCBIN Palettes/bg.pal
 
-titulo
-	INCBIN Bitmaps/titulo.raw
+titleScreenTiles
+	INCBIN Bitmaps/title.raw
 
-titulo_pal
-	INCBIN Palettes/titulo.pal
+titleScreenPalette
+	INCBIN Palettes/title.pal
 
-gameOver
-	INCBIN Bitmaps/gameOver.raw
+gameOverScreenTiles
+	INCBIN Bitmaps/game_over.raw
 
-gameOver_pal
-	INCBIN Palettes/gameOver.pal
+gameOverScreenPalette
+	INCBIN Palettes/game_over.pal
 
-fin
-	INCBIN Bitmaps/fin.raw
+endingScreenTiles
+	INCBIN Bitmaps/ending.raw
 
-fin_pal
-	INCBIN Palettes/fin.pal
+endingScreenPalette
+	INCBIN Palettes/ending.pal
 
-dream
-	INCBIN Bitmaps/dream.raw
+splashScreenTiles
+	INCBIN Bitmaps/splash.raw
 
-dream_pal
-	INCBIN Palettes/dream.pal
+splashScreenPalette
+	INCBIN Palettes/splash.pal
 
 	END

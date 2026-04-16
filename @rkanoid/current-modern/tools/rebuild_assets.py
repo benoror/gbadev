@@ -5,18 +5,18 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROJECT_DIR = ROOT / "proyecto"
-BACKUP_DIR = PROJECT_DIR / "backup_t"
+PROJECT_DIR = ROOT / "project"
+BACKUP_DIR = PROJECT_DIR / "source_art"
 BITMAP_DIR = ROOT / "bitmaps"
 PALETTE_DIR = ROOT / "palettes"
 
 ASSET_MAP = {
     "bg": BACKUP_DIR / "bg.bmp",
-    "dream": BACKUP_DIR / "dream.bmp",
-    "fin": BACKUP_DIR / "fin.bmp",
-    "gameover": BACKUP_DIR / "gameover.bmp",
+    "splash": BACKUP_DIR / "splash.bmp",
+    "ending": BACKUP_DIR / "ending.bmp",
+    "game_over": BACKUP_DIR / "game_over.bmp",
     "sprites": BACKUP_DIR / "sprites.bmp",
-    "titulo": BACKUP_DIR / "titulo.bmp",
+    "title": BACKUP_DIR / "title.bmp",
 }
 
 

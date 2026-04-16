@@ -41,19 +41,23 @@ This uses:
 
 and reads BMPs from:
 
-- `proyecto/backup_t/`
+- `project/source_art/`
 
 ## Structure
 
-- `demo.c` - front-end flow and screen transitions
-- `juego.c` - gameplay loop, OAM updates, HUD, collisions
-- `niveles.c` - level/block definitions and runtime block state
-- `assets.h`, `gameplay.h`, `levels.h` - explicit module boundaries
+- `app_flow.c` - entry flow, fades, and top-level screen sequencing
+- `menu.c` - title menu input and cursor sprites
+- `screens.c` - shared full-screen presenters and background/sprite asset loading
+- `game_loop.c` - gameplay orchestration, serve state, collisions, and bonuses
+- `game_sprites.c` - OAM layout, HUD digits, paddle, ball, and bonus sprite helpers
+- `levels_data.c` - data-driven level seeds and tile maps
+- `levels_runtime.c` - runtime block initialization and background map synchronization
+- `assets.h`, `gameplay.h`, `levels.h`, `levels_data.h`, `levels_runtime.h` - explicit gameplay and level module boundaries
+- `gba_*.h`, `regs.h` - split platform helpers for registers, input, DMA, waits, fades, and audio
 - `start_gnu.s`, `wait_vbl_done.s`, `data_gnu.S`, `linker.ld` - public-toolchain runtime/build files
 
 ## Translation pass
 
-This lane begins the English-oriented cleanup by exposing translated entry points and helper names while preserving original gameplay behavior. See:
+This lane now treats English names as the canonical source names for files, runtime identifiers, level structures, and asset symbols while preserving gameplay behavior. See:
 
 - `RENAMES.md`
-

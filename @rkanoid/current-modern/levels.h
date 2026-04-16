@@ -1,58 +1,69 @@
 #ifndef RKANOID_LEVELS_H
 #define RKANOID_LEVELS_H
 
-#include "regs.h"
+#include "game_types.h"
 
-#define O1 2
-#define O2 3
-#define N1 4
-#define N2 5
-#define mes1 6
-#define mes2 7
+#define TILE_BRICK_PRESSED_1 2
+#define TILE_BRICK_PRESSED_2 3
+#define TILE_EMPTY_1 4
+#define TILE_EMPTY_2 5
+#define TILE_SHIELD_1 6
+#define TILE_SHIELD_2 7
 
-#define TILE_BRICK_PRESSED_1 O1
-#define TILE_BRICK_PRESSED_2 O2
-#define TILE_EMPTY_1 N1
-#define TILE_EMPTY_2 N2
-#define TILE_SHIELD_1 mes1
-#define TILE_SHIELD_2 mes2
+#define TILE_RED_1 18
+#define TILE_RED_2 19
+#define TILE_GREEN_1 20
+#define TILE_GREEN_2 21
+#define TILE_YELLOW_1 22
+#define TILE_YELLOW_2 23
+#define TILE_BLUE_1 24
+#define TILE_BLUE_2 25
+#define TILE_BROWN_1 26
+#define TILE_BROWN_2 27
+#define TILE_GRAY_1 28
+#define TILE_GRAY_2 29
+#define TILE_PURPLE_1 30
+#define TILE_PURPLE_2 31
+#define TILE_PINK_1 32
+#define TILE_PINK_2 33
+#define TILE_SMILE_1 34
+#define TILE_SMILE_2 35
+#define TILE_TITANIUM_1 36
+#define TILE_TITANIUM_2 37
+#define TILE_IRIS_1 38
+#define TILE_IRIS_2 39
 
 #define NO_BONUS 666
 #define COMET_BONUS 52
-#define LONG_R_BONUS 56
-#define LIFE_BONUS 60
-#define BIGBALL_BONUS 64
-#define MESIAS_BONUS 68
-
-#define LONG_PADDLE_BONUS LONG_R_BONUS
-#define EXTRA_LIFE_BONUS LIFE_BONUS
-#define BIG_BALL_BONUS BIGBALL_BONUS
-#define SHIELD_BONUS MESIAS_BONUS
-
-#define TRUE 1
-#define FALSE 0
-
-typedef int boolean;
+#define LONG_PADDLE_BONUS 56
+#define EXTRA_LIFE_BONUS 60
+#define BIG_BALL_BONUS 64
+#define SHIELD_BONUS 68
 
 typedef struct
 {
-	int x, y, xM, yM, tile1, tile2;
-	boolean destruye;
-	u8 golpes;
-	u16 BONUS, activoBonus, bonX, bonY, bonN;
+    int x;
+    int y;
+    int right;
+    int bottom;
+    int tileIndex;
+    int tileIndex2;
+    boolean destructible;
+    u8 hitsRemaining;
+    u16 bonusType;
+    u16 bonusActive;
+    u16 bonusX;
+    u16 bonusY;
+    u16 bonusSlot;
 } Block;
 
-extern Block L[162];
-extern u8 bgMap[];
-extern u8 blockMap_1[];
-extern u8 blockMap_2[];
-extern u8 blockMap_3[];
-extern u8 blockMap_4[];
-extern u8 blockMap_5[];
+extern Block gBlocks[162];
+extern u8 gBackgroundMap[];
 
 void ApplyShieldFloor(void);
-void RefreshBlockMap(u16 level);
-void InitializeBlockProperties(u16 level);
+void CopyLevelTileMapToBackground(u16 level);
+void CopyBackgroundMapToVram(void);
+void InitializeBlocksForLevel(u16 level);
 void ResetActiveBonusPositions(void);
 u16 IsLevelCleared(void);
 

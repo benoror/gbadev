@@ -1,61 +1,61 @@
 .section .rodata, "a", %progbits
 
 .align 2
-.global sprites
-sprites:
+.global spriteTiles
+spriteTiles:
     .incbin "bitmaps/sprites.raw"
 
 .align 2
-.global sprite_palette
-sprite_palette:
+.global spritePalette
+spritePalette:
     .incbin "palettes/sprites.pal"
 
 .align 2
-.global bg
-bg:
+.global backgroundTiles
+backgroundTiles:
     .incbin "bitmaps/bg.raw"
 
 .align 2
-.global bg_pal
-bg_pal:
+.global backgroundPalette
+backgroundPalette:
     .incbin "palettes/bg.pal"
 
 .align 2
-.global titulo
-titulo:
-    .incbin "bitmaps/titulo.raw"
+.global titleScreenTiles
+titleScreenTiles:
+    .incbin "bitmaps/title.raw"
 
 .align 2
-.global titulo_pal
-titulo_pal:
-    .incbin "palettes/titulo.pal"
+.global titleScreenPalette
+titleScreenPalette:
+    .incbin "palettes/title.pal"
 
 .align 2
-.global gameOver
-gameOver:
-    .incbin "bitmaps/gameover.raw"
+.global gameOverScreenTiles
+gameOverScreenTiles:
+    .incbin "bitmaps/game_over.raw"
 
 .align 2
-.global gameOver_pal
-gameOver_pal:
-    .incbin "palettes/gameover.pal"
+.global gameOverScreenPalette
+gameOverScreenPalette:
+    .incbin "palettes/game_over.pal"
 
 .align 2
-.global fin
-fin:
-    .incbin "bitmaps/fin.raw"
+.global endingScreenTiles
+endingScreenTiles:
+    .incbin "bitmaps/ending.raw"
 
 .align 2
-.global fin_pal
-fin_pal:
-    .incbin "palettes/fin.pal"
+.global endingScreenPalette
+endingScreenPalette:
+    .incbin "palettes/ending.pal"
 
 .align 2
-.global dream
-dream:
-    .incbin "bitmaps/dream.raw"
+.global splashScreenTiles
+splashScreenTiles:
+    .incbin "bitmaps/splash.raw"
 
 .align 2
-.global dream_pal
-dream_pal:
-    .incbin "palettes/dream.pal"
+.global splashScreenPalette
+splashScreenPalette:
+    .incbin "palettes/splash.pal"
