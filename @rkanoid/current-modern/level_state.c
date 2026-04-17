@@ -37,6 +37,8 @@ void InitializeBlocksForLevel(u16 level)
     u16 index;
     u16 bonusSlot;
 
+    LoadLevelTileMap(level);
+
     for (index = 0; index < 162; ++index) {
         ResetBlock(&gBlocks[index]);
     }
