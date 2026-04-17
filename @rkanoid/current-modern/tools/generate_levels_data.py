@@ -95,7 +95,9 @@ def read_seeds(path: Path) -> list[tuple[str, str, str, str, str, str, str]]:
 
 def emit_tilemap(name: str, grid: list[list[tuple[str, str]]]) -> list[str]:
     out: list[str] = []
-    out.append(f"static u8 {name}[] = {{")
+    # `const`: keeps the source of truth in ROM and lets collision code mutate the working
+    # copy (gActiveTileMap) without trashing the original for subsequent lives.
+    out.append(f"static const u8 {name}[] = {{")
     for y in range(18):
         parts: list[str] = []
         for x in range(9):
@@ -125,6 +127,10 @@ def emit_seeds(name: str, seeds: list[tuple[str, str, str, str, str, str, str]])
 
 def emit_getters() -> list[str]:
     lines: list[str] = []
+    lines.append("/* Mutable working tile map. DestroyBlock writes TILE_BRICK_PRESSED_* here; LoadLevelTileMap")
+    lines.append(" * refreshes it from the const ROM source so losing a life rolls the visuals back. */")
+    lines.append("static u8 gActiveTileMap[sizeof(level1TileMap) / sizeof(level1TileMap[0])];")
+    lines.append("")
     lines.append("const BlockSeed *GetLevelBlockSeeds(u16 level, u16 *count)")
     lines.append("{")
     lines.append("    switch (level) {")
@@ -138,13 +144,24 @@ def emit_getters() -> list[str]:
     lines.append("    }")
     lines.append("}")
     lines.append("")
-    lines.append("u8 *GetLevelTileMap(u16 level)")
+    lines.append("void LoadLevelTileMap(u16 level)")
     lines.append("{")
+    lines.append("    const u8 *source;")
+    lines.append("    u16 i;")
+    lines.append("")
     lines.append("    switch (level) {")
     for level in range(1, 11):
-        lines.append(f"    case {level}: return level{level}TileMap;")
-    lines.append("    default: return level1TileMap;")
+        lines.append(f"    case {level}: source = level{level}TileMap; break;")
+    lines.append("    default: source = level1TileMap; break;")
     lines.append("    }")
+    lines.append("    for (i = 0; i < sizeof(gActiveTileMap) / sizeof(gActiveTileMap[0]); ++i)")
+    lines.append("        gActiveTileMap[i] = source[i];")
+    lines.append("}")
+    lines.append("")
+    lines.append("u8 *GetLevelTileMap(u16 level)")
+    lines.append("{")
+    lines.append("    (void)level;")
+    lines.append("    return gActiveTileMap;")
     lines.append("}")
     lines.append("")
     return lines
