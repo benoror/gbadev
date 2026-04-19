@@ -119,10 +119,11 @@ import mGBA from './mgba.js';
       return;
     }
 
-    // Restore auto-save state (power-off resume) if one exists.
-    try {
-      if (typeof Module.loadAutoSaveState === 'function') Module.loadAutoSaveState();
-    } catch (_) { /* ignore missing autosave */ }
+    // Auto-resume on ROM open: disabled for now. Uncomment to restore the last session
+    // (paired with the persist() hook below on pagehide/beforeunload).
+    // try {
+    //   if (typeof Module.loadAutoSaveState === 'function') Module.loadAutoSaveState();
+    // } catch (_) { /* ignore missing autosave */ }
 
     setStatus('');
   }
@@ -275,22 +276,35 @@ import mGBA from './mgba.js';
     });
   }
 
-  /* ---------- Lifecycle: auto-save on unload, FS sync, visibility ---------- */
+  /* ---------- Lifecycle: FS sync, visibility ----------
+   *
+   * Auto-save state on page unload is disabled for now — flipping `PERSIST_AUTOSAVE_ON_UNLOAD`
+   * to true (and uncommenting the `loadAutoSaveState()` call in `startRomFromUrl`) re-enables
+   * the gbajs3-style session resume. Left wired so the restore path keeps pausing audio and
+   * syncing the filesystem to IDB when the tab goes to the background / is hidden.
+   */
+  const PERSIST_AUTOSAVE_ON_UNLOAD = false;
+
   function wireLifecycle() {
     const persist = () => {
       if (!Module) return;
-      safe(() => Module.forceAutoSaveState && Module.forceAutoSaveState());
+      if (PERSIST_AUTOSAVE_ON_UNLOAD) {
+        safe(() => Module.forceAutoSaveState && Module.forceAutoSaveState());
+      }
       safe(() => Module.FSSync && Module.FSSync());
     };
 
-    addEventListener('pagehide', persist);
-    addEventListener('beforeunload', persist);
+    if (PERSIST_AUTOSAVE_ON_UNLOAD) {
+      addEventListener('pagehide', persist);
+      addEventListener('beforeunload', persist);
+    }
 
     document.addEventListener('visibilitychange', () => {
       if (!Module) return;
       if (document.hidden) {
         safe(() => Module.pauseAudio && Module.pauseAudio());
-        persist();
+        // Keep FS in sync so save states written while visible aren't lost if the tab is killed.
+        safe(() => Module.FSSync && Module.FSSync());
       } else if (!isPaused) {
         safe(() => Module.resumeAudio && Module.resumeAudio());
       }
