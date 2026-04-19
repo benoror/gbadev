@@ -65,11 +65,10 @@ import mGBA from './mgba.js';
       Module = await mGBA({ canvas });
       const { projectName, projectVersion } = Module.version || {};
       setStatus(`${projectName || 'mGBA'} ${projectVersion || ''} ready`);
-      Module.FSInit();
-      // Ensure any persisted save files from IDBFS are available before we load.
-      if (typeof Module.FSSync === 'function') {
-        try { Module.FSSync(); } catch (e) { /* first run, no IDB yet */ }
-      }
+      // FSInit returns a promise: it mounts IDBFS at /data and /autosave, pulls any
+      // previously-synced files back from IndexedDB, and creates the standard sub-dirs.
+      // Never race it with a manual FSSync() — you'll get "2 FS.syncfs operations in flight".
+      await Module.FSInit();
 
       wireControls();
       wireKeyboard();
@@ -111,7 +110,14 @@ import mGBA from './mgba.js';
       }
     });
 
-    Module.loadGame(fileName);
+    // Module.uploadRom writes to /data/games/<fileName>. loadGame expects the full VFS
+    // path — passing just the base name returns ENOENT and leaves the canvas blank.
+    const gamePath = `${(Module.filePaths?.() || {}).gamePath || '/data/games'}/${fileName}`;
+    const ok = Module.loadGame(gamePath);
+    if (!ok) {
+      setStatus(`Failed to load ROM: ${fileName}`, 'error');
+      return;
+    }
 
     // Restore auto-save state (power-off resume) if one exists.
     try {
