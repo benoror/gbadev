@@ -138,9 +138,11 @@ void UpdateScoreDisplay(u32 score)
     u16 slot;
 
     FormatSevenDigits(score, digits);
+    /* Score is left-aligned in the HUD column starting at x=168 so the leftmost displayed
+     * digit sits flush with the level / time / speed indicators below it. */
     for (slot = 0; slot < 7; ++slot) {
         OAM[SCORE_SLOT_START + slot].Attrib0 = 0x2000 + 24;
-        OAM[SCORE_SLOT_START + slot].Attrib1 = 176 + (slot * 8);
+        OAM[SCORE_SLOT_START + slot].Attrib1 = 168 + (slot * 8);
         OAM[SCORE_SLOT_START + slot].Attrib2 = DIGIT_TILE_BASE + (digits[slot] * 2);
     }
 }
@@ -172,9 +174,11 @@ void UpdateTimeDisplay(u32 seconds)
     digits[0] = (u16)((seconds / 100) % 10);
     digits[1] = (u16)((seconds / 10) % 10);
     digits[2] = (u16)(seconds % 10);
+    /* Right-shifted one sprite (x=176) so it lines up with the Score's old ones column
+     * and with the Level/Speed ones digit (x=176). */
     for (i = 0; i < 3; ++i) {
         OAM[TIME_SLOT_START + i].Attrib0 = 0x2000 + 104;
-        OAM[TIME_SLOT_START + i].Attrib1 = 168 + i * 8;
+        OAM[TIME_SLOT_START + i].Attrib1 = 176 + i * 8;
         OAM[TIME_SLOT_START + i].Attrib2 = DIGIT_TILE_BASE + (digits[i] * 2);
     }
 }
