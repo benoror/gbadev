@@ -41,7 +41,6 @@ is tracked as a followup (requires an upstream emscripten rebuild without
 - On-screen touch d-pad + A/B + L/R + Start/Select on coarse-pointer devices.
 - Pause / Resume, Soft Reset (Quick Reload), Fullscreen toggle.
 - 9 save-state slots (Save / Load State).
-- Auto-save on `pagehide` / `beforeunload`; auto-restored when the same ROM is reopened.
 - Screenshot → downloads PNG.
 - Volume slider (persisted to `localStorage`).
 
