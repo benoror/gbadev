@@ -30,6 +30,22 @@
       <div id="rack" class="rack" role="tablist"></div>
     </section>
 
+    <section class="stage">
+      <div class="stage-player-col">
+        <div id="player-wrap" class="stage-player" data-crt="false" aria-label="Game Boy Advance">
+          <div class="screen">
+            <iframe id="player-frame" title="Player" allow="fullscreen; gamepad; autoplay"></iframe>
+          </div>
+        </div>
+        <div class="stage-controls">
+          <!-- LED dots mimic the GBA power indicator: green while the option is on, dark off. -->
+          <button id="btn-fullscreen" type="button"><span class="led" aria-hidden="true"></span>Fullscreen</button>
+          <button id="btn-crt" type="button"><span class="led" aria-hidden="true"></span>CRT shader</button>
+          <button id="btn-info" type="button" class="is-on"><span class="led" aria-hidden="true"></span>Notes</button>
+        </div>
+      </div>
+    </section>
+
     <section id="spine-wrap" class="spine-wrap" aria-label="Version timeline" style="display:none">
       <div class="spine-header">
         <div>
@@ -43,24 +59,13 @@
       <div id="spine" class="spine" role="tablist"></div>
     </section>
 
-    <section class="stage">
-      <div id="player-wrap" class="stage-player" data-crt="false">
-        <iframe id="player-frame" title="Player" allow="fullscreen; gamepad; autoplay"></iframe>
-        <div class="stage-controls">
-          <button id="btn-fullscreen" type="button">Fullscreen</button>
-          <button id="btn-crt" type="button">CRT shader</button>
-          <button id="btn-info" type="button">Hide notes</button>
-          <a id="btn-pop" class="btn" target="_blank" rel="noopener" href="./player/">Pop out player</a>
-        </div>
-      </div>
-      <aside id="notes" class="stage-notes" aria-label="Version notes">
-        <span id="notes-eyebrow" class="eyebrow">Select a version</span>
-        <h2 id="notes-title">—</h2>
-        <div id="notes-meta" class="meta"></div>
-        <p id="notes-summary"></p>
-        <div id="notes-links" class="links"></div>
-      </aside>
-    </section>
+    <aside id="notes" class="stage-notes" aria-label="Version notes">
+      <span id="notes-eyebrow" class="eyebrow">Select a version</span>
+      <h2 id="notes-title">—</h2>
+      <div id="notes-meta" class="meta"></div>
+      <p id="notes-summary"></p>
+      <div id="notes-links" class="links"></div>
+    </aside>
 
     <p id="fatal" style="display:none;color:#ff7070;font-weight:600"></p>
   </main>

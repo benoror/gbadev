@@ -72,10 +72,10 @@ function renderRack() {
     btn.setAttribute('aria-label', `${game.title} — ${game.versions.length} version${game.versions.length === 1 ? '' : 's'}`);
     btn.innerHTML = `
       <span class="cart-badge">${game.versions.length}</span>
-      <div class="cart-label">
-        <div class="cart-cover" aria-hidden="true"></div>
-        <div class="cart-title">${escapeHtml(game.title)}</div>
-      </div>
+      <span class="cart-label">
+        <span class="cart-cover" aria-hidden="true"></span>
+        <span class="cart-title">${escapeHtml(game.title)}</span>
+      </span>
     `;
     btn.addEventListener('click', () => selectGame(game.id));
     rack.appendChild(btn);
@@ -198,7 +198,8 @@ function wireStageControls() {
     e.currentTarget.classList.toggle('is-on', on);
   });
   qs('#btn-fullscreen').addEventListener('click', () => {
-    const el = qs('#player-wrap');
+    /* Fullscreen the LCD, not the whole GBA shell — avoids ugly letterboxing. */
+    const el = qs('#player-wrap .screen') || qs('#player-wrap');
     if (!document.fullscreenElement) {
       (el.requestFullscreen || el.webkitRequestFullscreen || (() => {})).call(el);
     } else {
