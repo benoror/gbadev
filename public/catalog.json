@@ -1,0 +1,69 @@
+{
+  "games": [
+    {
+      "id": "rkanoid",
+      "title": "@rkanoid",
+      "author": "Ducker",
+      "cartColor": "#b1374f",
+      "accent": "#ef4668",
+      "summary": "Breakout-style block breaker — from 2003 freeware demo to a modern, fixed-point physics rebuild.",
+      "versions": [
+        { "id": "V0.01", "label": "v0.01",    "kind": "historical", "year": 2003, "rom": "roms/archive/@rkanoid V0.01 by Ducker (PD).gba",     "notes": "Earliest surviving demo; proto paddle & single block row." },
+        { "id": "V0.02", "label": "v0.02",    "kind": "historical", "year": 2003, "rom": "roms/archive/@rkanoid V0.02 by Ducker (PD).gba",     "notes": "Bounce geometry tuning; still prototype." },
+        { "id": "V0.09", "label": "v0.09",    "kind": "historical", "year": 2003, "rom": "roms/archive/@rkanoid V0.09 by Ducker (PD).gba",     "notes": "Initial level layouts." },
+        { "id": "B1.0",  "label": "Beta 1.0", "kind": "historical", "year": 2004, "rom": "roms/archive/@rkanoid Beta 1.0 by Ducker (PD).gba",  "notes": "First public beta; full HUD." },
+        { "id": "B1.5",  "label": "Beta 1.5", "kind": "historical", "year": 2004, "rom": "roms/archive/@rkanoid Beta 1.5 by Ducker (PD).gba",  "notes": "Bonus items introduced." },
+        { "id": "V2.00", "label": "v2.00",    "kind": "historical", "year": 2004, "rom": "roms/archive/@rkanoid V2.00 by Ducker (PD).gba",     "notes": "Second major revision; level overhaul." },
+        { "id": "V2.50", "label": "v2.50",    "kind": "historical", "year": 2004, "rom": "roms/archive/@rkanoid V2.50 by Ducker (PD).gba",     "notes": "Polish pass; paddle physics tuned." },
+        { "id": "V2.80", "label": "v2.80",    "kind": "historical", "year": 2005, "rom": "roms/archive/@rkanoid V2.80 by Ducker (PD).gba",     "notes": "Last archival pre-release build." },
+        { "id": "LATEST",   "label": "LATEST",          "kind": "latest",   "year": 2005, "rom": "roms/@rkanoid LATEST - DEMO.gba",         "notes": "Original shipped demo ROM — the canonical object." },
+        { "id": "FAITHFUL", "label": "FAITHFUL",        "kind": "faithful", "year": 2026, "rom": "roms/@rkanoid FAITHFUL - COMPARISON.gba", "notes": "Reverse-engineered comparison rebuild from sources." },
+        { "id": "V3.0.0",   "label": "v3.0.0 · MODERN", "kind": "modern",   "year": 2026, "rom": "roms/@rkanoid MODERN - RECOMPILED.gba",   "notes": "Modern rebuild: Q8.8 physics, 10 levels, dynamic speed ramp, new HUD." }
+      ]
+    },
+    {
+      "id": "cebelix",
+      "title": "Cebelix",
+      "author": "Dreamsoft",
+      "cartColor": "#2f8a4a",
+      "accent": "#4ecb74",
+      "summary": "Small Dreamsoft demo.",
+      "versions": [
+        { "id": "V0.0.1", "label": "v0.0.1", "kind": "latest", "year": 2003, "rom": "roms/cebelix.gba", "notes": "Distributed demo ROM." }
+      ]
+    },
+    {
+      "id": "dexgex",
+      "title": "DexGex",
+      "author": "Dreamsoft",
+      "cartColor": "#8f3bc2",
+      "accent": "#c674f1",
+      "summary": "Another Dreamsoft one-ROM release.",
+      "versions": [
+        { "id": "V0.0.1", "label": "v0.0.1", "kind": "latest", "year": 2004, "rom": "roms/dezgex.gba", "notes": "Distributed demo ROM." }
+      ]
+    },
+    {
+      "id": "mystic-q",
+      "title": "Mystic Q",
+      "author": "Dreamsoft",
+      "cartColor": "#2f6ecc",
+      "accent": "#63a5f7",
+      "summary": "Puzzle-esque Dreamsoft prototype.",
+      "versions": [
+        { "id": "V0.0.1", "label": "v0.0.1", "kind": "historical", "year": 2004, "rom": "roms/archive/mystic_q.gba", "notes": "Archival ROM." }
+      ]
+    },
+    {
+      "id": "pik-roll",
+      "title": "Pik Roll",
+      "author": "Dreamsoft",
+      "cartColor": "#c28a2e",
+      "accent": "#f1c247",
+      "summary": "Rolling action prototype.",
+      "versions": [
+        { "id": "V0.0.1", "label": "v0.0.1", "kind": "historical", "year": 2004, "rom": "roms/archive/pik_roll.gba", "notes": "Archival ROM." }
+      ]
+    }
+  ]
+}

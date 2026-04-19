@@ -3,110 +3,68 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GBA Dev Showcase</title>
+  <title>GBA Dev Museum</title>
   <!--
-    coi-serviceworker: installs a service worker at / that injects COOP/COEP response headers.
-    This makes the showcase itself cross-origin isolated so the embedded /player/ iframe can
-    use threaded mGBA (SharedArrayBuffer). Iframes inherit the parent's isolation state, so the
-    same SW also serves the player when opened directly.
+    coi-serviceworker installs a SW at / that injects COOP/COEP headers so threaded mGBA can use
+    SharedArrayBuffer. Iframes inherit the parent's isolation state, so both this page and
+    /player/ need the SW active.
   -->
   <script src="./coi-sw.js"></script>
-  <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #111; color: #eee; }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 20px; }
-    h1 { margin: 0 0 8px; }
-    p { color: #bbb; }
-    .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
-    a.btn { text-decoration: none; background: #2d6cdf; color: #fff; padding: 10px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-    a.btn:hover { background: #3d7cef; }
-    a.btn.secondary { background: #333; }
-    a.btn.secondary:hover { background: #444; }
-    a.btn.is-active { outline: 2px solid #e7b74f; outline-offset: 2px; }
-    iframe { width: 100%; height: 72vh; border: 1px solid #333; border-radius: 10px; background: #000; }
-    .note { font-size: 13px; color: #999; margin-top: 10px; }
-    .warn { display: none; color: #ffb86b; font-weight: 600; }
-  </style>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <link rel="stylesheet" href="./museum.css" />
 </head>
 <body>
-  <div class="wrap">
-    <h1>GBA Dev Playable Showcase</h1>
-    <p id="file-warning" class="warn">
-      You are running from <code>file://</code>. The mGBA WASM core needs <code>http://</code> (service
-      worker + threads). Start any static server from this folder — e.g. <code>python3 -m http.server 8000</code> —
-      and open <code>http://localhost:8000/</code>.
-    </p>
-    <p>
-      Powered by a minimal vanilla player around <a href="https://github.com/thenick775/mgba" target="_blank" rel="noopener">thenick775/mgba</a>’s
-      WASM core. Pick a ROM below or open the player directly.
-    </p>
+  <main class="museum">
+    <header class="museum-header">
+      <p>preserved · reconstructed · reimagined</p>
+      <h1>GBA Dev Museum</h1>
+      <div class="legend" aria-label="Legend">
+        <span class="chip"><span class="dot historical"></span>Historical</span>
+        <span class="chip"><span class="dot latest"></span>Canonical shipped</span>
+        <span class="chip"><span class="dot faithful"></span>Faithful rebuild</span>
+        <span class="chip"><span class="dot modern"></span>Modern rebuild</span>
+      </div>
+    </header>
 
-    <div class="links">
-      <a id="play-rkanoid-original" class="btn" href="./player/">Play @rkanoid (Original Shipped ROM)</a>
-      <a id="play-rkanoid-faithful" class="btn" href="./player/">Play @rkanoid (Faithful Comparison)</a>
-      <a id="play-rkanoid-modern" class="btn" href="./player/">Play @rkanoid (Modern Recompiled)</a>
-      <a id="play-dexgex" class="btn" href="./player/">Play DexGex</a>
-      <a id="play-cebelix" class="btn" href="./player/">Play Cebelix</a>
-      <a class="btn secondary" href="./player/" target="_blank" rel="noopener">Open Player in New Tab</a>
-      <a class="btn secondary" href="https://github.com/thenick775/mgba" target="_blank" rel="noopener">mGBA WASM Source</a>
-    </div>
+    <section aria-label="Game cartridges">
+      <div id="rack" class="rack" role="tablist"></div>
+    </section>
 
-    <iframe id="emulator-frame" src="./player/" title="Player"></iframe>
-    <div class="note">
-      Compare the original shipped ROM against the faithful and modern rebuilds. The embedded view defaults to the
-      faithful comparison ROM. Drop new ROMs into <code>public/roms/</code> and add shortcuts in this page.
-    </div>
-  </div>
-  <script>
-    function playerUrlFor(romFileName) {
-      var romUrl = new URL('./roms/' + romFileName, window.location.href).href;
-      return './player/?romURL=' + encodeURIComponent(romUrl);
-    }
+    <section id="spine-wrap" class="spine-wrap" aria-label="Version timeline" style="display:none">
+      <div class="spine-header">
+        <div>
+          <strong id="spine-title">—</strong>
+          <span style="margin-left: 8px" id="spine-count"></span>
+        </div>
+        <div>
+          <span class="kbd">←</span> <span class="kbd">→</span> walk versions · <span class="kbd">F</span> fullscreen · <span class="kbd">C</span> CRT · <span class="kbd">I</span> notes
+        </div>
+      </div>
+      <div id="spine" class="spine" role="tablist"></div>
+    </section>
 
-    var links = {
-      'play-rkanoid-original': '@rkanoid LATEST - DEMO.gba',
-      'play-rkanoid-faithful': '@rkanoid FAITHFUL - COMPARISON.gba',
-      'play-rkanoid-modern':   '@rkanoid MODERN - RECOMPILED.gba',
-      'play-dexgex':           'dezgex.gba',
-      'play-cebelix':          'cebelix.gba'
-    };
+    <section class="stage">
+      <div id="player-wrap" class="stage-player" data-crt="false">
+        <iframe id="player-frame" title="Player" allow="fullscreen; gamepad; autoplay"></iframe>
+        <div class="stage-controls">
+          <button id="btn-fullscreen" type="button">Fullscreen</button>
+          <button id="btn-crt" type="button">CRT shader</button>
+          <button id="btn-info" type="button">Hide notes</button>
+          <a id="btn-pop" class="btn" target="_blank" rel="noopener" href="./player/">Pop out player</a>
+        </div>
+      </div>
+      <aside id="notes" class="stage-notes" aria-label="Version notes">
+        <span id="notes-eyebrow" class="eyebrow">Select a version</span>
+        <h2 id="notes-title">—</h2>
+        <div id="notes-meta" class="meta"></div>
+        <p id="notes-summary"></p>
+        <div id="notes-links" class="links"></div>
+      </aside>
+    </section>
 
-    var frame = document.getElementById('emulator-frame');
-    var allButtons = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    <p id="fatal" style="display:none;color:#ff7070;font-weight:600"></p>
+  </main>
 
-    function loadInFrame(id, romFileName) {
-      var url = playerUrlFor(romFileName);
-      if (frame) frame.src = url;
-      allButtons.forEach(function (b) { b.classList.toggle('is-active', b.id === id); });
-      // Allow deep-linking: keep the query param in the address bar without reloading.
-      try {
-        var hashRomUrl = new URL(url, window.location.href).searchParams.get('romURL');
-        history.replaceState(null, '', '?rom=' + encodeURIComponent(hashRomUrl));
-      } catch (_) { /* no-op */ }
-    }
-
-    Object.keys(links).forEach(function (id) {
-      var a = document.getElementById(id);
-      if (!a) return;
-      a.href = playerUrlFor(links[id]); // right-click → open in new tab still works
-      a.addEventListener('click', function (e) {
-        // Let the user force-open in a new tab with Cmd/Ctrl/middle-click.
-        if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
-        e.preventDefault();
-        loadInFrame(id, links[id]);
-      });
-    });
-
-    // Honor ?rom=<url> on page load, else default to the Faithful comparison ROM.
-    var initialRomUrl = new URLSearchParams(window.location.search).get('rom');
-    if (initialRomUrl) {
-      if (frame) frame.src = './player/?romURL=' + encodeURIComponent(initialRomUrl);
-    } else {
-      loadInFrame('play-rkanoid-faithful', '@rkanoid FAITHFUL - COMPARISON.gba');
-    }
-
-    if (window.location.protocol === 'file:') {
-      document.getElementById('file-warning').style.display = 'block';
-    }
-  </script>
+  <script type="module" src="./museum.js"></script>
 </body>
 </html>
