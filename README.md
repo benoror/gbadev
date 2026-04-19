@@ -12,11 +12,11 @@ Latest release: [@rkanoid LATEST - DEMO.gba](https://github.com/benoror/gbadev/b
 
 Playable showcase: [/public/index.html](/public/index.html)
 
-Run locally via HTTP (required for gbajs3):
+Run locally via any static HTTP server (required for threaded mGBA WASM; `file://` is blocked):
 
 ```bash
 cd /Users/benoror/code/benoror/gbadev/public
-python3 serve.py
+python3 -m http.server 8000
 # then open http://127.0.0.1:8000/
 ```
 

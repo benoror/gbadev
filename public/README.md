@@ -1,61 +1,87 @@
-# Running the playable showcase
+# Playable showcase
 
-`gbajs3` cannot be run reliably from `file://` URLs because browsers block:
+`public/` is a fully static bundle: a tiny showcase page (`index.html`) and a minimal
+vanilla-JS player (`player/`) built directly on [thenick775/mgba](https://github.com/thenick775/mgba)’s
+WASM core. No build step, no React/MUI, no custom server — just files.
 
-- service worker registration
-- manifest loading
-- module loading with CORS checks
+## Quick start
 
-## Start a local web server
-
-Preferred (adds cross-origin isolation headers for threaded WASM):
+The mGBA WASM core uses threads (SharedArrayBuffer), which requires cross-origin
+isolation. `player/coi-sw.js` is a drop-in service worker that injects the required
+COOP/COEP headers on second load, so **any static HTTP server on localhost works**:
 
 ```bash
 cd /Users/benoror/code/benoror/gbadev/public
-python3 serve.py
+python3 -m http.server 8000
+# or: npx serve .
+# or: any static host — works on GitHub Pages, Netlify, etc.
 ```
 
 Then open:
 
-- Showcase: `http://127.0.0.1:8000/`
-- Emulator direct: `http://127.0.0.1:8000/gbajs3-app/`
+- Showcase: <http://127.0.0.1:8000/>
+- Player direct: <http://127.0.0.1:8000/player/>
+- Player with an explicit ROM: <http://127.0.0.1:8000/player/?romURL=/roms/@rkanoid%20MODERN%20-%20RECOMPILED.gba>
 
-## `@rkanoid` ROMs in showcase
+> First visit registers the service worker and reloads once; after that cross-origin
+> isolation is active and everything just works.
 
-Exposed in the showcase UI:
+## Why not `file://`?
+
+Threaded WASM needs a service worker (or COOP/COEP response headers). Browsers
+disallow both from `file://`, so double-clicking `index.html` won’t work with this
+mGBA build. Producing a **non-threaded** mGBA WASM that *would* run from `file://`
+is tracked as a followup (requires an upstream emscripten rebuild without
+`-pthread`).
+
+## Features in `player/`
+
+- Keyboard: Arrows · <kbd>Z</kbd>=B · <kbd>X</kbd>=A · <kbd>A</kbd>=L · <kbd>S</kbd>=R ·
+  <kbd>Enter</kbd>=Start · <kbd>Backspace</kbd>=Select · hold <kbd>Tab</kbd> = fast-forward (5×).
+- On-screen touch d-pad + A/B + L/R + Start/Select on coarse-pointer devices.
+- Pause / Resume, Soft Reset (Quick Reload), Fullscreen toggle.
+- 9 save-state slots (Save / Load State).
+- Auto-save on `pagehide` / `beforeunload`; auto-restored when the same ROM is reopened.
+- Screenshot → downloads PNG.
+- Volume slider (persisted to `localStorage`).
+
+## Bundled ROMs
+
+`public/roms/` ships the @rkanoid builds and a couple of demo ROMs:
 
 - `public/roms/@rkanoid LATEST - DEMO.gba`
 - `public/roms/@rkanoid FAITHFUL - COMPARISON.gba`
 - `public/roms/@rkanoid MODERN - RECOMPILED.gba`
+- `public/roms/cebelix.gba`
+- `public/roms/dezgex.gba`
 
-Default embedded iframe loads:
+The default embedded iframe on the showcase loads the Faithful Comparison ROM.
+The Modern Recompiled ROM is kept in sync by `make publish` in
+`@rkanoid/current-modern/`.
 
-- `public/roms/@rkanoid FAITHFUL - COMPARISON.gba`
+## Player layout
 
-Faithful comparison ROM source:
-
-- `@rkanoid/build/faithful/work/rkanoid-faithful.bin`
-
-Modern recompiled ROM source:
-
-- `@rkanoid/current-modern/rkanoid-modern.bin`
-
-Fallback (works for non-threaded paths only):
-
-From repo root:
-
-```bash
-cd /Users/benoror/code/benoror/gbadev
-python3 -m http.server 8000
+```
+public/player/
+├── index.html   # minimal UI (canvas + buttons + touchpad)
+├── app.js       # vanilla JS wrapper around mGBA (boot, input, save-state, etc.)
+├── app.css
+├── mgba.js      # mGBA WASM loader (from @thenick775/mgba-wasm)
+├── mgba.wasm    # mGBA core (~2 MB, threaded)
+└── coi-sw.js    # COOP/COEP service worker for cross-origin isolation
 ```
 
-Then open:
+## Updating the mGBA core
 
-- Showcase: `http://localhost:8000/public/`
-- Emulator direct: `http://localhost:8000/public/gbajs3-app/`
+Copy the two files from the upstream npm tarball:
 
-Reference project:
+```
+@thenick775/mgba-wasm/dist/mgba.js    → public/player/mgba.js
+@thenick775/mgba-wasm/dist/mgba.wasm  → public/player/mgba.wasm
+```
 
-- [thenick775/gbajs3](https://github.com/thenick775/gbajs3)
-- Staging demo URL mentioned by maintainer: [thenick775.github.io/gbajs3](https://thenick775.github.io/gbajs3/)
+## References
 
+- [thenick775/mgba – feature/wasm branch](https://github.com/thenick775/mgba)
+- [@thenick775/mgba-wasm (npm)](https://www.npmjs.com/package/@thenick775/mgba-wasm)
+- [coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker)
