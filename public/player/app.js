@@ -5,9 +5,12 @@
  * Flow:
  *   1. coi-sw.js registers a service worker that injects COOP/COEP headers on subsequent loads
  *      so threaded mGBA can use SharedArrayBuffer on any static host.
- *   2. mgba.js exposes the global `mGBA(options) => Promise<Module>` Emscripten bootstrap.
+ *   2. mgba.js is an ES module with `export default mGBA`; loaded via dynamic import so we
+ *      can show a friendly status message if it fails (e.g. COI not yet applied on first load).
  *   3. `?romURL=<absolute-or-relative-url>` selects which ROM to fetch and launch.
  */
+
+import mGBA from './mgba.js';
 
 (function () {
   'use strict';
@@ -46,6 +49,10 @@
     if (typeof mGBA !== 'function') {
       setStatus('mGBA core failed to load', 'error');
       return;
+    }
+
+    if (!self.crossOriginIsolated) {
+      setStatus('Waiting for cross-origin isolation… (first load reloads once)');
     }
 
     try {
