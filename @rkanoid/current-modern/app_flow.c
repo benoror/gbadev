@@ -11,27 +11,27 @@ void C_Entry(void)
 
     InitializeDisplay();
     ShowSplashScreen();
-    FadeIn(30, FALSE, TRUE);
-    WaitVBlanks(100);
-    FadeOut(30, FALSE, FALSE);
+    FadeIn(7, FALSE, TRUE);
+    WaitVBlanks(20);
+    FadeOut(7, FALSE, FALSE);
 
     ShowTitleScreen();
-    FadeIn(30, FALSE, FALSE);
+    FadeIn(7, FALSE, FALSE);
     ClearAllSprites();
     LoadSpriteGraphics();
 
     players = RunMainMenu();
 
-    FadeOut(30, TRUE, FALSE);
+    FadeOut(7, TRUE, FALSE);
     LoadGameplayBackground();
     LoadSpriteGraphics();
     RunGame(players);
 
-    FadeOut(30, TRUE, FALSE);
+    FadeOut(7, TRUE, FALSE);
     ShowGameOverScreen();
-    FadeIn(30, TRUE, FALSE);
+    FadeIn(7, TRUE, FALSE);
     buttons = ReadJoypad();
     while (buttons & J_START)
         buttons = ReadJoypad();
-    FadeOut(30, TRUE, FALSE);
+    FadeOut(7, TRUE, FALSE);
 }

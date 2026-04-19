@@ -54,14 +54,14 @@ void RunGame(u16 playerCount)
 
     while (session.lives > 0 && session.level <= 10) {
         if (session.level > 1)
-            FadeOut(30, TRUE, FALSE);
+            FadeOut(7, TRUE, FALSE);
 
         InitializeBlocksForLevel(session.level);
         session.levelTileMap = GetLevelTileMap(session.level);
         RefreshBackground(session.level, FALSE);
         ClearAllSprites();
-        WaitVBlanks(100);
-        FadeIn(30, TRUE, FALSE);
+        WaitVBlanks(20);
+        FadeIn(7, TRUE, FALSE);
         UpdateLevelDisplay(session.level);
         UpdateLifeDisplay(session.lives);
         ResetActiveBonusPositions();
