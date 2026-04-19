@@ -62,14 +62,21 @@ The Modern Recompiled ROM is kept in sync by `make publish` in
 ## Player layout
 
 ```
-public/player/
-├── index.html   # minimal UI (canvas + buttons + touchpad)
-├── app.js       # vanilla JS wrapper around mGBA (boot, input, save-state, etc.)
-├── app.css
-├── mgba.js      # mGBA WASM loader (from @thenick775/mgba-wasm)
-├── mgba.wasm    # mGBA core (~2 MB, threaded)
-└── coi-sw.js    # COOP/COEP service worker for cross-origin isolation
+public/
+├── coi-sw.js    # COOP/COEP service worker at /, scope=/ so it covers both pages below
+├── index.html   # showcase (links + embedded iframe)
+└── player/
+    ├── index.html   # minimal UI (canvas + buttons + touchpad)
+    ├── app.js       # vanilla JS wrapper around mGBA (boot, input, save-state, etc.)
+    ├── app.css
+    ├── mgba.js      # mGBA WASM loader (from @thenick775/mgba-wasm)
+    └── mgba.wasm    # mGBA core (~2 MB, threaded)
 ```
+
+> `coi-sw.js` MUST sit at the repo root: the service worker's scope is the directory where
+> the file lives, and iframes inherit their parent's isolation state. Placing it at `/player/`
+> would only isolate the player page — the showcase iframe would still be blocked because
+> its parent document (`/index.html`) wouldn't be isolated.
 
 ## Updating the mGBA core
 
