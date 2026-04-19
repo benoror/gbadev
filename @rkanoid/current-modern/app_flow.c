@@ -11,9 +11,10 @@ void C_Entry(void)
 
     InitializeDisplay();
     ShowSplashScreen();
-    FadeIn(7, FALSE, TRUE);
-    WaitVBlanks(20);
-    FadeOut(7, FALSE, FALSE);
+    /* Splash runs at half the speed of the rest of the flow so the title lingers. */
+    FadeIn(28, FALSE, TRUE);
+    WaitVBlanks(600);
+    FadeOut(28, FALSE, FALSE);
 
     ShowTitleScreen();
     FadeIn(7, FALSE, FALSE);
