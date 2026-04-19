@@ -32,6 +32,7 @@ import mGBA from './mgba.js';
   let Module = null;
   let isPaused = false;
   let romFileName = null;
+  let romGamePath = null;
   let ffMultiplier = 1;
 
   function setStatus(text, kind) {
@@ -112,12 +113,14 @@ import mGBA from './mgba.js';
 
     // Module.uploadRom writes to /data/games/<fileName>. loadGame expects the full VFS
     // path — passing just the base name returns ENOENT and leaves the canvas blank.
-    const gamePath = `${(Module.filePaths?.() || {}).gamePath || '/data/games'}/${fileName}`;
-    const ok = Module.loadGame(gamePath);
+    romGamePath = `${(Module.filePaths?.() || {}).gamePath || '/data/games'}/${fileName}`;
+    const ok = Module.loadGame(romGamePath);
     if (!ok) {
       setStatus(`Failed to load ROM: ${fileName}`, 'error');
       return;
     }
+    // Clear pause state so the just-loaded game is actually running.
+    if (isPaused) { isPaused = false; pauseBtn.textContent = 'Pause'; }
 
     // Auto-resume on ROM open: disabled for now. Uncomment to restore the last session
     // (paired with the persist() hook below on pagehide/beforeunload).
@@ -131,13 +134,11 @@ import mGBA from './mgba.js';
   /* ---------- Controls ---------- */
   function wireControls() {
     pauseBtn.addEventListener('click', togglePause);
-    resetBtn.addEventListener('click', () => {
-      safe(() => Module.quickReload && Module.quickReload());
-    });
+    resetBtn.addEventListener('click', hardReset);
     shotBtn.addEventListener('click', takeScreenshot);
     fullBtn.addEventListener('click', toggleFullscreen);
-    saveBtn.addEventListener('click', () => safe(() => Module.saveState && Module.saveState(Number(slotSel.value))));
-    loadBtn.addEventListener('click', () => safe(() => Module.loadState && Module.loadState(Number(slotSel.value))));
+    saveBtn.addEventListener('click', saveToSelectedSlot);
+    loadBtn.addEventListener('click', loadFromSelectedSlot);
     volumeEl.addEventListener('input', () => {
       safe(() => Module.setVolume && Module.setVolume(Number(volumeEl.value)));
       try { localStorage.setItem('player.volume', volumeEl.value); } catch (_) { /* no-op */ }
@@ -148,6 +149,62 @@ import mGBA from './mgba.js';
     const stored = (() => { try { return localStorage.getItem('player.volume'); } catch (_) { return null; } })();
     if (stored != null) volumeEl.value = stored;
     safe(() => Module.setVolume && Module.setVolume(Number(volumeEl.value)));
+  }
+
+  /*
+   * Hard reset — emulates a physical power-cycle.
+   *
+   * mGBA keeps an auto-save state at `/autosave/<game>_auto.ss` (the /autosave mount is
+   * `autoPersist: true`, so IndexedDB silently writes/reads it). `loadGame()` restores
+   * from that auto-save, which is why the game appears to come back to "last saved state"
+   * after a naive reload. To mimic pulling the battery out we:
+   *   1. `quitGame()` — tear down the running core.
+   *   2. Delete the auto-save state file (and the in-memory cache `Module.autoSaveStateName`).
+   *   3. `loadGame()` — attach and boot from the cart header.
+   * Battery save (`.sav` in /data/saves) is preserved on purpose — that's cartridge SRAM
+   * and real hardware keeps it across power cycles.
+   */
+  function hardReset() {
+    if (!Module || !romGamePath) return;
+
+    if (isPaused) {
+      safe(() => Module.resumeGame && Module.resumeGame());
+      safe(() => Module.resumeAudio && Module.resumeAudio());
+      isPaused = false;
+      pauseBtn.textContent = 'Pause';
+    }
+
+    safe(() => Module.quitGame && Module.quitGame());
+
+    // Wipe auto-save state so loadGame boots cleanly.
+    const autoPath = Module.autoSaveStateName;
+    if (autoPath && Module.FS && Module.FS.analyzePath) {
+      safe(() => {
+        if (Module.FS.analyzePath(autoPath).exists) Module.FS.unlink(autoPath);
+      });
+    }
+    // And flush the deletion so a subsequent reload doesn't resurrect the file from IDB.
+    safe(() => Module.FSSync && Module.FSSync());
+
+    safe(() => Module.loadGame(romGamePath));
+  }
+
+  function saveToSelectedSlot() {
+    if (!Module) return;
+    const slot = Number(slotSel.value);
+    let ok = false;
+    safe(() => { ok = !!(Module.saveState && Module.saveState(slot)); });
+    // Flush the FS so the state file actually hits IndexedDB (not lost if the tab is closed).
+    safe(() => Module.FSSync && Module.FSSync());
+    alert(ok ? `State saved to slot ${slot}` : `Failed to save state to slot ${slot}`);
+  }
+
+  function loadFromSelectedSlot() {
+    if (!Module) return;
+    const slot = Number(slotSel.value);
+    let ok = false;
+    safe(() => { ok = !!(Module.loadState && Module.loadState(slot)); });
+    alert(ok ? `Loaded state from slot ${slot}` : `No state present in slot ${slot}`);
   }
 
   function togglePause() {
