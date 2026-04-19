@@ -9,6 +9,11 @@
 #define LEVEL_TENS_SLOT 0
 #define LEVEL_SLOT 8
 #define PADDLE_SLOT_START 9
+/* HUD entries on the right edge below the level readout. Slot numbers are above the bonus
+ * range (23+) and well clear of paddle/life/ball/trail slots, so they never collide. */
+#define TIME_SLOT_START 60     /* 3 slots: hundreds, tens, ones of seconds */
+#define SPEED_TENS_SLOT 64     /* Hidden while the level is < 10 (matches UpdateLevelDisplay). */
+#define SPEED_SLOT 65          /* Ones digit of the speed level. */
 #define PADDLE_SLOT_COUNT 6
 #define LIFE_SLOT_START 15
 #define BALL_SLOT_HEAD 17
@@ -155,6 +160,43 @@ void UpdateLevelDisplay(u16 level)
     OAM[LEVEL_SLOT].Attrib0 = 0x2000 + 88;
     OAM[LEVEL_SLOT].Attrib1 = 176;
     OAM[LEVEL_SLOT].Attrib2 = DIGIT_TILE_BASE + (digits[1] * 2);
+}
+
+void UpdateTimeDisplay(u32 seconds)
+{
+    u16 digits[3];
+    u16 i;
+
+    if (seconds > 999)
+        seconds = 999;
+    digits[0] = (u16)((seconds / 100) % 10);
+    digits[1] = (u16)((seconds / 10) % 10);
+    digits[2] = (u16)(seconds % 10);
+    for (i = 0; i < 3; ++i) {
+        OAM[TIME_SLOT_START + i].Attrib0 = 0x2000 + 104;
+        OAM[TIME_SLOT_START + i].Attrib1 = 168 + i * 8;
+        OAM[TIME_SLOT_START + i].Attrib2 = DIGIT_TILE_BASE + (digits[i] * 2);
+    }
+}
+
+void UpdateSpeedDisplay(u16 speedLevel)
+{
+    u16 digits[2];
+
+    /* speedLevel is a human-readable integer: 1 at round start, +1 per tier. Capped at 99. */
+    if (speedLevel > 99)
+        speedLevel = 99;
+    FormatTwoDigits(speedLevel, digits);
+    if (digits[0] != 0) {
+        OAM[SPEED_TENS_SLOT].Attrib0 = 0x2000 + 120;
+        OAM[SPEED_TENS_SLOT].Attrib1 = 168;
+        OAM[SPEED_TENS_SLOT].Attrib2 = DIGIT_TILE_BASE + (digits[0] * 2);
+    } else {
+        HideSpriteSlot(SPEED_TENS_SLOT);
+    }
+    OAM[SPEED_SLOT].Attrib0 = 0x2000 + 120;
+    OAM[SPEED_SLOT].Attrib1 = 176;
+    OAM[SPEED_SLOT].Attrib2 = DIGIT_TILE_BASE + (digits[1] * 2);
 }
 
 void SetPaddleSprite(u16 x, u16 y, boolean longPaddle, u16 playerIndex)

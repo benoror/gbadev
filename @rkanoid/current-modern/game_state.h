@@ -15,6 +15,13 @@ typedef struct
     boolean longPaddle;
     boolean trailEnabled;
     boolean shieldActive;
+    /* Current target Euclidean ball-speed magnitude in Q8.8 units. Drives BallNormalizeVelocity
+     * call-sites so raising it mid-round speeds the ball up on the next bounce (and we also
+     * renormalize immediately when it changes). Resets to BALL_SPEED_MAG per level / per life. */
+    s32 ballSpeedMag;
+    /* Frames elapsed since the current round (per level / per life) started. At 60 fps on GBA,
+     * each second = 60 frames. Used to drive the HUD time display and the speed-tier ramp. */
+    u32 levelFrame;
 } RuntimeState;
 
 typedef struct

@@ -90,17 +90,20 @@ static void PaddleLaunchFromHitParam(FrameState *frame, RuntimeState *runtime)
         t = FIX_ONE;
     else if (t < -FIX_ONE)
         t = -FIX_ONE;
-    maxVx = (BALL_SPEED_MAG * 85) / 100;
-    vx = (t * maxVx) / FIX_ONE;
-    vySq = BALL_SPEED_MAG * BALL_SPEED_MAG - vx * vx;
-    if (vySq < 0) {
-        vx = 0;
-        vySq = BALL_SPEED_MAG * BALL_SPEED_MAG;
+    {
+        const s32 speed = runtime->ballSpeedMag;
+        maxVx = (speed * 85) / 100;
+        vx = (t * maxVx) / FIX_ONE;
+        vySq = speed * speed - vx * vx;
+        if (vySq < 0) {
+            vx = 0;
+            vySq = speed * speed;
+        }
     }
     vy = -(s32)u32_isqrt((u32)vySq);
     frame->ballVelX = vx;
     frame->ballVelY = vy;
-    BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+    BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
 }
 
 boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
@@ -137,7 +140,7 @@ boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
     if (frame->ballVelX > 0 && ballR >= padL && ballL < padL) {
         frame->ballVelX = -FIX_ONE;
         frame->ballVelY = -FIX_ONE;
-        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         frame->ballPosX = FIX_FROM_INT(SnapPixelX(padL - (s32)runtime->ballWidth - 1, (s32)runtime->ballWidth));
         Ball_SyncPixelsFromFixedPos(frame);
         return TRUE;
@@ -145,7 +148,7 @@ boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
     if (frame->ballVelX < 0 && ballL <= padR && ballR > padR) {
         frame->ballVelX = FIX_ONE;
         frame->ballVelY = -FIX_ONE;
-        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+        BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         frame->ballPosX = FIX_FROM_INT(SnapPixelX(padR + 1, (s32)runtime->ballWidth));
         Ball_SyncPixelsFromFixedPos(frame);
         return TRUE;
@@ -231,7 +234,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                     if (pierce == FALSE) {
                         if (frame->ballVelY > 0) {
                             frame->ballVelY = -frame->ballVelY;
-                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                         }
                         frame->ballPosY = FIX_FROM_INT(
                             SnapPixelY(savedY - (s32)runtime->ballHeight, (s32)runtime->ballHeight,
@@ -244,7 +247,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                     if (pierce == FALSE) {
                         if (frame->ballVelY < 0) {
                             frame->ballVelY = -frame->ballVelY;
-                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                         }
                         frame->ballPosY = FIX_FROM_INT(
                             SnapPixelY(savedBottom, (s32)runtime->ballHeight, (s32)runtime->maxBallY));
@@ -258,7 +261,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                     if (pierce == FALSE) {
                         if (frame->ballVelX > 0) {
                             frame->ballVelX = -frame->ballVelX;
-                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                         }
                         frame->ballPosX = FIX_FROM_INT(
                             SnapPixelX(savedX - (s32)runtime->ballWidth, (s32)runtime->ballWidth));
@@ -270,7 +273,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                     if (pierce == FALSE) {
                         if (frame->ballVelX < 0) {
                             frame->ballVelX = -frame->ballVelX;
-                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                         }
                         frame->ballPosX =
                             FIX_FROM_INT(SnapPixelX(savedRight, (s32)runtime->ballWidth));
