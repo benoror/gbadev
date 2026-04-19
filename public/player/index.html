@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Player</title>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <!--
+    coi-serviceworker injects COOP/COEP headers on subsequent loads so threaded WASM runs on
+    any static host (GitHub Pages, python3 -m http.server, npx serve, etc.). First visit
+    registers, reloads once, and the emulator comes up with cross-origin isolation active.
+  -->
+  <script src="./coi-sw.js"></script>
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <main class="app">
+    <div class="screen-wrap">
+      <canvas id="screen" width="240" height="160" aria-label="Emulator display"></canvas>
+      <div id="status" class="status" role="status" aria-live="polite">Booting mGBA…</div>
+    </div>
+
+    <section class="controls" aria-label="Emulator controls">
+      <button id="btn-pause" type="button">Pause</button>
+      <button id="btn-reset" type="button" title="Soft reset (Quick Reload)">Reset</button>
+      <button id="btn-shot" type="button" title="Download PNG screenshot">Screenshot</button>
+      <button id="btn-full" type="button" title="Fullscreen">Fullscreen</button>
+
+      <label class="slot">
+        <span>Slot</span>
+        <select id="state-slot" aria-label="Save state slot">
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+        </select>
+      </label>
+      <button id="btn-save" type="button">Save State</button>
+      <button id="btn-load" type="button">Load State</button>
+
+      <label class="volume">
+        <span>Volume</span>
+        <input id="volume" type="range" min="0" max="100" value="70" aria-label="Volume" />
+      </label>
+    </section>
+
+    <section class="touch" aria-label="Touch controls" aria-hidden="true">
+      <div class="tpad dpad">
+        <button class="dbtn up" data-btn="Up" aria-label="Up">▲</button>
+        <button class="dbtn left" data-btn="Left" aria-label="Left">◀</button>
+        <button class="dbtn right" data-btn="Right" aria-label="Right">▶</button>
+        <button class="dbtn down" data-btn="Down" aria-label="Down">▼</button>
+      </div>
+      <div class="tpad ab">
+        <button class="abtn" data-btn="B" aria-label="B">B</button>
+        <button class="abtn" data-btn="A" aria-label="A">A</button>
+      </div>
+      <div class="tpad lr">
+        <button class="lrbtn" data-btn="L" aria-label="L">L</button>
+        <button class="lrbtn" data-btn="R" aria-label="R">R</button>
+      </div>
+      <div class="tpad ss">
+        <button class="ssbtn" data-btn="Select" aria-label="Select">Select</button>
+        <button class="ssbtn" data-btn="Start" aria-label="Start">Start</button>
+      </div>
+    </section>
+
+    <footer class="hint">
+      <p>
+        Keyboard: Arrows · <kbd>Z</kbd>=B · <kbd>X</kbd>=A · <kbd>A</kbd>=L · <kbd>S</kbd>=R ·
+        <kbd>Enter</kbd>=Start · <kbd>Backspace</kbd>=Select · hold <kbd>Tab</kbd> = fast-forward
+      </p>
+    </footer>
+  </main>
+
+  <script src="./mgba.js"></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GBA Dev Showcase</title>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #111; color: #eee; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #111; color: #eee; }
     .wrap { max-width: 1100px; margin: 0 auto; padding: 20px; }
     h1 { margin: 0 0 8px; }
     p { color: #bbb; }
@@ -14,63 +14,61 @@
     a.btn.secondary { background: #333; }
     iframe { width: 100%; height: 72vh; border: 1px solid #333; border-radius: 10px; background: #000; }
     .note { font-size: 13px; color: #999; margin-top: 10px; }
+    .warn { display: none; color: #ffb86b; font-weight: 600; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>GBA Dev Playable Showcase</h1>
-    <p id="file-warning" style="display:none; color:#ffb86b; font-weight:600;">
-      You are running from <code>file://</code>. gbajs3 requires <code>http://</code> or <code>https://</code> for manifest/service-worker/module loading.
-      Start a local server and open <code>http://localhost:8000/public/</code>.
+    <p id="file-warning" class="warn">
+      You are running from <code>file://</code>. The mGBA WASM core needs <code>http://</code> (service
+      worker + threads). Start any static server from this folder — e.g. <code>python3 -m http.server 8000</code> —
+      and open <code>http://localhost:8000/</code>.
     </p>
     <p>
-      This page uses a local build of <code>gbajs3</code> (mGBA WASM core). Pick a ROM shortcut below or open the emulator directly.
+      Powered by a minimal vanilla player around <a href="https://github.com/thenick775/mgba" target="_blank" rel="noopener">thenick775/mgba</a>’s
+      WASM core. Pick a ROM below or open the player directly.
     </p>
 
     <div class="links">
-      <a id="play-rkanoid-original" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Original Shipped ROM)</a>
-      <a id="play-rkanoid-faithful" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Faithful Comparison)</a>
-      <a id="play-rkanoid-modern" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play @rkanoid (Modern Recompiled)</a>
-      <a id="play-dexgex" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play DexGex</a>
-      <a id="play-cebelix" class="btn" href="./gbajs3-app/" target="_blank" rel="noopener">Play Cebelix</a>
-      <a class="btn secondary" href="./gbajs3-app/" target="_blank" rel="noopener">Open Emulator Only</a>
-      <a class="btn secondary" href="https://github.com/thenick775/gbajs3" target="_blank" rel="noopener">gbajs3 Project</a>
+      <a id="play-rkanoid-original" class="btn" href="./player/" target="_blank" rel="noopener">Play @rkanoid (Original Shipped ROM)</a>
+      <a id="play-rkanoid-faithful" class="btn" href="./player/" target="_blank" rel="noopener">Play @rkanoid (Faithful Comparison)</a>
+      <a id="play-rkanoid-modern" class="btn" href="./player/" target="_blank" rel="noopener">Play @rkanoid (Modern Recompiled)</a>
+      <a id="play-dexgex" class="btn" href="./player/" target="_blank" rel="noopener">Play DexGex</a>
+      <a id="play-cebelix" class="btn" href="./player/" target="_blank" rel="noopener">Play Cebelix</a>
+      <a class="btn secondary" href="./player/" target="_blank" rel="noopener">Open Player Only</a>
+      <a class="btn secondary" href="https://github.com/thenick775/mgba" target="_blank" rel="noopener">mGBA WASM Source</a>
     </div>
 
-    <iframe id="emulator-frame" src="./gbajs3-app/" title="gbajs3 emulator"></iframe>
+    <iframe id="emulator-frame" src="./player/" title="Player"></iframe>
     <div class="note">
-      Compare the original shipped ROM against the faithful and modern rebuilds. The embedded view defaults to the faithful comparison ROM. If autoload ever fails, use the emulator UI to import from <code>public/roms/</code>.
+      Compare the original shipped ROM against the faithful and modern rebuilds. The embedded view defaults to the
+      faithful comparison ROM. Drop new ROMs into <code>public/roms/</code> and add shortcuts in this page.
     </div>
   </div>
   <script>
-    function emulatorUrlFor(romFileName) {
-      var romUrl = new URL("./roms/" + romFileName, window.location.href).href;
-      return "./gbajs3-app/?romURL=" + encodeURIComponent(romUrl);
+    function playerUrlFor(romFileName) {
+      var romUrl = new URL('./roms/' + romFileName, window.location.href).href;
+      return './player/?romURL=' + encodeURIComponent(romUrl);
     }
 
-    var rkanoidOriginalUrl = emulatorUrlFor("@rkanoid LATEST - DEMO.gba");
-    var rkanoidFaithfulUrl = emulatorUrlFor("@rkanoid FAITHFUL - COMPARISON.gba");
-    var rkanoidModernUrl = emulatorUrlFor("@rkanoid MODERN - RECOMPILED.gba");
-    var dexgexUrl = emulatorUrlFor("dezgex.gba");
-    var cebelixUrl = emulatorUrlFor("cebelix.gba");
+    var links = {
+      'play-rkanoid-original': '@rkanoid LATEST - DEMO.gba',
+      'play-rkanoid-faithful': '@rkanoid FAITHFUL - COMPARISON.gba',
+      'play-rkanoid-modern':   '@rkanoid MODERN - RECOMPILED.gba',
+      'play-dexgex':           'dezgex.gba',
+      'play-cebelix':          'cebelix.gba'
+    };
+    Object.keys(links).forEach(function (id) {
+      var a = document.getElementById(id);
+      if (a) a.href = playerUrlFor(links[id]);
+    });
 
-    var rkanoidOriginalLink = document.getElementById("play-rkanoid-original");
-    var rkanoidFaithfulLink = document.getElementById("play-rkanoid-faithful");
-    var rkanoidModernLink = document.getElementById("play-rkanoid-modern");
-    var dexgexLink = document.getElementById("play-dexgex");
-    var cebelixLink = document.getElementById("play-cebelix");
-    var frame = document.getElementById("emulator-frame");
+    var frame = document.getElementById('emulator-frame');
+    if (frame) frame.src = playerUrlFor('@rkanoid FAITHFUL - COMPARISON.gba');
 
-    if (rkanoidOriginalLink) rkanoidOriginalLink.href = rkanoidOriginalUrl;
-    if (rkanoidFaithfulLink) rkanoidFaithfulLink.href = rkanoidFaithfulUrl;
-    if (rkanoidModernLink) rkanoidModernLink.href = rkanoidModernUrl;
-    if (dexgexLink) dexgexLink.href = dexgexUrl;
-    if (cebelixLink) cebelixLink.href = cebelixUrl;
-    if (frame) frame.src = rkanoidFaithfulUrl;
-
-    if (window.location.protocol === "file:") {
-      var warning = document.getElementById("file-warning");
-      if (warning) warning.style.display = "block";
+    if (window.location.protocol === 'file:') {
+      document.getElementById('file-warning').style.display = 'block';
     }
   </script>
 </body>
