@@ -6,11 +6,12 @@
   <title>Player</title>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   <!--
-    coi-serviceworker injects COOP/COEP headers on subsequent loads so threaded WASM runs on
-    any static host (GitHub Pages, python3 -m http.server, npx serve, etc.). First visit
-    registers, reloads once, and the emulator comes up with cross-origin isolation active.
+    coi-serviceworker injects COOP/COEP headers so threaded WASM runs on any static host.
+    Loaded from the repo root (scope=/) so both the showcase (/) and the player (/player/)
+    end up cross-origin isolated — iframes inherit the parent's isolation state, so both
+    documents need the SW active.
   -->
-  <script src="./coi-sw.js"></script>
+  <script src="../coi-sw.js"></script>
   <link rel="stylesheet" href="./app.css" />
 </head>
 <body>

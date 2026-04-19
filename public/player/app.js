@@ -51,8 +51,14 @@ import mGBA from './mgba.js';
       return;
     }
 
+    // Threaded mGBA requires SharedArrayBuffer, which requires cross-origin isolation.
+    // coi-sw.js normally reloads the page once after registering the service worker, but on
+    // the very first visit there's a race where app.js runs before the worker is controlling.
+    // In that case we wait for a controller → reload ourselves; if that also fails (e.g. a
+    // private browsing session where service workers are blocked), show a helpful error.
     if (!self.crossOriginIsolated) {
-      setStatus('Waiting for cross-origin isolation… (first load reloads once)');
+      await ensureCrossOriginIsolationOrReload();
+      return;
     }
 
     try {
@@ -287,6 +293,54 @@ import mGBA from './mgba.js';
 
   /* ---------- Utilities ---------- */
   function safe(fn) { try { return fn(); } catch (err) { console.warn(err); } }
+
+  const COI_RELOAD_KEY = 'player.coiReload';
+
+  async function ensureCrossOriginIsolationOrReload() {
+    // Safety net: if we already tried reloading once and still aren't isolated, don't loop forever.
+    const attempts = Number(sessionStorage.getItem(COI_RELOAD_KEY) || '0');
+    if (attempts >= 2) {
+      setStatus(
+        'Cross-origin isolation could not be enabled. The COI service worker might be blocked ' +
+          '(private browsing, extensions, or a cross-origin server). Try a normal browser window ' +
+          'or serve with COOP/COEP response headers.',
+        'error'
+      );
+      return;
+    }
+
+    setStatus('Enabling cross-origin isolation… the page will reload once.');
+
+    if (!('serviceWorker' in navigator)) {
+      setStatus(
+        'Cross-origin isolation unavailable: service workers are disabled in this browser ' +
+          '(e.g. private mode). Use a normal browser window or a server sending COOP/COEP headers.',
+        'error'
+      );
+      return;
+    }
+
+    // Wait briefly for coi-sw.js to take control and reload the page itself. If nothing
+    // happens within the grace period, force a reload ourselves.
+    const start = Date.now();
+    while (Date.now() - start < 2500) {
+      if (self.crossOriginIsolated) {
+        sessionStorage.setItem(COI_RELOAD_KEY, String(attempts + 1));
+        location.reload();
+        return;
+      }
+      await new Promise((r) => setTimeout(r, 100));
+    }
+
+    try { await navigator.serviceWorker.ready; } catch (_) { /* fall through */ }
+    sessionStorage.setItem(COI_RELOAD_KEY, String(attempts + 1));
+    location.reload();
+  }
+
+  // Clear the reload-attempts counter once we've actually booted successfully.
+  addEventListener('load', () => {
+    if (self.crossOriginIsolated) sessionStorage.removeItem(COI_RELOAD_KEY);
+  });
 
   boot();
 })();
