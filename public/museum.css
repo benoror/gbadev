@@ -85,65 +85,50 @@ a { color: inherit; }
   display: flex;
   gap: 18px;
   overflow-x: auto;
-  padding: 4px 4px 16px;
+  padding: 8px 4px 24px;
   scroll-snap-type: x mandatory;
+  /* The rack is just below the header; give carts some breathing room so the lift/focus
+     ring transforms don't clip against the edges of the container. */
 }
 
 .rack::-webkit-scrollbar { height: 8px; }
 .rack::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
+/* Each cart is a real GBA cartridge vector image with a colour-customized label overlaid
+ * inside the cart's label cut-out. Container = cart SVG (200:122 aspect); label overlay
+ * is absolutely positioned at the sticker region. */
 .cart {
   --cart-color: #4a51d9;
   --cart-accent: #ffffff;
   position: relative;
   flex: 0 0 auto;
-  width: 128px;
-  height: 168px;
-  border-radius: 8px 8px 14px 14px;
-  background: linear-gradient(180deg, var(--cart-color) 0%, color-mix(in oklab, var(--cart-color) 70%, #000) 100%);
-  box-shadow: var(--shadow), inset 0 -4px 0 rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.15);
+  width: 168px;
+  aspect-ratio: 200 / 122;
+  background: transparent url('./images/gba-cart.svg') center/100% 100% no-repeat;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+  border: 0;
+  padding: 0;
   cursor: pointer;
   scroll-snap-align: start;
   transform-origin: 50% 100%;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1.2),
-              filter 0.3s ease, box-shadow 0.3s ease;
+              filter 0.3s ease;
 }
 
-.cart::before {
-  /* Ridges on the top lip (GBA cart connector area). */
-  content: '';
-  position: absolute;
-  top: 0; left: 8px; right: 8px;
-  height: 16px;
-  background:
-    linear-gradient(90deg,
-      rgba(0,0,0,.25) 0 3px, transparent 3px 6px,
-      rgba(0,0,0,.25) 6px 9px, transparent 9px 12px,
-      rgba(0,0,0,.25) 12px 15px, transparent 15px 18px);
-  background-size: 18px 100%;
-  border-radius: 4px;
-  opacity: 0.7;
-}
-
-.cart::after {
-  /* Bottom notch silhouette */
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 50%;
-  transform: translateX(-50%);
-  width: 72px; height: 10px;
-  border-radius: 0 0 12px 12px;
-  background: color-mix(in oklab, var(--cart-color) 55%, #000);
-  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.5);
-}
-
+/* Position the colour label inside the cart's sticker rectangle. Percentages are tuned to
+ * the gba-cart.svg viewBox (370 70 200 122) so the label hugs the inner dark rectangle. */
 .cart-label {
   position: absolute;
-  inset: 26px 10px 28px;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #fff 0%, #eee 100%);
-  color: #111;
-  box-shadow: inset 0 0 0 2px var(--cart-accent, rgba(0,0,0,0.1)), 0 2px 6px rgba(0,0,0,0.25);
+  left: 14.5%;
+  top: 26.5%;
+  width: 74%;
+  height: 63%;
+  border-radius: 2px;
+  background: var(--cart-color);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+              inset 0 2px 0 rgba(255, 255, 255, 0.18),
+              inset 0 -2px 0 rgba(0, 0, 0, 0.22);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -151,71 +136,72 @@ a { color: inherit; }
 
 .cart-cover {
   flex: 1;
-  background: linear-gradient(135deg,
-    color-mix(in oklab, var(--cart-color) 50%, #fff) 0%,
-    color-mix(in oklab, var(--cart-color) 85%, #000) 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(135deg,
+      color-mix(in oklab, var(--cart-color) 50%, #fff) 0%,
+      color-mix(in oklab, var(--cart-color) 85%, #000) 100%);
   position: relative;
   overflow: hidden;
 }
 
 .cart-cover::after {
-  /* Subtle GBA screen scanline hint on the cover */
+  /* Soft scanline veil so the cover reads as an LCD-screen still, not a flat colour patch. */
   content: '';
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(0deg,
-    rgba(255,255,255,0.08) 0 1px, transparent 1px 3px);
+    rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 3px);
   mix-blend-mode: overlay;
   pointer-events: none;
 }
 
 .cart-title {
-  padding: 4px 6px 5px;
-  font-size: 11px;
-  font-weight: 700;
+  padding: 3px 6px 4px;
+  font-size: 10px;
+  font-weight: 800;
   letter-spacing: 0.8px;
   text-align: center;
-  background: var(--cart-color);
+  background: rgba(0, 0, 0, 0.35);
   color: #fff;
   text-transform: uppercase;
-  border-top: 2px solid rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 .cart-badge {
   position: absolute;
-  top: -8px; right: -8px;
+  top: 14%;
+  right: 8%;
   background: var(--cart-accent, var(--accent));
   color: #111;
   font-size: 10px;
-  font-weight: 700;
-  padding: 3px 7px;
+  font-weight: 800;
+  padding: 2px 6px;
   border-radius: 999px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
 .cart:hover, .cart:focus-visible {
   transform: translateY(-6px) rotate(-1deg);
   outline: none;
-  filter: brightness(1.08);
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55)) brightness(1.05);
 }
 
 .cart.is-selected {
-  transform: translateY(-12px) scale(1.04);
-  filter: brightness(1.1);
-  box-shadow: 0 16px 50px rgba(0,0,0,0.6),
-              0 0 0 2px var(--cart-accent, var(--accent)),
-              inset 0 -4px 0 rgba(0,0,0,0.3);
+  transform: translateY(-12px) scale(1.06);
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.6)) brightness(1.08);
   animation: cart-insert 0.45s cubic-bezier(0.2, 0.8, 0.2, 1.2);
 }
 
 @keyframes cart-insert {
-  0% { transform: translateY(0) scale(1); }
-  40% { transform: translateY(-24px) scale(1.06); }
-  100% { transform: translateY(-12px) scale(1.04); }
+  0%   { transform: translateY(0)     scale(1); }
+  40%  { transform: translateY(-28px) scale(1.08); }
+  100% { transform: translateY(-12px) scale(1.06); }
 }
 
 .rack[data-has-selection="true"] .cart:not(.is-selected) {
-  filter: brightness(0.6) saturate(0.7);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35)) brightness(0.7) saturate(0.7);
 }
 
 /* ---------- Version spine ---------- */
@@ -304,63 +290,99 @@ a { color: inherit; }
   filter: grayscale(1);
 }
 
-/* ---------- Stage (player + liner notes) ---------- */
-.stage {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
-  gap: 20px;
-}
+/* ---------- Stage (player, full-width) ----------
+ * Notes are rendered above the stage (between the spine and the player), so the stage just
+ * hosts the GBA shell and its control strip at full container width.
+ */
+.stage { display: block; }
+.stage-player-col { display: flex; flex-direction: column; }
 
+/* Stage player is the GBA console SVG with the iframe overlaid exactly where the LCD sits.
+ * The LCD rectangle in gba-console.svg lives at roughly (93.7, 36.4, 148.3, 100.0) inside
+ * the 335x192 viewBox → the percentages below. Keep these in sync with that SVG! */
 .stage-player {
   position: relative;
-  background: #000;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  aspect-ratio: 335 / 192;
+  background: transparent url('./images/gba-console.svg') center/100% 100% no-repeat;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+  padding: 0;
+}
+
+.stage-player .screen {
+  position: absolute;
+  left: 28%;
+  top: 19%;
+  width: 44.3%;
+  height: 52.1%;
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  background: #000;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), inset 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .stage-player iframe {
   width: 100%;
-  aspect-ratio: 240 / 160;
+  height: 100%;
   border: 0;
   display: block;
   background: #000;
 }
 
-.stage-player[data-crt="true"]::after {
+.stage-player[data-crt="true"] .screen::after {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 2px, transparent 2px 4px),
-    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
   mix-blend-mode: multiply;
 }
 
 .stage-controls {
   display: flex;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 12px 14px;
   background: var(--bg-2);
-  border-top: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   flex-wrap: wrap;
+  margin-top: 12px;
 }
 
-.stage-controls button, .stage-controls a.btn {
+.stage-controls button {
   background: var(--bg-3);
   color: var(--fg);
   border: 1px solid var(--border);
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
   font: inherit;
   font-size: 13px;
   cursor: pointer;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
-.stage-controls button:hover, .stage-controls a.btn:hover { background: #262c3a; }
-.stage-controls button.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.stage-controls button:hover { background: #262c3a; }
+
+/* GBA-style power LED: small round dot, dim/black when off, saturated green with glow when on. */
+.stage-controls .led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #1a1e2a;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  flex: 0 0 auto;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+.stage-controls button.is-on .led {
+  background: radial-gradient(circle at 35% 30%, #b9ffc7 0%, #3ad66c 55%, #10883b 100%);
+  box-shadow: 0 0 6px rgba(58, 214, 108, 0.75),
+              inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.stage-controls button.is-on { border-color: rgba(58, 214, 108, 0.55); }
 
 .stage-notes {
   background: var(--bg-2);
@@ -429,5 +451,6 @@ a { color: inherit; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 820px) {
-  .stage { grid-template-columns: 1fr; }
+  .stage-notes { padding: 14px 16px; }
+  .stage-notes h2 { font-size: 18px; }
 }
