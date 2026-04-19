@@ -16,5 +16,11 @@ void HideBonusSprite(u16 spriteOffset);
 void UpdateLifeDisplay(u16 lives);
 void UpdateScoreDisplay(u32 score);
 void UpdateLevelDisplay(u16 level);
+/* Right-side HUD entries below the level readout. `seconds` is capped at 999 (~16 min).
+ * `speedLevel` is the current speed tier rendered as a plain integer: 1 at round start,
+ * +1 per elapsed tier boundary, capped at 99. Each function only writes to the OAM slots
+ * it owns; no side effects on the rest of the HUD. */
+void UpdateTimeDisplay(u32 seconds);
+void UpdateSpeedDisplay(u16 speedLevel);
 
 #endif

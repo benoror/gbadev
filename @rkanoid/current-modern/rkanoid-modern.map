@@ -96,7 +96,7 @@ LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.r
 LOAD /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/libnosys.a
 END GROUP
 
-.text           0x08000000     0x26b0
+.text           0x08000000     0x28c4
  *(.text._start)
  .text._start   0x08000000      0x148 start_gnu.o
                 0x08000000                _start
@@ -116,7 +116,7 @@ END GROUP
                 0x0800066c                ShowTitleScreen
                 0x08000680                ShowGameOverScreen
                 0x08000694                ShowEndingScreen
- .text          0x080006a8      0x47c game_sprites.o
+ .text          0x080006a8      0x5d4 game_sprites.o
                 0x080006a8                ClearAllSprites
                 0x080006d8                SetBallSprite
                 0x080007e4                UpdateBonusSprite
@@ -124,97 +124,99 @@ END GROUP
                 0x08000874                UpdateLifeDisplay
                 0x080008ec                UpdateScoreDisplay
                 0x08000998                UpdateLevelDisplay
-                0x08000a44                SetPaddleSprite
- .text          0x08000b24      0x1f8 ball_motion.o
-                0x08000b24                BallNormalizeVelocity
-                0x08000bf8                BallSyncFixedFromPixels
-                0x08000c10                Ball_SyncPixelsFromFixedPos
-                0x08000c64                BallIntegrateAndSyncPixels
-                0x08000cc4                BallComputeTrailOffset
- .text          0x08000d1c      0x514 physics.o
-                0x08000d1c                GetPaddleSpeed
-                0x08000d2c                ClampPaddleX
-                0x08000d50                ApplyWorldBounds
-                0x08000eec                IntegrateBallMotionThisFrame
-                0x08001184                MovePaddleFromInput
- .text          0x08001230      0x780 collisions.o
-                0x080013e0                ApplyPaddleCollision
-                0x080015d8                ProcessBlockCollisions
- .text          0x080019b0      0x1c8 bonuses.o
-                0x080019b0                UpdateFallingBonuses
- .text          0x08001b78      0x1ec serve_state.o
-                0x08001b78                RunServeState
- .text          0x08001d64       0x88 frame_present.o
-                0x08001d64                PresentGameplayFrame
- .text          0x08001dec      0x2e0 game_loop.o
-                0x08001dec                RunGame
- .text          0x080020cc      0x12c levels_data.o
-                0x080020cc                GetLevelBlockSeeds
-                0x080021a0                LoadLevelTileMap
-                0x080021ec                GetLevelTileMap
- .text          0x080021f8      0x24c level_state.o
-                0x080021f8                ResetBlock
-                0x0800223c                HideBonus
-                0x0800225c                InitializeBlocksForLevel
-                0x080023a8                ResetActiveBonusPositions
-                0x080023fc                IsLevelCleared
- .text          0x08002444      0x120 level_render.o
-                0x08002444                ApplyShieldFloor
-                0x08002470                CopyLevelTileMapToBackground
-                0x080024b8                CopyBackgroundMapToVram
-                0x08002508                RefreshBackground
- .text          0x08002564      0x148 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/libgcc.a(_divsi3.o)
-                0x08002564                __aeabi_idiv
-                0x08002564                __divsi3
-                0x0800268c                __aeabi_idivmod
- .text          0x080026ac        0x4 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/libgcc.a(_dvmd_tls.o)
-                0x080026ac                __aeabi_ldiv0
-                0x080026ac                __aeabi_idiv0
-                0x080026b0                        . = ALIGN (0x4)
-                0x080026b0                        __text_end = .
+                0x08000a44                UpdateTimeDisplay
+                0x08000afc                UpdateSpeedDisplay
+                0x08000b9c                SetPaddleSprite
+ .text          0x08000c7c      0x1f8 ball_motion.o
+                0x08000c7c                BallNormalizeVelocity
+                0x08000d50                BallSyncFixedFromPixels
+                0x08000d68                Ball_SyncPixelsFromFixedPos
+                0x08000dbc                BallIntegrateAndSyncPixels
+                0x08000e1c                BallComputeTrailOffset
+ .text          0x08000e74      0x4fc physics.o
+                0x08000e74                GetPaddleSpeed
+                0x08000e84                ClampPaddleX
+                0x08000ea8                ApplyWorldBounds
+                0x08001040                IntegrateBallMotionThisFrame
+                0x080012c4                MovePaddleFromInput
+ .text          0x08001370      0x7b0 collisions.o
+                0x08001554                ApplyPaddleCollision
+                0x0800174c                ProcessBlockCollisions
+ .text          0x08001b20      0x1c8 bonuses.o
+                0x08001b20                UpdateFallingBonuses
+ .text          0x08001ce8      0x1ec serve_state.o
+                0x08001ce8                RunServeState
+ .text          0x08001ed4       0xc4 frame_present.o
+                0x08001ed4                PresentGameplayFrame
+ .text          0x08001f98      0x348 game_loop.o
+                0x08001f98                RunGame
+ .text          0x080022e0      0x12c levels_data.o
+                0x080022e0                GetLevelBlockSeeds
+                0x080023b4                LoadLevelTileMap
+                0x08002400                GetLevelTileMap
+ .text          0x0800240c      0x24c level_state.o
+                0x0800240c                ResetBlock
+                0x08002450                HideBonus
+                0x08002470                InitializeBlocksForLevel
+                0x080025bc                ResetActiveBonusPositions
+                0x08002610                IsLevelCleared
+ .text          0x08002658      0x120 level_render.o
+                0x08002658                ApplyShieldFloor
+                0x08002684                CopyLevelTileMapToBackground
+                0x080026cc                CopyBackgroundMapToVram
+                0x0800271c                RefreshBackground
+ .text          0x08002778      0x148 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/libgcc.a(_divsi3.o)
+                0x08002778                __aeabi_idiv
+                0x08002778                __divsi3
+                0x080028a0                __aeabi_idivmod
+ .text          0x080028c0        0x4 /Users/benoror/code/benoror/gbadev/@rkanoid/.tools/arm-gnu-toolchain-15.2.rel1-darwin-arm64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/libgcc.a(_dvmd_tls.o)
+                0x080028c0                __aeabi_ldiv0
+                0x080028c0                __aeabi_idiv0
+                0x080028c4                        . = ALIGN (0x4)
+                0x080028c4                        __text_end = .
 
-.glue_7         0x080026b0        0x0
- .glue_7        0x080026b0        0x0 linker stubs
+.glue_7         0x080028c4        0x0
+ .glue_7        0x080028c4        0x0 linker stubs
 
-.glue_7t        0x080026b0        0x0
- .glue_7t       0x080026b0        0x0 linker stubs
+.glue_7t        0x080028c4        0x0
+ .glue_7t       0x080028c4        0x0 linker stubs
 
-.vfp11_veneer   0x080026b0        0x0
- .vfp11_veneer  0x080026b0        0x0 linker stubs
+.vfp11_veneer   0x080028c4        0x0
+ .vfp11_veneer  0x080028c4        0x0 linker stubs
 
-.v4_bx          0x080026b0        0x0
- .v4_bx         0x080026b0        0x0 linker stubs
+.v4_bx          0x080028c4        0x0
+ .v4_bx         0x080028c4        0x0 linker stubs
 
-.iplt           0x080026b0        0x0
- .iplt          0x080026b0        0x0 start_gnu.o
+.iplt           0x080028c4        0x0
+ .iplt          0x080028c4        0x0 start_gnu.o
 
-.rodata         0x080026b0    0x29fa0
+.rodata         0x080028c4    0x29fa0
  *(.rodata*)
- .rodata        0x080026b0    0x27a00 data_gnu.o
-                0x080026b0                spriteTiles
-                0x08003030                spritePalette
-                0x08003230                backgroundTiles
-                0x08003eb0                backgroundPalette
-                0x080040b0                titleScreenTiles
-                0x0800d6b0                titleScreenPalette
-                0x0800d8b0                gameOverScreenTiles
-                0x08016eb0                gameOverScreenPalette
-                0x080170b0                endingScreenTiles
-                0x080206b0                endingScreenPalette
-                0x080208b0                splashScreenTiles
-                0x08029eb0                splashScreenPalette
- .rodata        0x0802a0b0        0x8 menu.o
- .rodata        0x0802a0b8       0x3c game_sprites.o
- .rodata        0x0802a0f4       0x11 bonuses.o
- *fill*         0x0802a105        0x3 
- .rodata        0x0802a108     0x2548 levels_data.o
+ .rodata        0x080028c4    0x27a00 data_gnu.o
+                0x080028c4                spriteTiles
+                0x08003244                spritePalette
+                0x08003444                backgroundTiles
+                0x080040c4                backgroundPalette
+                0x080042c4                titleScreenTiles
+                0x0800d8c4                titleScreenPalette
+                0x0800dac4                gameOverScreenTiles
+                0x080170c4                gameOverScreenPalette
+                0x080172c4                endingScreenTiles
+                0x080208c4                endingScreenPalette
+                0x08020ac4                splashScreenTiles
+                0x0802a0c4                splashScreenPalette
+ .rodata        0x0802a2c4        0x8 menu.o
+ .rodata        0x0802a2cc       0x3c game_sprites.o
+ .rodata        0x0802a308       0x11 bonuses.o
+ *fill*         0x0802a319        0x3 
+ .rodata        0x0802a31c     0x2548 levels_data.o
  *(.rodata.*)
-                0x0802c650                        . = ALIGN (0x4)
+                0x0802c864                        . = ALIGN (0x4)
 
-.rel.dyn        0x0802c650        0x0
- .rel.iplt      0x0802c650        0x0 start_gnu.o
+.rel.dyn        0x0802c864        0x0
+ .rel.iplt      0x0802c864        0x0 start_gnu.o
 
-.data           0x03000000      0x25c load address 0x0802c650
+.data           0x03000000      0x25c load address 0x0802c864
                 0x03000000                        __data_start__ = .
  *(.data*)
  .data          0x03000000      0x259 level_render.o
@@ -222,12 +224,12 @@ END GROUP
                 0x0300025c                        . = ALIGN (0x4)
  *fill*         0x03000259        0x3 
                 0x0300025c                        __data_end__ = .
-                0x0802c650                        __data_lma = LOADADDR (.data)
+                0x0802c864                        __data_lma = LOADADDR (.data)
 
-.igot.plt       0x0300025c        0x0 load address 0x0802c8ac
+.igot.plt       0x0300025c        0x0 load address 0x0802cac0
  .igot.plt      0x0300025c        0x0 start_gnu.o
 
-.bss            0x03000260     0x1a98 load address 0x0802c8b0
+.bss            0x03000260     0x1a98 load address 0x0802cac8
                 0x03000260                        __bss_start__ = .
  *(.bss*)
  .bss           0x03000260      0x144 levels_data.o

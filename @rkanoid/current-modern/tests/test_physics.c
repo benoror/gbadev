@@ -80,6 +80,8 @@ static void ResetRuntime(RuntimeState *runtime)
     runtime->longPaddle = FALSE;
     runtime->trailEnabled = FALSE;
     runtime->shieldActive = FALSE;
+    runtime->ballSpeedMag = BALL_SPEED_MAG;
+    runtime->levelFrame = 0;
 }
 
 static void ResetFrame(FrameState *frame)

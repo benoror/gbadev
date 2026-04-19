@@ -26,7 +26,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
     if (frame->ballX >= (MAX_X - runtime->ballWidth)) {
         if (frame->ballVelX > 0) {
             frame->ballVelX = -frame->ballVelX;
-            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         }
         frame->ballPosX = FIX_FROM_INT((s32)MAX_X - (s32)runtime->ballWidth - 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -34,7 +34,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
     if (frame->ballX <= MIN_X) {
         if (frame->ballVelX < 0) {
             frame->ballVelX = -frame->ballVelX;
-            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         }
         frame->ballPosX = FIX_FROM_INT((s32)MIN_X + 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -47,7 +47,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
         }
         if (frame->ballVelY > 0) {
             frame->ballVelY = -frame->ballVelY;
-            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         }
         frame->ballPosY = FIX_FROM_INT((s32)runtime->maxBallY - (s32)runtime->ballHeight - 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -57,7 +57,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
     if (frame->ballY <= MIN_Y) {
         if (frame->ballVelY < 0) {
             frame->ballVelY = -frame->ballVelY;
-            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+            BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         }
         frame->ballPosY = FIX_FROM_INT((s32)MIN_Y + 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -124,7 +124,7 @@ void IntegrateBallMotionThisFrame(FrameState *frame, RuntimeState *runtime, Game
                 ri = (s32)n - (s32)i;
                 remX = (frame->ballVelX * ri) / (s32)n;
                 remY = (frame->ballVelY * ri) / (s32)n;
-                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                 hitSegment = 1;
                 break;
             }
@@ -133,7 +133,7 @@ void IntegrateBallMotionThisFrame(FrameState *frame, RuntimeState *runtime, Game
                 ri = (s32)n - (s32)i;
                 remX = (frame->ballVelX * ri) / (s32)n;
                 remY = (frame->ballVelY * ri) / (s32)n;
-                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                 hitSegment = 1;
                 break;
             }
@@ -142,7 +142,7 @@ void IntegrateBallMotionThisFrame(FrameState *frame, RuntimeState *runtime, Game
                 ri = (s32)n - (s32)i;
                 remX = (frame->ballVelX * ri) / (s32)n;
                 remY = (frame->ballVelY * ri) / (s32)n;
-                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, BALL_SPEED_MAG);
+                BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
                 hitSegment = 1;
                 break;
             }
