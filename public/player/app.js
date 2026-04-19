@@ -94,7 +94,12 @@ import mGBA from './mgba.js';
   async function startRomFromUrl(romURL) {
     setStatus('Loading ROM…');
     const absoluteUrl = new URL(romURL, location.href);
-    const res = await fetch(absoluteUrl.href);
+    // `cache: 'no-store'` bypasses both the HTTP cache and the disk cache so a freshly-
+    // compiled ROM (e.g. `make ship` just ran) is always fetched from the server. Without
+    // this, `python3 -m http.server` responses have no `Cache-Control` header and the
+    // browser applies a heuristic "fresh" window — you'd see stale frames after a rebuild
+    // until a manual hard-reload.
+    const res = await fetch(absoluteUrl.href, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
 
     const blob = await res.blob();
