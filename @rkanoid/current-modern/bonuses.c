@@ -3,6 +3,7 @@
 #include "game_sprites.h"
 #include "levels.h"
 #include "level_state.h"
+#include "gba_audio.h"
 
 static void ApplyCollectedBonus(Block *block, RuntimeState *runtime, u16 *lifeCount)
 {
@@ -31,6 +32,7 @@ static void ApplyCollectedBonus(Block *block, RuntimeState *runtime, u16 *lifeCo
         break;
     }
 
+    SfxBonusPickup();
     HideBonus(block);
     HideBonusSprite(block->bonusSlot);
 }

@@ -13,6 +13,7 @@
 #include "frame_present.h"
 #include "ball_motion.h"
 #include "fixed_point.h"
+#include "gba_audio.h"
 
 static void InitializeRuntime(RuntimeState *runtime)
 {
@@ -128,6 +129,7 @@ void RunGame(u16 playerCount)
 
             PresentGameplayFrame(&frame, &runtime, session.activePlayer, session.score, &session.lives);
             if (IsLevelCleared() == TRUE) {
+                SfxLevelClear();
                 ++session.level;
                 break;
             }

@@ -10,7 +10,7 @@ OBJCOPY := $(TOOLROOT)/arm-none-eabi-objcopy
 TARGET := rkanoid-modern
 OBJS := start_gnu.o wait_vbl_done.o data_gnu.o app_flow.o menu.o screens.o game_sprites.o \
 	ball_motion.o physics.o collisions.o bonuses.o serve_state.o frame_present.o \
-	game_loop.o levels_data.o level_state.o level_render.o
+	game_loop.o levels_data.o level_state.o level_render.o gba_audio.o
 
 CPPFLAGS := -I.
 CFLAGS := -marm -mcpu=arm7tdmi -O2 -ffreestanding -fno-builtin -std=gnu89 -Wall
@@ -37,8 +37,11 @@ wait_vbl_done.o: wait_vbl_done.s
 data_gnu.o: data_gnu.S
 	$(CC) $(ASFLAGS) -c $< -o $@
 
-app_flow.o: app_flow.c gameplay.h game_sprites.h menu.h regs.h screens.h
+app_flow.o: app_flow.c gameplay.h game_sprites.h menu.h regs.h screens.h gba_audio.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c app_flow.c -o $@
+
+gba_audio.o: gba_audio.c gba_audio.h gba_types.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c gba_audio.c -o $@
 
 menu.o: menu.c menu.h regs.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c menu.c -o $@
@@ -51,19 +54,21 @@ game_sprites.o: game_sprites.c game_sprites.h regs.h ball_motion.h
 
 game_loop.o: game_loop.c gameplay.h game_sprites.h game_state.h game_constants.h levels_data.h \
 	level_state.h level_render.h physics.h collisions.h bonuses.h serve_state.h frame_present.h \
-	ball_motion.h fixed_point.h regs.h
+	ball_motion.h fixed_point.h regs.h gba_audio.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c game_loop.c -o $@
 
 ball_motion.o: ball_motion.c ball_motion.h fixed_point.h game_state.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c ball_motion.c -o $@
 
-physics.o: physics.c regs.h game_constants.h physics.h game_state.h ball_motion.h collisions.h fixed_point.h
+physics.o: physics.c regs.h game_constants.h physics.h game_state.h ball_motion.h collisions.h fixed_point.h \
+	gba_audio.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c physics.c -o $@
 
-collisions.o: collisions.c game_constants.h collisions.h levels.h game_state.h ball_motion.h fixed_point.h
+collisions.o: collisions.c game_constants.h collisions.h levels.h game_state.h ball_motion.h fixed_point.h \
+	gba_audio.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c collisions.c -o $@
 
-bonuses.o: bonuses.c game_constants.h bonuses.h game_sprites.h levels.h level_state.h game_state.h
+bonuses.o: bonuses.c game_constants.h bonuses.h game_sprites.h levels.h level_state.h game_state.h gba_audio.h
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c bonuses.c -o $@
 
 serve_state.o: serve_state.c regs.h game_constants.h serve_state.h game_sprites.h physics.h game_state.h
@@ -96,7 +101,7 @@ clean:
 
 TEST_CC := gcc
 TEST_CFLAGS := -std=gnu99 -Wall -Wno-unused-function -O1 -g -iquote tests -iquote .
-TEST_SOURCES := tests/test_physics.c ball_motion.c collisions.c physics.c
+TEST_SOURCES := tests/test_physics.c ball_motion.c collisions.c physics.c tests/audio_stub.c
 
 test: tests/test_runner
 	./tests/test_runner

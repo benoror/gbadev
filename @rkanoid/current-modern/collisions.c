@@ -3,6 +3,7 @@
 #include "levels.h"
 #include "ball_motion.h"
 #include "fixed_point.h"
+#include "gba_audio.h"
 
 static s32 SnapPixelX(s32 v, s32 ballWidth)
 {
@@ -133,6 +134,7 @@ boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
             FIX_FROM_INT(SnapPixelY(padT - (s32)runtime->ballHeight, (s32)runtime->ballHeight, (s32)runtime->maxBallY));
         Ball_SyncPixelsFromFixedPos(frame);
         PaddleLaunchFromHitParam(frame, runtime);
+        SfxPaddleHit();
         return TRUE;
     }
 
@@ -143,6 +145,7 @@ boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
         BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         frame->ballPosX = FIX_FROM_INT(SnapPixelX(padL - (s32)runtime->ballWidth - 1, (s32)runtime->ballWidth));
         Ball_SyncPixelsFromFixedPos(frame);
+        SfxPaddleHit();
         return TRUE;
     }
     if (frame->ballVelX < 0 && ballL <= padR && ballR > padR) {
@@ -151,6 +154,7 @@ boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
         BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
         frame->ballPosX = FIX_FROM_INT(SnapPixelX(padR + 1, (s32)runtime->ballWidth));
         Ball_SyncPixelsFromFixedPos(frame);
+        SfxPaddleHit();
         return TRUE;
     }
 
@@ -160,6 +164,7 @@ boolean ApplyPaddleCollision(FrameState *frame, RuntimeState *runtime)
             FIX_FROM_INT(SnapPixelY(padT - (s32)runtime->ballHeight, (s32)runtime->ballHeight, (s32)runtime->maxBallY));
         Ball_SyncPixelsFromFixedPos(frame);
         PaddleLaunchFromHitParam(frame, runtime);
+        SfxPaddleHit();
         return TRUE;
     }
     return FALSE;
@@ -240,6 +245,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                             SnapPixelY(savedY - (s32)runtime->ballHeight, (s32)runtime->ballHeight,
                                 (s32)runtime->maxBallY));
                         Ball_SyncPixelsFromFixedPos(frame);
+                        SfxBrickHit();
                         return TRUE;
                     }
                 } else {
@@ -252,6 +258,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                         frame->ballPosY = FIX_FROM_INT(
                             SnapPixelY(savedBottom, (s32)runtime->ballHeight, (s32)runtime->maxBallY));
                         Ball_SyncPixelsFromFixedPos(frame);
+                        SfxBrickHit();
                         return TRUE;
                     }
                 }
@@ -266,6 +273,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                         frame->ballPosX = FIX_FROM_INT(
                             SnapPixelX(savedX - (s32)runtime->ballWidth, (s32)runtime->ballWidth));
                         Ball_SyncPixelsFromFixedPos(frame);
+                        SfxBrickHit();
                         return TRUE;
                     }
                 } else {
@@ -278,6 +286,7 @@ boolean ProcessBlockCollisions(FrameState *frame, RuntimeState *runtime, u8 *lev
                         frame->ballPosX =
                             FIX_FROM_INT(SnapPixelX(savedRight, (s32)runtime->ballWidth));
                         Ball_SyncPixelsFromFixedPos(frame);
+                        SfxBrickHit();
                         return TRUE;
                     }
                 }
