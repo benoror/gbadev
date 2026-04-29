@@ -320,13 +320,29 @@ a { color: inherit; }
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), inset 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
-.stage-player iframe {
+.stage-player canvas#player-canvas {
   width: 100%;
   height: 100%;
-  border: 0;
   display: block;
   background: #000;
+  /* Keep GBA pixels crisp instead of letting the browser bilinear-blend them. */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
+
+/* Compact status overlay shown while booting / loading a ROM / surfacing fatal errors. */
+.player-status {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #cfd4e0;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  pointer-events: none;
+}
+.player-status.hidden { display: none; }
+.player-status.error { color: #ffb4b4; background: rgba(120, 0, 0, 0.65); }
 
 .stage-player[data-crt="true"] .screen::after {
   content: '';
@@ -339,6 +355,41 @@ a { color: inherit; }
   mix-blend-mode: multiply;
 }
 
+/* Fullscreen: keep the GBA shell's 335:192 ratio inside a black void. The fullscreen API
+ * auto-sizes the element to the viewport, so we clamp width to `min(100vw, 100vh * ratio)`
+ * and let aspect-ratio drive height. The `::backdrop` fills the surrounding letterbox. */
+.stage-player:fullscreen,
+.stage-player:-webkit-full-screen {
+  aspect-ratio: 335 / 192;
+  width: min(100vw, calc(100vh * 335 / 192));
+  height: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: auto;
+}
+.stage-player:fullscreen::backdrop,
+.stage-player:-webkit-full-screen::backdrop {
+  background: #000;
+}
+
+/* Keyboard-hint row sits just above the stage-controls strip; it's the only row of prose
+ * between the GBA shell and the control toolbar, so we keep it compact and muted. */
+.stage-hints {
+  margin: 12px 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
+.stage-hints .kbd {
+  display: inline-block;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font: 600 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--fg);
+}
+
 .stage-controls {
   display: flex;
   gap: 10px;
@@ -347,7 +398,34 @@ a { color: inherit; }
   border: 1px solid var(--border);
   border-radius: 10px;
   flex-wrap: wrap;
-  margin-top: 12px;
+  align-items: center;
+}
+
+.stage-controls .slot,
+.stage-controls .volume {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.stage-controls .slot select,
+.stage-controls .volume input[type=range] {
+  background: var(--bg-3);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.stage-controls .volume input[type=range] {
+  accent-color: #3ad66c;
+  width: 120px;
+  padding: 0;
 }
 
 .stage-controls button {

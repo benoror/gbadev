@@ -103,6 +103,21 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); f
   font-size: 11px;
 }
 
+/* Single "Open in new window" action that lingers when the player is opened standalone.
+ * When embedded in the museum iframe it's clipped by overflow: hidden on the LCD cut-out. */
+.pop { margin-top: auto; align-self: center; }
+.pop button {
+  background: var(--btn);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+.pop button:hover { background: var(--btn-hover); }
+
 /* Touch pad — hidden on fine pointer devices. */
 .touch {
   display: none;

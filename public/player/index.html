@@ -21,29 +21,12 @@
       <div id="status" class="status" role="status" aria-live="polite">Booting mGBA…</div>
     </div>
 
-    <section class="controls" aria-label="Emulator controls">
-      <button id="btn-pause" type="button">Pause</button>
-      <button id="btn-reset" type="button" title="Soft reset (Quick Reload)">Reset</button>
-      <button id="btn-shot" type="button" title="Download PNG screenshot">Screenshot</button>
-      <button id="btn-full" type="button" title="Fullscreen">Fullscreen</button>
-
-      <label class="slot">
-        <span>Slot</span>
-        <select id="state-slot" aria-label="Save state slot">
-          <option>1</option><option>2</option><option>3</option>
-          <option>4</option><option>5</option><option>6</option>
-          <option>7</option><option>8</option><option>9</option>
-        </select>
-      </label>
-      <button id="btn-save" type="button">Save State</button>
-      <button id="btn-load" type="button">Load State</button>
-
-      <label class="volume">
-        <span>Volume</span>
-        <input id="volume" type="range" min="0" max="100" value="70" aria-label="Volume" />
-      </label>
-    </section>
-
+    <!--
+      Gameplay controls (pause / reset / save-state / screenshot / volume) have been lifted to
+      the museum shell, which drives the iframe through `window.playerAPI` in app.js. When
+      the player is opened standalone (via the "Open in new window" button below or a direct
+      URL) the keyboard bindings in app.js still work — only the on-screen toolbar is gone.
+    -->
     <section class="touch" aria-label="Touch controls" aria-hidden="true">
       <div class="tpad dpad">
         <button class="dbtn up" data-btn="Up" aria-label="Up">▲</button>
@@ -65,12 +48,11 @@
       </div>
     </section>
 
-    <footer class="hint">
-      <p>
-        Keyboard: Arrows · <kbd>Z</kbd>=B · <kbd>X</kbd>=A · <kbd>A</kbd>=L · <kbd>S</kbd>=R ·
-        <kbd>Enter</kbd>=Start · <kbd>Backspace</kbd>=Select · hold <kbd>Tab</kbd> = fast-forward
-      </p>
-    </footer>
+    <div class="pop">
+      <button id="btn-pop" type="button" title="Open this ROM in a standalone browser window">
+        Open in new window
+      </button>
+    </div>
   </main>
 
   <script type="module" src="./app.js"></script>
