@@ -10,6 +10,7 @@ void C_Entry(void)
     u16 players;
 
     InitializeDisplay();
+    InitAudio();
     ShowSplashScreen();
     /* Splash runs at half the speed of the rest of the flow so the title lingers. */
     FadeIn(28, FALSE, TRUE);

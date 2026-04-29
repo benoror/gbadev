@@ -4,6 +4,7 @@
 #include "ball_motion.h"
 #include "collisions.h"
 #include "fixed_point.h"
+#include "gba_audio.h"
 
 u16 GetPaddleSpeed(u16 buttons)
 {
@@ -27,6 +28,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
         if (frame->ballVelX > 0) {
             frame->ballVelX = -frame->ballVelX;
             BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
+            SfxWallBounce();
         }
         frame->ballPosX = FIX_FROM_INT((s32)MAX_X - (s32)runtime->ballWidth - 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -35,6 +37,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
         if (frame->ballVelX < 0) {
             frame->ballVelX = -frame->ballVelX;
             BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
+            SfxWallBounce();
         }
         frame->ballPosX = FIX_FROM_INT((s32)MIN_X + 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -43,11 +46,13 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
         if (runtime->shieldActive == FALSE) {
             --session->lives;
             *lostLifeThisFrame = 1;
+            SfxLifeLost();
             return;
         }
         if (frame->ballVelY > 0) {
             frame->ballVelY = -frame->ballVelY;
             BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
+            SfxWallBounce();
         }
         frame->ballPosY = FIX_FROM_INT((s32)runtime->maxBallY - (s32)runtime->ballHeight - 1);
         Ball_SyncPixelsFromFixedPos(frame);
@@ -58,6 +63,7 @@ void ApplyWorldBounds(FrameState *frame, RuntimeState *runtime, GameSession *ses
         if (frame->ballVelY < 0) {
             frame->ballVelY = -frame->ballVelY;
             BallNormalizeVelocity(&frame->ballVelX, &frame->ballVelY, runtime->ballSpeedMag);
+            SfxWallBounce();
         }
         frame->ballPosY = FIX_FROM_INT((s32)MIN_Y + 1);
         Ball_SyncPixelsFromFixedPos(frame);

@@ -1,6 +1,6 @@
 # GBA Dev
 
-Some Game Boy Advance Development I did circa. 2001 (was abt ~14yo) for the Homebrew scene
+Some Game Boy Advance Development I did circa. 2001-2003 for the Homebrew scene
 
 ## @rkanoid
 
