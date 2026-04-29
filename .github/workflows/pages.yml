@@ -1,23 +1,23 @@
 name: Deploy GitHub Pages
 
-# Publishes /public to https://benoror.github.io/gbadev on every push
-# to master or preserve, and on manual dispatch from the Actions tab.
+# Publishes /public to https://benoror.github.io/gbadev
+# Triggers on every push to the default branch (master) or preserve,
+# plus manual dispatch from the Actions tab.
+#
+# IMPORTANT: For this to actually deploy, repo Settings → Pages → Source
+# must be set to "GitHub Actions" (not "Deploy from a branch").
 
 on:
   push:
-    branches: [master, preserve]
-    paths:
-      - "public/**"
-      - ".github/workflows/pages.yml"
+    branches: [master, main, preserve]
   workflow_dispatch:
 
-# Required permissions for the Pages deployment APIs.
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Cancel any in-flight deployment if a newer push lands.
+# Avoid stacked deployments — the latest push always wins.
 concurrency:
   group: pages
   cancel-in-progress: true
