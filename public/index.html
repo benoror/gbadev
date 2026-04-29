@@ -34,11 +34,37 @@
       <div class="stage-player-col">
         <div id="player-wrap" class="stage-player" data-crt="false" aria-label="Game Boy Advance">
           <div class="screen">
-            <iframe id="player-frame" title="Player" allow="fullscreen; gamepad; autoplay"></iframe>
+            <!-- mGBA writes pixels straight to this canvas; no iframe involved. ROM swaps
+                 are hot (Module.quitGame() + loadGame()) so the WASM never re-inits. -->
+            <canvas id="player-canvas" width="240" height="160" aria-label="Emulator display"></canvas>
+            <div id="player-status" class="player-status hidden" role="status" aria-live="polite"></div>
           </div>
         </div>
+        <p class="stage-hints" aria-hidden="true">
+          Keyboard: Arrows · <span class="kbd">Z</span>=B · <span class="kbd">X</span>=A ·
+          <span class="kbd">A</span>=L · <span class="kbd">S</span>=R ·
+          <span class="kbd">Enter</span>=Start · <span class="kbd">Backspace</span>=Select ·
+          hold <span class="kbd">Tab</span> = fast-forward
+        </p>
         <div class="stage-controls">
           <!-- LED dots mimic the GBA power indicator: green while the option is on, dark off. -->
+          <button id="btn-pause" type="button"><span class="led" aria-hidden="true"></span><span class="label">Pause</span></button>
+          <button id="btn-reset" type="button"><span class="led" aria-hidden="true"></span>Reset</button>
+          <button id="btn-shot"  type="button"><span class="led" aria-hidden="true"></span>Screenshot</button>
+          <label class="slot">
+            Slot
+            <select id="state-slot" aria-label="Save state slot">
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5</option><option>6</option>
+              <option>7</option><option>8</option><option>9</option>
+            </select>
+          </label>
+          <button id="btn-save" type="button"><span class="led" aria-hidden="true"></span>Save State</button>
+          <button id="btn-load" type="button"><span class="led" aria-hidden="true"></span>Load State</button>
+          <label class="volume">
+            Volume
+            <input id="volume" type="range" min="0" max="100" value="70" aria-label="Volume" />
+          </label>
           <button id="btn-fullscreen" type="button"><span class="led" aria-hidden="true"></span>Fullscreen</button>
           <button id="btn-crt" type="button"><span class="led" aria-hidden="true"></span>CRT shader</button>
           <button id="btn-info" type="button" class="is-on"><span class="led" aria-hidden="true"></span>Notes</button>
