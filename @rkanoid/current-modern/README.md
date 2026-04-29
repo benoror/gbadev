@@ -61,7 +61,7 @@ and reads BMPs from:
 
 Level tile maps + block seeds are generated into `levels_data.c` from:
 
-- `tools/levels_source/tiles.map` — shared glyph legend (ASCII + emoji aliases)
+- `tools/levels_source/tiles.map` — shared glyph legend (ASCII)
 - `tools/levels_source/levelXX.level` — 18×9 glyph grid per level
 - `tools/levels_source/levelXX.seeds` — block seeds per level
 
@@ -92,6 +92,7 @@ Generator:
 - `level_state.c` - mutable block runtime (`gBlocks`), level init/clear queries
 - `level_render.c` - background composition (`gBackgroundMap`) + VRAM upload helpers
 - `ball_motion.c` - fixed-point ball position / velocity helpers + trail-offset math
+- `gba_audio.c` - PSG SFX engine (square 1/2 + noise) with non-blocking single-shot triggers
 - `assets.h`, `gameplay.h`, `levels.h`, `levels_data.h`, `level_state.h`, `level_render.h` - explicit gameplay and level module boundaries
 - `fixed_point.h`, `ball_motion.h` - fixed-point primitives shared by physics and rendering
 - `gba_*.h`, `regs.h` - split platform helpers for registers, input, DMA, waits, fades, and audio
@@ -102,6 +103,26 @@ Generator:
 `game_sprites.c` is intentionally still a **single module** after the gameplay split: it is ~175 LOC,
 mostly static tables + small OAM writers, and splitting further would mostly churn include edges
 without improving readability yet.
+
+## Audio
+
+`gba_audio.{c,h}` exposes a tiny non-blocking PSG SFX engine. `InitAudio()`
+runs once at boot (called from `app_flow.c`); each `Sfx*()` is a fire-and-forget
+register write that triggers a hardware channel and returns immediately, so the
+game loop never stalls.
+
+Wired events:
+
+- `SfxPaddleHit` — `collisions.c::ApplyPaddleCollision` (every redirect)
+- `SfxBrickHit` — `collisions.c::ProcessBlockCollisions` (non-pierce hits only,
+  to avoid spam during the comet trail)
+- `SfxWallBounce` — `physics.c::ApplyWorldBounds` (walls / ceiling / shield)
+- `SfxBonusPickup` — `bonuses.c::ApplyCollectedBonus`
+- `SfxLifeLost` — `physics.c::ApplyWorldBounds` (death floor)
+- `SfxLevelClear` — `game_loop.c` when `IsLevelCleared()` is `TRUE`
+
+Host tests use `tests/audio_stub.c` to no-op these symbols so the linker stays
+happy on the test runner.
 
 ## Translation pass
 
